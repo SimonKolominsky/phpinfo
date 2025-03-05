@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Справочник PHP</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-icons-1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+    <!-- Боковое меню -->
+    <nav id="sidebar" class="bg-light border-end">
+        <div class="sidebar-header border-bottom d-flex justify-content-between align-items-center">
+            <h3 class="m-0 text-primary">Справочник</h3>
+            <button type="button" id="sidebarCollapseBtn" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-accordion mt-3">
+            <!-- Основы -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#basics-collapse">
+                    <div class="sidebar-subheading">Основы</div>
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+                <div id="basics-collapse" class="collapse">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="pages/requirements.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Требования General</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/requirements_db.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Требования DB</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/oop.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>ООП</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/interaction_principles.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Принципы взаимодействия</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/ddd.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>DDD</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/agile_scrum_kanban.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Agile Scrum Kanban</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/solid.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>SOLID</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/grasp.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>GRASP</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/structures.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Структуры в PHP</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/zval.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Zval в PHP</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/jit_compile_php.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>JIT компиляция в PHP</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/react.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Реактивное программирование</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/extreme_programming.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Экстремальное программирование</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/templates.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Шаблоны</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/antipatterns.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Антипатерны</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/interfaces_and_traits.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Интерфейсы и трейты</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/php8.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>PHP 8+</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/spl.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>SPL</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/algoritms.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Алгоритмы</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/tests.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Тестирование</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/static_analysis.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Статический анализ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/mvc.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>MVC</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/orm.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>ORM</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/decorator.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Decorator</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/algoritm_hard.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Сложность алгоритма</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/php6.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>PHP 6</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/opcode.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Opcode</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Базы данных -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#database-collapse">
+                    <div class="sidebar-subheading">Базы данных</div>
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+                <div id="database-collapse" class="collapse">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="pages/database/sql.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>SQL</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/nosql.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>NoSQL</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/normalize.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Нормализация</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/keys.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Ключи</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/relations.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Связи</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/indexes.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Индексы</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/indexes_composite.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Составные индексы</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/constraints.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Ограничения</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/partitioning.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Партиционирование</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/replication.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Репликация</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/scaling.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Масштабирование</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/explain.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Explain</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/sql_optimization.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Оптимизация запросов</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/bd_selection.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Селективность</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/bd_planner.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Планировщик</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/transactions.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Транзакции</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/acid.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>ACID</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/bd_isolation_levels.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Уровни изоляций</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/blocks.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Блокировки</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/cursor.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Курсоры</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/union.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Union</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/mysql_postgree.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>MySQL и PostgreSQL</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/engines.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Движки</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/mvcc.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>MVCC</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/database/injection.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>SQL-инъекции</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Технологии -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#technology-collapse">
+                    <div class="sidebar-subheading">Технологии</div>
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+                <div id="technology-collapse" class="collapse">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="pages/api.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>API</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/rest.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>REST API</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/authorization.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>JWT и OAuth</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/memorydb.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>InMemory DB</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/mqbroker.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>MQ Broker</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/rabbit.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Rabbit MQ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/redis.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Redis</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/persistent.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Persistent</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/stateful_stateless.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Stateful и Stateless</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/owasp.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>OWASP</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/web_security.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>WEB уязвимости</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/idempotency.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Идемпотентность</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/soap.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>SOAP</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/testing.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Тестирование</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/testing_types.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Виды тестирования</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/phpunit.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>PHPUnit</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/phpunit_objects.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>PHPUnit объекты</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/psr.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>PSR</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/cqrs.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>CQRS</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/linux.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Linux</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/docker.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Docker</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Symfony -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#symfony-collapse">
+                    <div class="sidebar-subheading">Symfony</div>
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+                <div id="symfony-collapse" class="collapse">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="pages/symfony/components.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Компоненты</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/di.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>DI</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/messenger.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Messenger</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/profiler.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Profiler</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/security.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Security</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/serializer.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Serializer</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/flex.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Flex</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/cache.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Cache</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/repository.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>Repository</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/symfony/servicelocator.html" class="nav-link" target="contentFrame">
+                                <i class="bi bi-bookmarks"></i>
+                                <span>ServiceLocator</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <div class="container-fluid">
+                <button type="button" id="mobileMenuBtn" class="btn btn-sm btn-outline-primary d-md-none">
+                    <i class="bi bi-list"></i>
+                </button>
+                <span class="navbar-text" id="currentTopicTitle">-</span>
+            </div>
+        </nav>
+
+        <div id="contentContainer">
+            <iframe name="contentFrame" id="contentFrame" src="pages/welcome.html" title="Контент шпаргалки"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle с Popper -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Получаем элементы DOM
+    const sidebar = document.getElementById('sidebar');
+    const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const currentTopicTitle = document.getElementById('currentTopicTitle');
+    const contentFrame = document.getElementById('contentFrame');
+    const sectionHeaders = document.querySelectorAll('.sidebar-section-header');
+
+    // Функция для переключения состояния бокового меню
+    function toggleSidebar() {
+        sidebar.classList.toggle('collapsed');
+    }
+
+    // Обработчик клика по кнопке сворачивания меню
+    sidebarCollapseBtn.addEventListener('click', toggleSidebar);
+
+    // Обработчик для мобильной кнопки меню
+    mobileMenuBtn.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+    });
+
+    // Обработчики для навигационных ссылок
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Удалить активный класс со всех ссылок
+            navLinks.forEach(l => l.classList.remove('active'));
+
+            // Добавить активный класс текущей ссылке
+            this.classList.add('active');
+
+            // Обновить заголовок на основе выбранной ссылки
+            currentTopicTitle.textContent = this.querySelector('span').textContent;
+
+            // На мобильных устройствах скрыть меню после выбора
+            if (window.innerWidth < 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+    });
+
+    // Обработчики для заголовков разделов (дополнительно к Bootstrap)
+    sectionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            icon.classList.toggle('bi-chevron-down');
+            icon.classList.toggle('bi-chevron-up');
+        });
+    });
+
+    // Отслеживание загрузки iframe для обновления заголовка
+    contentFrame.addEventListener('load', function() {
+        try {
+            // Пытаемся получить заголовок из загруженного документа
+            const iframeTitle = contentFrame.contentDocument.title;
+            if (iframeTitle) {
+                currentTopicTitle.textContent = iframeTitle;
+
+                // Находим и активируем соответствующую ссылку в меню
+                navLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    const iframeHref = contentFrame.contentWindow.location.href.split('/').pop();
+
+                    if (linkHref === iframeHref || linkHref.includes(iframeHref)) {
+                        // Активировать ссылку
+                        link.classList.add('active');
+
+                        // Раскрыть родительский раздел
+                        const parentCollapse = link.closest('.collapse');
+                        if (parentCollapse) {
+                            const bsCollapse = new bootstrap.Collapse(parentCollapse, {
+                                toggle: false
+                            });
+                            bsCollapse.show();
+
+                            // Изменить иконку
+                            const parentHeader = parentCollapse.previousElementSibling;
+                            if (parentHeader) {
+                                const icon = parentHeader.querySelector('i');
+                                icon.classList.remove('bi-chevron-down');
+                                icon.classList.add('bi-chevron-up');
+                            }
+                        }
+                    }
+                });
+            }
+        } catch(e) {
+            // Обработка ошибок доступа к кросс-доменному iframe
+            console.log("Не удалось получить заголовок iframe");
+        }
+    });
+</script>
+</body>
+</html>
