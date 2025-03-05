@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>API (Application Programming Interface) —
+    это набор правил и протоколов, который позволяет различным программам взаимодействовать друг с другом. API бывают
+    разных видов в зависимости от их назначения, архитектуры и способа использования. Вот основные типы:</p>
+    <hr>
+    <h3>1. <strong>По уровню доступа</strong></h3>
+    <ul>
+        <li><p><strong>Публичные (Open API)</strong>: Доступны для всех разработчиков. Пример: API Google Maps, Twitter
+            API.</p></li>
+        <li><p><strong>Частные (Private API)</strong>: Используются внутри компании или организации для внутренних нужд.
+        </p></li>
+        <li><p><strong>Партнерские (Partner API)</strong>: Доступны только для определенных партнеров или сторонних
+            разработчиков, с которыми заключено соглашение.</p></li>
+    </ul>
+    <hr>
+    <h3>2. <strong>По архитектуре</strong></h3>
+    <ul>
+        <li><p><strong>REST (Representational State Transfer)</strong>: Самый популярный тип API, основанный на
+            HTTP-запросах (GET, POST, PUT, DELETE). Данные обычно передаются в формате JSON или XML.</p>
+            <ul>
+                <li><p>Пример: API GitHub, Twitter API.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>SOAP (Simple Object Access Protocol)</strong>: Более строгий и сложный протокол, использующий XML
+            для передачи данных. Часто используется в корпоративных приложениях.</p>
+            <ul>
+                <li><p>Пример: API для банковских систем.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>GraphQL</strong>: Альтернатива REST, позволяющая клиенту запрашивать только нужные данные,
+            уменьшая объем передаваемой информации.</p>
+            <ul>
+                <li><p>Пример: API GitHub (частично), Shopify API.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>gRPC</strong>: Высокопроизводительный протокол, использующий HTTP/2 и бинарный формат данных
+            (Protocol Buffers). Часто используется в микросервисах.</p>
+            <ul>
+                <li><p>Пример: API для внутренних сервисов Google.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3>3. <strong>По назначению</strong></h3>
+    <ul>
+        <li><p><strong>Веб-API (Web API)</strong>: Используются для взаимодействия с веб-сервисами через HTTP.</p>
+            <ul>
+                <li><p>Пример: API социальных сетей, платежных систем.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Операционные системы API</strong>: Позволяют программам взаимодействовать с операционной
+            системой.</p>
+            <ul>
+                <li><p>Пример: Windows API, POSIX API.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Библиотеки и фреймворки API</strong>: Предоставляют функции для работы с конкретными библиотеками
+            или фреймворками.</p>
+            <ul>
+                <li><p>Пример: API TensorFlow, API React.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Аппаратные API</strong>: Используются для взаимодействия с аппаратным обеспечением.</p>
+            <ul>
+                <li><p>Пример: API для работы с камерой или датчиками на смартфоне.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3>4. <strong>По способу использования</strong></h3>
+    <ul>
+        <li><p><strong>Синхронные API</strong>: Клиент отправляет запрос и ждет ответа перед продолжением работы.</p>
+        </li>
+        <li><p><strong>Асинхронные API</strong>: Клиент отправляет запрос и может продолжать выполнение других задач, не
+            дожидаясь ответа. Ответ приходит позже, например, через callback или webhook.</p></li>
+    </ul>
+    <hr>
+    <h3>5. <strong>По формату данных</strong></h3>
+    <ul>
+        <li><p><strong>JSON API</strong>: Данные передаются в формате JSON.</p></li>
+        <li><p><strong>XML API</strong>: Данные передаются в формате XML.</p></li>
+        <li><p><strong>Протоколы на основе бинарных данных</strong>: Например, gRPC или Protocol Buffers.</p></li>
+    </ul>
+    <hr>
+    <h3>6. <strong>По сфере применения</strong></h3>
+    <ul>
+        <li><p><strong>Платежные API</strong>: Для обработки платежей (например, Stripe API, PayPal API).</p></li>
+        <li><p><strong>Картографические API</strong>: Для работы с картами и геоданными (например, Google Maps API).</p>
+        </li>
+        <li><p><strong>Социальные API</strong>: Для интеграции с социальными сетями (например, Facebook Graph API, VK
+            API).</p></li>
+        <li><p><strong>Мультимедийные API</strong>: Для работы с видео, аудио и изображениями (например, YouTube API,
+            Spotify API).</p></li>
+        <li><p><strong>Искусственный интеллект и машинное обучение</strong>: API для работы с моделями ИИ (например,
+            OpenAI API, TensorFlow API).</p></li>
+    </ul>
+    <hr>
+    <h3>7. <strong>По способу аутентификации</strong></h3>
+    <ul>
+        <li><p><strong>API с ключом доступа (API Key)</strong>: Используется уникальный ключ для доступа.</p></li>
+        <li><p><strong>OAuth</strong>: Протокол для авторизации, часто используется в социальных сетях.</p></li>
+        <li><p><strong>JWT (JSON Web Token)</strong>: Токен для аутентификации и авторизации.</p></li>
+    </ul>
+    <hr>
+    <p>Каждый тип API имеет свои преимущества и недостатки, и выбор зависит от конкретных задач и требований
+        проекта.</p></div>
+</body>
+</html>

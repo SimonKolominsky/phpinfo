@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Антипаттерны в разработке программного
+    обеспечения — это распространенные подходы или решения, которые кажутся правильными на первый взгляд, но на самом
+    деле приводят к проблемам в поддержке, масштабируемости, производительности или безопасности. В PHP, как и в других
+    языках, есть свои типичные антипаттерны. Рассмотрим несколько примеров:</p>
+    <hr>
+    <h3>1. <strong>God Object (Божественный объект)</strong></h3>
+    <p>Антипаттерн, когда один класс берет на себя слишком много обязанностей, нарушая принцип единственной
+        ответственности (SRP).</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">GodObject</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">handleUsers</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span
+                    class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">processOrders</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span
+                    class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sendEmails</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token comment">/* ... */</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">generateReports</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span
+                    class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Класс становится слишком сложным, его трудно тестировать и поддерживать.</p>
+    <p><strong>Решение</strong>: Разделить обязанности на несколько классов, каждый из которых отвечает за одну задачу.
+    </p>
+    <hr>
+    <h3>2. <strong>Spaghetti Code (Спагетти-код)</strong></h3>
+    <p>Код, в котором отсутствует структура, а логика размазана по множеству файлов или функций без четкой
+        организации.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$condition1</span><span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 100 строк кода</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$condition2</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// еще 50 строк</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Такой код сложно читать, отлаживать и расширять.</p>
+    <p><strong>Решение</strong>: Использовать принципы модульности, разделять код на небольшие функции или методы,
+        применять шаблоны проектирования.</p>
+    <hr>
+    <h3>3. <strong>Hardcoding (Жесткое кодирование)</strong></h3>
+    <p>Использование "магических чисел" или строк прямо в коде вместо констант или конфигураций.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$discount</span> <span class="token operator">=</span> <span
+                class="token variable">$price</span> <span class="token operator">*</span> <span class="token number">0.15</span><span
+                class="token punctuation">;</span> <span
+                class="token comment">// 0.15 — это "магическое число"</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: При изменении значения придется искать и менять его во всем коде.</p>
+    <p><strong>Решение</strong>: Использовать константы или конфигурационные файлы.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token function">define</span><span class="token punctuation">(</span><span
+                class="token string single-quoted-string">'DISCOUNT_RATE'</span><span class="token punctuation">,</span> <span
+                class="token number">0.15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$discount</span> <span class="token operator">=</span> <span
+                    class="token variable">$price</span> <span class="token operator">*</span> <span
+                    class="token constant">DISCOUNT_RATE</span><span class="token punctuation">;</span></pre>
+    </div>
+    <hr>
+    <h3>4. <strong>Copy-Paste Programming (Копипаст-код)</strong></h3>
+    <p>Дублирование кода вместо выноса общей логики в отдельные функции или классы.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">calculateTotal</span><span class="token punctuation">(</span><span
+                class="token variable">$items</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+    <span class="token variable">$total</span> <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$items</span> <span
+                    class="token keyword">as</span> <span class="token variable">$item</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$total</span> <span class="token operator">+=</span> <span class="token variable">$item</span><span
+                    class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'price'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token variable">$total</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span
+                    class="token function-definition function">calculateDiscount</span><span
+                    class="token punctuation">(</span><span class="token variable">$items</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$total</span> <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$items</span> <span
+                    class="token keyword">as</span> <span class="token variable">$item</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$total</span> <span class="token operator">+=</span> <span class="token variable">$item</span><span
+                    class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'price'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token variable">$total</span> <span
+                    class="token operator">*</span> <span class="token number">0.1</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Дублирование усложняет поддержку и увеличивает вероятность ошибок.</p>
+    <p><strong>Решение</strong>: Вынести общую логику в отдельную функцию.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">calculateSum</span><span
+                class="token punctuation">(</span><span class="token variable">$items</span><span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$total</span> <span class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$items</span> <span
+                    class="token keyword">as</span> <span class="token variable">$item</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$total</span> <span class="token operator">+=</span> <span class="token variable">$item</span><span
+                    class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'price'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token variable">$total</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function-definition function">calculateTotal</span><span
+                    class="token punctuation">(</span><span class="token variable">$items</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">calculateSum</span><span
+                    class="token punctuation">(</span><span class="token variable">$items</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span
+                    class="token function-definition function">calculateDiscount</span><span
+                    class="token punctuation">(</span><span class="token variable">$items</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">calculateSum</span><span
+                    class="token punctuation">(</span><span class="token variable">$items</span><span
+                    class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.1</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>5. <strong>Tight Coupling (Сильная связанность)</strong></h3>
+    <p>Когда классы или модули сильно зависят друг от друга, что затрудняет их повторное использование и
+        тестирование.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">Order</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$paymentProcessor</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">paymentProcessor</span> <span
+                    class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name">PaymentProcessor</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Сильная связанность</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Класс <code>Order</code> жестко зависит от <code>PaymentProcessor</code>, что
+        усложняет тестирование и замену реализации.</p>
+    <p><strong>Решение</strong>: Использовать Dependency Injection (внедрение зависимостей).</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">Order</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$paymentProcessor</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">PaymentProcessor</span> <span class="token variable">$paymentProcessor</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">paymentProcessor</span> <span
+                    class="token operator">=</span> <span class="token variable">$paymentProcessor</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>6. <strong>Premature Optimization (Преждевременная оптимизация)</strong></h3>
+    <p>Оптимизация кода до того, как это действительно необходимо, что может привести к усложнению и снижению
+        читаемости.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Пример: Использование сложных структур данных для простой задачи</span>
+<span class="token variable">$data</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">SplFixedArray</span><span
+                    class="token punctuation">(</span><span class="token number">1000</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token variable">$i</span> <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span> <span class="token variable">$i</span> <span
+                    class="token operator">&lt;</span> <span class="token number">1000</span><span
+                    class="token punctuation">;</span> <span class="token variable">$i</span><span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token variable">$data</span><span class="token punctuation">[</span><span
+                    class="token variable">$i</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token variable">$i</span> <span class="token operator">*</span> <span
+                    class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Код становится сложнее без реальной необходимости.</p>
+    <p><strong>Решение</strong>: Оптимизировать только после выявления узких мест (бottlenecks) с помощью
+        профилирования.</p>
+    <hr>
+    <h3>7. <strong>Ignoring Error Handling (Игнорирование обработки ошибок)</strong></h3>
+    <p>Отсутствие обработки ошибок или исключений, что может привести к неожиданным сбоям.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$file</span> <span class="token operator">=</span> <span
+                class="token function">fopen</span><span class="token punctuation">(</span><span
+                class="token string double-quoted-string">"nonexistent_file.txt"</span><span
+                class="token punctuation">,</span> <span class="token string double-quoted-string">"r"</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Если файл не существует, скрипт завершится с ошибкой.</p>
+    <p><strong>Решение</strong>: Добавить проверки и обработку исключений.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token variable">$file</span> <span class="token operator">=</span> <span
+                    class="token function">fopen</span><span class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"nonexistent_file.txt"</span><span
+                    class="token punctuation">,</span> <span class="token string double-quoted-string">"r"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token operator">!</span><span class="token variable">$file</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Exception</span><span
+                    class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"File not found"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span
+                    class="token punctuation">(</span><span class="token class-name">Exception</span> <span
+                    class="token variable">$e</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Error: "</span> <span
+                    class="token operator">.</span> <span class="token variable">$e</span><span class="token operator">-&gt;</span><span
+                    class="token function">getMessage</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>8. <strong>Overuse of Global Variables (Злоупотребление глобальными переменными)</strong></h3>
+    <p>Использование глобальных переменных для передачи данных между функциями или модулями.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$config</span> <span class="token operator">=</span> <span
+                class="token punctuation">[</span><span class="token punctuation">]</span><span
+                class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function-definition function">loadConfig</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">global</span> <span class="token variable">$config</span><span
+                    class="token punctuation">;</span>
+    <span class="token variable">$config</span> <span class="token operator">=</span> <span
+                    class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'db_host'</span> <span class="token operator">=&gt;</span> <span
+                    class="token string single-quoted-string">'localhost'</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span
+                    class="token function-definition function">connectToDatabase</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">global</span> <span class="token variable">$config</span><span
+                    class="token punctuation">;</span>
+    <span class="token comment">// Использование $config</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Глобальные переменные усложняют понимание кода и могут привести к неожиданным побочным
+        эффектам.</p>
+    <p><strong>Решение</strong>: Передавать данные через параметры функций или использовать Dependency Injection.</p>
+    <hr>
+    <h3>9. <strong>Magic Methods Overuse (Злоупотребление "магическими" методами)</strong></h3>
+    <p>Чрезмерное использование магических методов в PHP, таких как <code>__get</code>, <code>__set</code>,
+        <code>__call</code>, что может сделать код непредсказуемым.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$data</span> <span
+                    class="token operator">=</span> <span class="token punctuation">[</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__get</span><span class="token punctuation">(</span><span
+                    class="token variable">$name</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">data</span><span class="token punctuation">[</span><span
+                    class="token variable">$name</span><span class="token punctuation">]</span> <span
+                    class="token operator">??</span> <span class="token constant">null</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__set</span><span class="token punctuation">(</span><span
+                    class="token variable">$name</span><span class="token punctuation">,</span> <span
+                    class="token variable">$value</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">data</span><span
+                    class="token punctuation">[</span><span class="token variable">$name</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token variable">$value</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$user</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">User</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token property">name</span> <span class="token operator">=</span> <span
+                    class="token string double-quoted-string">"John"</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Магический метод __set</span>
+<span class="token keyword">echo</span> <span class="token variable">$user</span><span
+                    class="token operator">-&gt;</span><span class="token property">name</span><span
+                    class="token punctuation">;</span>    <span
+                    class="token comment">// Магический метод __get</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Код становится сложнее для понимания и отладки.</p>
+    <p><strong>Решение</strong>: Использовать магические методы только когда это действительно необходимо.</p>
+    <hr>
+    <h3>10. <strong>Ignoring Security (Игнорирование безопасности)</strong></h3>
+    <p>Недостаточное внимание к безопасности, например, отсутствие валидации входных данных или экранирования
+        SQL-запросов.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$username</span> <span class="token operator">=</span> <span
+                class="token variable">$_POST</span><span class="token punctuation">[</span><span
+                class="token string single-quoted-string">'username'</span><span class="token punctuation">]</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$password</span> <span class="token operator">=</span> <span
+                    class="token variable">$_POST</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'password'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token variable">$query</span> <span class="token operator">=</span> <span
+                    class="token string double-quoted-string">"SELECT * FROM users WHERE username = '<span
+                    class="token interpolation"><span
+                    class="token variable">$username</span></span>' AND password = '<span
+                    class="token interpolation"><span class="token variable">$password</span></span>'"</span><span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <p><strong>Проблема</strong>: Уязвимость к SQL-инъекциям.</p>
+    <p><strong>Решение</strong>: Использовать подготовленные выражения (prepared statements) и экранирование.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$stmt</span> <span class="token operator">=</span> <span
+                class="token variable">$pdo</span><span class="token operator">-&gt;</span><span class="token function">prepare</span><span
+                class="token punctuation">(</span><span class="token string double-quoted-string">"SELECT * FROM users WHERE username = :username AND password = :password"</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span><span class="token operator">-&gt;</span><span
+                    class="token function">execute</span><span class="token punctuation">(</span><span
+                    class="token punctuation">[</span><span class="token string single-quoted-string">'username'</span> <span
+                    class="token operator">=&gt;</span> <span class="token variable">$username</span><span
+                    class="token punctuation">,</span> <span class="token string single-quoted-string">'password'</span> <span
+                    class="token operator">=&gt;</span> <span class="token variable">$password</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span></pre>
+    </div>
+</div>
+</body>
+</html>

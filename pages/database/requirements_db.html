@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Вот структурированный и дополненный список
+    тем, которые нужно знать для собеседования по базам данных (MySQL и PostgreSQL), с акцентом на их интеграцию с PHP и
+    Symfony:</p>
+    <hr>
+    <h3><strong>1. Общие концепции для MySQL и PostgreSQL</strong></h3><h4><strong>Оптимизация запросов</strong></h4>
+    <ul>
+        <li><p>Использование и анализ <code>EXPLAIN</code> (или <code>EXPLAIN ANALYZE</code> в PostgreSQL).</p></li>
+        <li><p>Правильное индексирование:</p>
+            <ul>
+                <li><p>Типы индексов (B-tree, Hash, GIN, GiST, FULLTEXT и др.).</p></li>
+                <li><p>Составные индексы.</p></li>
+                <li><p>Индексы для полнотекстового поиска.</p></li>
+            </ul>
+        </li>
+        <li><p>Понимание работы планировщика запросов.</p></li>
+        <li><p>Выявление и устранение медленных запросов:</p>
+            <ul>
+                <li><p>Использование логов медленных запросов.</p></li>
+                <li><p>Инструменты для анализа (например, <code>pg_stat_statements</code> в PostgreSQL).</p></li>
+            </ul>
+        </li>
+    </ul>
+    <h4><strong>Транзакции</strong></h4>
+    <ul>
+        <li><p>Уровни изоляции:</p>
+            <ul>
+                <li><p><code>READ UNCOMMITTED</code>, <code>READ COMMITTED</code>, <code>REPEATABLE READ</code>, <code>SERIALIZABLE</code>.
+                </p></li>
+            </ul>
+        </li>
+        <li><p>Блокировки:</p>
+            <ul>
+                <li><p>Shared, Exclusive, Row-level, Table-level.</p></li>
+            </ul>
+        </li>
+        <li><p>Deadlock-и:</p>
+            <ul>
+                <li><p>Причины возникновения и способы предотвращения.</p></li>
+            </ul>
+        </li>
+        <li><p>Понимание ACID-свойств (Atomicity, Consistency, Isolation, Durability).</p></li>
+    </ul>
+    <h4><strong>Связь с Doctrine ORM</strong></h4>
+    <ul>
+        <li><p>Оптимизация запросов через DQL (Doctrine Query Language).</p></li>
+        <li><p>Стратегии генерации ID:</p>
+            <ul>
+                <li><p><code>sequence</code> в PostgreSQL vs <code>auto_increment</code> в MySQL.</p></li>
+            </ul>
+        </li>
+        <li><p>Кэширование:</p>
+            <ul>
+                <li><p>Кэширование результатов запросов.</p></li>
+                <li><p>Кэширование метаданных.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <h4><strong>Масштабирование</strong></h4>
+    <ul>
+        <li><p>Репликация:</p>
+            <ul>
+                <li><p>Master-Slave, Master-Master.</p></li>
+            </ul>
+        </li>
+        <li><p>Шардирование данных.</p></li>
+        <li><p>Партиционирование таблиц:</p>
+            <ul>
+                <li><p>Горизонтальное и вертикальное разделение данных.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>2. MySQL-специфичные знания</strong></h3><h4><strong>Типы хранилищ (engines)</strong></h4>
+    <ul>
+        <li><p>Сравнение и применение:</p>
+            <ul>
+                <li><p>InnoDB (транзакции, внешние ключи).</p></li>
+                <li><p>MyISAM (полнотекстовый поиск, отсутствие транзакций).</p></li>
+                <li><p>Memory (хранение в оперативной памяти).</p></li>
+            </ul>
+        </li>
+    </ul>
+    <h4><strong>Оптимизация</strong></h4>
+    <ul>
+        <li><p>Настройка конфигурации (<code>my.cnf</code>):</p>
+            <ul>
+                <li><p>Размер буферов (<code>innodb_buffer_pool_size</code>).</p></li>
+                <li><p>Настройка кэша запросов (<code>query_cache</code>).</p></li>
+            </ul>
+        </li>
+        <li><p>Оптимизация соединений и потоков.</p></li>
+    </ul>
+    <h4><strong>Инструменты</strong></h4>
+    <ul>
+        <li><p>MySQL Workbench.</p></li>
+        <li><p>Percona Toolkit.</p></li>
+        <li><p>ProxySQL для балансировки нагрузки.</p></li>
+    </ul>
+    <h4><strong>Типы данных</strong></h4>
+    <ul>
+        <li><p>Оптимальное использование типов:</p>
+            <ul>
+                <li><p><code>CHAR</code> vs <code>VARCHAR</code>.</p></li>
+                <li><p><code>INT</code> vs <code>BIGINT</code>.</p></li>
+            </ul>
+        </li>
+        <li><p>Поддержка JSON (начиная с MySQL 5.7).</p></li>
+    </ul>
+    <hr>
+    <h3><strong>3. PostgreSQL-специфичные знания</strong></h3><h4><strong>Расширенные возможности</strong></h4>
+    <ul>
+        <li><p>Полнотекстовый поиск:</p>
+            <ul>
+                <li><p><code>tsvector</code>, <code>tsquery</code>.</p></li>
+            </ul>
+        </li>
+        <li><p>Геопространственные данные:</p>
+            <ul>
+                <li><p>Расширение PostGIS.</p></li>
+            </ul>
+        </li>
+        <li><p>Нативная поддержка JSON (<code>JSONB</code>).</p></li>
+        <li><p>Наследование таблиц.</p></li>
+    </ul>
+    <h4><strong>Типы данных</strong></h4>
+    <ul>
+        <li><p>Пользовательские типы данных.</p></li>
+        <li><p>Массивы и составные типы.</p></li>
+        <li><p>Range типы данных.</p></li>
+        <li><p>Enum типы.</p></li>
+    </ul>
+    <h4><strong>Особенности работы</strong></h4>
+    <ul>
+        <li><p>VACUUM и автовакуум.</p></li>
+        <li><p>Последовательности (<code>SEQUENCE</code>).</p></li>
+        <li><p>Правила (<code>RULES</code>) и триггеры.</p></li>
+        <li><p>Оконные функции (Window Functions).</p></li>
+    </ul>
+    <h4><strong>Расширения</strong></h4>
+    <ul>
+        <li><p><code>pg_stat_statements</code> для мониторинга.</p></li>
+        <li><p><code>pgBadger</code> для анализа логов.</p></li>
+        <li><p>Партиционирование с использованием <code>pg_partman</code>.</p></li>
+    </ul>
+    <hr>
+    <h3><strong>4. Практические вопросы для собеседования</strong></h3>
+    <ul>
+        <li><p>Как оптимизировать запрос, который включает несколько JOIN-ов?</p></li>
+        <li><p>Расскажите о денормализации данных: когда её применять?</p></li>
+        <li><p>Как избежать блокировок при высоконагруженных операциях?</p></li>
+        <li><p>Стратегии миграции данных без простоя системы.</p></li>
+        <li><p>Как настроить индексы для полнотекстового поиска?</p></li>
+        <li><p>Разница между <code>LEFT JOIN</code> и <code>INNER JOIN</code>: когда и что использовать?</p></li>
+        <li><p>Как эффективно хранить и запрашивать иерархические данные?</p></li>
+        <li><p>Как реализовать "мягкое удаление" (soft delete) на уровне БД?</p></li>
+        <li><p>Оптимальные стратегии для работы с большими объемами данных.</p></li>
+        <li><p>Как спроектировать схему БД для многоязычного сайта?</p></li>
+    </ul>
+    <hr>
+    <h3><strong>5. Интеграция с PHP/Symfony</strong></h3>
+    <ul>
+        <li><p>Настройка Doctrine для оптимальной работы с конкретной СУБД.</p></li>
+        <li><p>Использование нативных запросов (native queries) в Doctrine.</p></li>
+        <li><p>Транзакции и обработка ошибок на уровне приложения.</p></li>
+        <li><p>Миграции с Doctrine Migrations:</p>
+            <ul>
+                <li><p>Создание и применение миграций.</p></li>
+                <li><p>Откат миграций.</p></li>
+            </ul>
+        </li>
+        <li><p>Работа с кэшированием в Doctrine:</p>
+            <ul>
+                <li><p>Кэширование запросов.</p></li>
+                <li><p>Кэширование метаданных.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>6. Дополнительные темы</strong></h3><h4><strong>Мониторинг и анализ</strong></h4>
+    <ul>
+        <li><p>Использование инструментов для мониторинга:</p>
+            <ul>
+                <li><p><code>pg_stat_activity</code> в PostgreSQL.</p></li>
+                <li><p><code>SHOW PROCESSLIST</code> в MySQL.</p></li>
+            </ul>
+        </li>
+        <li><p>Анализ логов:</p>
+            <ul>
+                <li><p>Логи медленных запросов.</p></li>
+                <li><p>Инструменты для анализа логов (например, <code>pgBadger</code>).</p></li>
+            </ul>
+        </li>
+    </ul>
+    <h4><strong>Резервное копирование и восстановление</strong></h4>
+    <ul>
+        <li><p>Стратегии резервного копирования:</p>
+            <ul>
+                <li><p>Полное, инкрементальное, дифференциальное.</p></li>
+            </ul>
+        </li>
+        <li><p>Инструменты:</p>
+            <ul>
+                <li><p><code>pg_dump</code> и <code>pg_restore</code> для PostgreSQL.</p></li>
+                <li><p><code>mysqldump</code> для MySQL.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <h4><strong>Безопасность</strong></h4>
+    <ul>
+        <li><p>Настройка прав доступа:</p>
+            <ul>
+                <li><p>Роли и привилегии.</p></li>
+            </ul>
+        </li>
+        <li><p>Шифрование данных:</p>
+            <ul>
+                <li><p>Использование SSL для соединений.</p></li>
+                <li><p>Шифрование данных на уровне приложения.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>7. Примеры вопросов на собеседовании</strong></h3>
+    <ul>
+        <li><p><strong>Теоретические вопросы:</strong></p>
+            <ul>
+                <li><p>"Какие уровни изоляции транзакций вы знаете? В чем их различия?"</p></li>
+                <li><p>"Как работает индексация в PostgreSQL/MySQL?"</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Практические задачи:</strong></p>
+            <ul>
+                <li><p>"Напишите запрос для поиска всех пользователей, которые сделали заказы за последний месяц."</p>
+                </li>
+                <li><p>"Оптимизируйте запрос с несколькими JOIN-ами."</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Архитектурные кейсы:</strong></p>
+            <ul>
+                <li><p>"Как бы вы спроектировали базу данных для системы бронирования билетов?"</p></li>
+                <li><p>"Какие стратегии вы бы использовали для масштабирования базы данных?"</p></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

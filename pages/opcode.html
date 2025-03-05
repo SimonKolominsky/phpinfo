@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p><strong>Opcode</strong> (сокращение от
+    "operation code") — это низкоуровневая инструкция, которая выполняется виртуальной машиной или интерпретатором. В
+    контексте PHP opcode — это промежуточное представление PHP-кода, которое генерируется на этапе компиляции и затем
+    выполняется движком Zend Engine.</p>
+    <hr>
+    <h3><strong>Как работает PHP и при чём тут opcode?</strong></h3>
+    <p>Когда PHP-скрипт выполняется, он проходит несколько этапов:</p>
+    <ol start="1">
+        <li><p><strong>Лексический анализ (Lexing)</strong>:</p>
+            <ul>
+                <li><p>Исходный код PHP разбивается на токены (лексемы), такие как ключевые слова, переменные, операторы
+                    и т.д.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Парсинг (Parsing)</strong>:</p>
+            <ul>
+                <li><p>Токены преобразуются в абстрактное синтаксическое дерево (Abstract Syntax Tree, AST), которое
+                    представляет структуру программы.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Компиляция в opcode</strong>:</p>
+            <ul>
+                <li><p>AST компилируется в opcode — набор низкоуровневых инструкций, которые понимает Zend Engine.</p>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>Выполнение opcode</strong>:</p>
+            <ul>
+                <li><p>Zend Engine выполняет opcode, что приводит к выполнению PHP-скрипта.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3><strong>Пример opcode</strong></h3>
+    <p>Рассмотрим простой PHP-код:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token number">10</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span class="token number">20</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$a</span> <span
+                    class="token operator">+</span> <span class="token variable">$b</span><span
+                    class="token punctuation">;</span></span></pre>
+    </div>
+    <p>На этапе компиляции этот код может быть преобразован в opcode, который выглядит примерно так:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring"></div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre>ASSIGN $a, 10
+ASSIGN $b, 20
+ADD $tmp, $a, $b
+ECHO $tmp</pre>
+    </div>
+    <p>Каждая инструкция (например, <code>ASSIGN</code>, <code>ADD</code>, <code>ECHO</code>) — это opcode.</p>
+    <hr>
+    <h3><strong>Зачем нужен opcode?</strong></h3>
+    <ol start="1">
+        <li><p><strong>Оптимизация выполнения</strong>:</p>
+            <ul>
+                <li><p>Преобразование PHP-кода в opcode позволяет оптимизировать выполнение, так как opcode выполняется
+                    быстрее, чем интерпретация исходного кода.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Кэширование opcode</strong>:</p>
+            <ul>
+                <li><p>Opcode может быть кэширован (например, с помощью OPcache), что позволяет избежать повторной
+                    компиляции PHP-скрипта при каждом запросе. Это значительно ускоряет выполнение.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Упрощение выполнения</strong>:</p>
+            <ul>
+                <li><p>Zend Engine работает с opcode, а не с исходным PHP-кодом, что упрощает процесс выполнения.</p>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3><strong>Opcode и OPcache</strong></h3>
+    <p>OPcache — это встроенное расширение PHP, которое кэширует opcode в памяти. Это позволяет избежать повторной
+        компиляции PHP-скриптов при каждом запросе, что значительно ускоряет выполнение.</p>
+    <p>Пример включения OPcache в конфигурации PHP (<code>php.ini</code>):</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">ini</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token key attr-name">zend_extension</span><span class="token punctuation">=</span><span
+                class="token value attr-value">opcache.so</span>
+<span class="token key attr-name">opcache.enable</span><span class="token punctuation">=</span><span
+                    class="token value attr-value">1</span>
+<span class="token key attr-name">opcache.enable_cli</span><span class="token punctuation">=</span><span
+                    class="token value attr-value">1</span>
+<span class="token key attr-name">opcache.memory_consumption</span><span class="token punctuation">=</span><span
+                    class="token value attr-value">128</span>
+<span class="token key attr-name">opcache.max_accelerated_files</span><span class="token punctuation">=</span><span
+                    class="token value attr-value">4000</span></pre>
+    </div>
+    <hr>
+    <h3><strong>Как посмотреть opcode?</strong></h3>
+    <p>Для просмотра opcode можно использовать инструменты, такие как:</p>
+    <ul>
+        <li><p><strong>VLD (Vulcan Logic Dumper)</strong> — расширение для PHP, которое позволяет выводить opcode для
+            конкретного скрипта.</p></li>
+        <li><p><strong>OPcache</strong> — также предоставляет возможность анализа кэшированного opcode.</p></li>
+    </ul>
+    <p>Пример использования VLD:</p>
+    <ol start="1">
+        <li><p>Установите VLD:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>pecl <span class="token function">install</span> vld</pre>
+            </div>
+        </li>
+        <li><p>Включите VLD в конфигурации PHP:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">ini</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key attr-name">extension</span><span class="token punctuation">=</span><span
+                        class="token value attr-value">vld.so</span></pre>
+            </div>
+        </li>
+        <li><p>Запустите PHP-скрипт с VLD:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>php <span class="token parameter variable">-d</span> <span class="token assign-left variable">vld.active</span><span
+                        class="token operator">=</span><span class="token number">1</span> <span
+                        class="token parameter variable">-d</span> <span
+                        class="token assign-left variable">vld.execute</span><span class="token operator">=</span><span
+                        class="token number">0</span> script.php</pre>
+            </div>
+        </li>
+    </ol>
+    <p>Вы увидите вывод opcode для вашего скрипта.</p>
+    <hr>
+    <h3><strong>Пример вывода VLD</strong></h3>
+    <p>Для кода:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token number">10</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span class="token number">20</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$a</span> <span
+                    class="token operator">+</span> <span class="token variable">$b</span><span
+                    class="token punctuation">;</span></span></pre>
+    </div>
+    <p>Вывод VLD может выглядеть так:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring"></div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre>line     #* E I O op                fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   2     0  E &gt;   ASSIGN                   !0, 10
+   3     1        ASSIGN                   !1, 20
+   4     2        ADD                      ~2, !0, !1
+         3        ECHO                     ~2
+   5     4      &gt; RETURN                   1</pre>
+    </div>
+    <p>Здесь:</p>
+    <ul>
+        <li><p><code>ASSIGN</code> — присваивание значения переменной.</p></li>
+        <li><p><code>ADD</code> — сложение.</p></li>
+        <li><p><code>ECHO</code> — вывод результата.</p></li>
+    </ul>
+    <hr>
+    <h3><strong>Итог</strong></h3>
+    <p>Opcode — это промежуточное представление PHP-кода, которое генерируется на этапе компиляции и выполняется Zend
+        Engine. Он позволяет ускорить выполнение PHP-скриптов за счёт оптимизации и кэширования. Инструменты, такие как
+        VLD и OPcache, помогают анализировать и работать с opcode.</p></div>
+</body>
+</html>

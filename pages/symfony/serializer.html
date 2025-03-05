@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Symfony Serializer — это компонент Symfony,
+    предназначенный для преобразования объектов PHP в различные форматы (например, JSON, XML, CSV) и обратно. Он
+    особенно полезен при работе с API, где требуется сериализация данных для передачи клиенту и десериализация данных,
+    полученных от клиента. Компонент Serializer гибкий, расширяемый и поддерживает кастомные настройки для работы с
+    сложными структурами данных.</p>
+    <hr>
+    <h3>Основные возможности Symfony Serializer</h3>
+    <ol start="1">
+        <li><p><strong>Сериализация и десериализация</strong></p>
+            <ul>
+                <li><p><strong>Сериализация</strong> — преобразование объектов PHP в строки (например, JSON или XML).
+                </p></li>
+                <li><p><strong>Десериализация</strong> — преобразование строк (например, JSON или XML) обратно в объекты
+                    PHP.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Поддержка форматов</strong><br>Symfony Serializer поддерживает множество форматов:</p>
+            <ul>
+                <li><p>JSON</p></li>
+                <li><p>XML</p></li>
+                <li><p>CSV</p></li>
+                <li><p>YAML</p></li>
+                <li><p>И другие (через кастомные нормализаторы и энкодеры).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Нормализация и денормализация</strong></p>
+            <ul>
+                <li><p><strong>Нормализация</strong> — преобразование объектов в массивы или другие структуры данных.
+                </p></li>
+                <li><p><strong>Денормализация</strong> — преобразование массивов или других структур данных обратно в
+                    объекты.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Группы сериализации</strong><br>Symfony Serializer позволяет использовать группы для управления
+            тем, какие свойства объекта будут сериализованы. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+                        class="token attribute-content"><span
+                        class="token attribute-class-name class-name">Groups</span><span
+                        class="token punctuation">(</span><span class="token punctuation">[</span><span
+                        class="token string single-quoted-string">'public'</span><span
+                        class="token punctuation">]</span><span class="token punctuation">)</span></span><span
+                        class="token delimiter punctuation">]</span></span>
+<span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$name</span><span class="token punctuation">;</span></pre>
+            </div>
+            <p>При сериализации можно указать группу:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$json</span> <span class="token operator">=</span> <span
+                        class="token variable">$serializer</span><span class="token operator">-&gt;</span><span
+                        class="token function">serialize</span><span class="token punctuation">(</span><span
+                        class="token variable">$object</span><span class="token punctuation">,</span> <span
+                        class="token string single-quoted-string">'json'</span><span class="token punctuation">,</span> <span
+                        class="token punctuation">[</span><span
+                        class="token string single-quoted-string">'groups'</span> <span
+                        class="token operator">=&gt;</span> <span
+                        class="token string single-quoted-string">'public'</span><span
+                        class="token punctuation">]</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Игнорирование свойств</strong><br>Можно указать свойства, которые не должны сериализоваться:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+                        class="token attribute-content"><span
+                        class="token attribute-class-name class-name">Ignore</span></span><span
+                        class="token delimiter punctuation">]</span></span>
+<span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$password</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Кастомные нормализаторы и энкодеры</strong><br>Symfony Serializer позволяет создавать собственные
+            нормализаторы и энкодеры для работы с нестандартными структурами данных.</p></li>
+    </ol>
+    <hr>
+    <h3>Пример использования Symfony Serializer</h3>
+    <ol start="1">
+        <li><p><strong>Установка компонента</strong><br>Установите компонент через Composer:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require symfony/serializer</pre>
+            </div>
+        </li>
+        <li><p><strong>Создание объекта для сериализации</strong><br>Пример класса:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">// src/Entity/Product.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Entity</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Serializer<span class="token punctuation">\</span>Annotation<span
+                            class="token punctuation">\</span>Groups</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Serializer<span class="token punctuation">\</span>Annotation<span
+                            class="token punctuation">\</span>Ignore</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Product</span>
+<span class="token punctuation">{</span>
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span class="token attribute-class-name class-name">Groups</span><span
+            class="token punctuation">(</span><span class="token punctuation">[</span><span
+            class="token string single-quoted-string">'public'</span><span class="token punctuation">]</span><span
+            class="token punctuation">)</span></span><span class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$name</span><span class="token punctuation">;</span>
+
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span class="token attribute-class-name class-name">Groups</span><span
+            class="token punctuation">(</span><span class="token punctuation">[</span><span
+            class="token string single-quoted-string">'public'</span><span class="token punctuation">]</span><span
+            class="token punctuation">)</span></span><span class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">float</span> <span
+                            class="token variable">$price</span><span class="token punctuation">;</span>
+
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span
+            class="token attribute-class-name class-name">Ignore</span></span><span class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$secretCode</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__construct</span><span
+                            class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span
+                            class="token variable">$name</span><span class="token punctuation">,</span> <span
+                            class="token keyword type-hint">float</span> <span class="token variable">$price</span><span
+                            class="token punctuation">,</span> <span class="token keyword type-hint">string</span> <span
+                            class="token variable">$secretCode</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">name</span> <span
+                            class="token operator">=</span> <span class="token variable">$name</span><span
+                            class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">price</span> <span
+                            class="token operator">=</span> <span class="token variable">$price</span><span
+                            class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">secretCode</span> <span
+                            class="token operator">=</span> <span class="token variable">$secretCode</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Геттеры и сеттеры</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Сериализация объекта в JSON</strong><br>Пример использования Serializer:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">use</span> <span class="token package">Symfony<span
+                        class="token punctuation">\</span>Component<span
+                        class="token punctuation">\</span>Serializer<span
+                        class="token punctuation">\</span>Serializer</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Serializer<span
+                            class="token punctuation">\</span>Encoder<span class="token punctuation">\</span>JsonEncoder</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Serializer<span class="token punctuation">\</span>Normalizer<span
+                            class="token punctuation">\</span>ObjectNormalizer</span><span
+                            class="token punctuation">;</span>
+
+<span class="token variable">$encoders</span> <span class="token operator">=</span> <span
+                            class="token punctuation">[</span><span class="token keyword">new</span> <span
+                            class="token class-name">JsonEncoder</span><span class="token punctuation">(</span><span
+                            class="token punctuation">)</span><span class="token punctuation">]</span><span
+                            class="token punctuation">;</span>
+<span class="token variable">$normalizers</span> <span class="token operator">=</span> <span
+                            class="token punctuation">[</span><span class="token keyword">new</span> <span
+                            class="token class-name">ObjectNormalizer</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token variable">$serializer</span> <span class="token operator">=</span> <span
+                            class="token keyword">new</span> <span class="token class-name">Serializer</span><span
+                            class="token punctuation">(</span><span class="token variable">$normalizers</span><span
+                            class="token punctuation">,</span> <span class="token variable">$encoders</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$product</span> <span class="token operator">=</span> <span
+                            class="token keyword">new</span> <span class="token class-name">Product</span><span
+                            class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'Laptop'</span><span
+                            class="token punctuation">,</span> <span class="token number">999.99</span><span
+                            class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'ABC123'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Сериализация в JSON</span>
+<span class="token variable">$json</span> <span class="token operator">=</span> <span
+                            class="token variable">$serializer</span><span class="token operator">-&gt;</span><span
+                            class="token function">serialize</span><span class="token punctuation">(</span><span
+                            class="token variable">$product</span><span class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'json'</span><span
+                            class="token punctuation">,</span> <span class="token punctuation">[</span><span
+                            class="token string single-quoted-string">'groups'</span> <span
+                            class="token operator">=&gt;</span> <span
+                            class="token string single-quoted-string">'public'</span><span
+                            class="token punctuation">]</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$json</span><span
+                            class="token punctuation">;</span> <span class="token comment">// {"name":"Laptop","price":999.99}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Десериализация JSON в объект</strong><br>Пример десериализации:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$data</span> <span class="token operator">=</span> <span
+                        class="token string single-quoted-string">'{"name":"Laptop","price":999.99}'</span><span
+                        class="token punctuation">;</span>
+<span class="token variable">$product</span> <span class="token operator">=</span> <span class="token variable">$serializer</span><span
+                            class="token operator">-&gt;</span><span class="token function">deserialize</span><span
+                            class="token punctuation">(</span><span class="token variable">$data</span><span
+                            class="token punctuation">,</span> <span
+                            class="token class-name static-context">Product</span><span class="token operator">::</span><span
+                            class="token keyword">class</span><span class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'json'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$product</span><span
+                            class="token operator">-&gt;</span><span class="token function">getName</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span> <span class="token comment">// Laptop</span></pre>
+            </div>
+        </li>
+    </ol>
+    <hr>
+    <h3>Настройка Symfony Serializer</h3>
+    <p>Symfony Serializer можно настроить через контейнер зависимостей. Например, в <code>config/services.yaml</code>:
+    </p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">yaml</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token key atrule">services</span><span class="token punctuation">:</span>
+    <span class="token key atrule">Symfony\Component\Serializer\Serializer</span><span
+                    class="token punctuation">:</span>
+        <span class="token key atrule">arguments</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token punctuation">[</span><span class="token string">'@serializer.normalizer.object'</span><span
+                    class="token punctuation">]</span>
+            <span class="token punctuation">-</span> <span class="token punctuation">[</span><span class="token string">'@serializer.encoder.json'</span><span
+                    class="token punctuation">]</span></pre>
+    </div>
+    <hr>
+    <h3>Преимущества Symfony Serializer</h3>
+    <ul>
+        <li><p><strong>Гибкость</strong> — поддержка множества форматов и кастомных настроек.</p></li>
+        <li><p><strong>Простота использования</strong> — интуитивно понятный API.</p></li>
+        <li><p><strong>Интеграция</strong> — легко интегрируется с другими компонентами Symfony (например, Validator,
+            Doctrine).</p></li>
+        <li><p><strong>Расширяемость</strong> — возможность создавать собственные нормализаторы и энкодеры.</p></li>
+    </ul>
+    <hr>
+    <h3>Когда использовать Symfony Serializer?</h3>
+    <ul>
+        <li><p>Для работы с API (сериализация и десериализация данных).</p></li>
+        <li><p>Для экспорта данных в различные форматы (JSON, XML, CSV).</p></li>
+        <li><p>Для преобразования сложных структур данных.</p></li>
+    </ul>
+    <p>Symfony Serializer — это мощный инструмент, который упрощает работу с данными в современных приложениях, особенно
+        в контексте REST API и интеграции с внешними системами.</p></div>
+</body>
+</html>

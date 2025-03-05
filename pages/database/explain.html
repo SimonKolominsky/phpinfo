@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Команда <code>EXPLAIN</code> используется в
+    SQL для анализа и оптимизации запросов. Она показывает, как СУБД (система управления базами данных) планирует
+    выполнить запрос, включая порядок доступа к таблицам, использование индексов, соединения и другие детали. Это
+    полезно для понимания производительности запроса и поиска способов его оптимизации.</p>
+    <h3>Как использовать <code>EXPLAIN</code>:</h3>
+    <ol start="1">
+        <li><p><strong>Простой запрос:</strong><br>Добавьте <code>EXPLAIN</code> перед вашим SQL-запросом. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span> <span
+                        class="token operator">*</span> <span class="token keyword">FROM</span> users <span
+                        class="token keyword">WHERE</span> age <span class="token operator">&gt;</span> <span
+                        class="token number">30</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Анализ плана выполнения:</strong><br>После выполнения команды <code>EXPLAIN</code> вы получите
+            план выполнения запроса. В зависимости от СУБД (например, MySQL, PostgreSQL, SQLite), вывод может
+            отличаться, но обычно включает:</p>
+            <ul>
+                <li><p><strong>id</strong>: Идентификатор шага.</p></li>
+                <li><p><strong>select_type</strong>: Тип операции (например, <code>SIMPLE</code>, <code>PRIMARY</code>).
+                </p></li>
+                <li><p><strong>table</strong>: Таблица, к которой происходит обращение.</p></li>
+                <li><p><strong>type</strong>: Тип доступа к данным (например, <code>ALL</code> (полное сканирование),
+                    <code>index</code> (сканирование по индексу), <code>range</code> (диапазон по индексу)).</p></li>
+                <li><p><strong>possible_keys</strong>: Возможные индексы, которые могут быть использованы.</p></li>
+                <li><p><strong>key</strong>: Фактически используемый индекс.</p></li>
+                <li><p><strong>rows</strong>: Оценочное количество строк, которые будут обработаны.</p></li>
+                <li><p><strong>Extra</strong>: Дополнительная информация (например, <code>Using where</code>, <code>Using
+                    index</code>).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Интерпретация результатов:</strong></p>
+            <ul>
+                <li><p>Если <code>type</code> равен <code>ALL</code>, это может указывать на полное сканирование
+                    таблицы, что может быть медленным для больших таблиц.</p></li>
+                <li><p>Если <code>key</code> пуст, это может означать, что индекс не используется, и запрос может быть
+                    оптимизирован.</p></li>
+                <li><p>Если <code>rows</code> имеет большое значение, это может указывать на необходимость оптимизации.
+                </p></li>
+            </ul>
+        </li>
+        <li><p><strong>Дополнительные опции:</strong><br>В некоторых СУБД (например, PostgreSQL) можно использовать
+            <code>EXPLAIN ANALYZE</code>, чтобы не только показать план, но и выполнить запрос и вывести фактические
+            данные о времени выполнения:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">EXPLAIN</span> <span class="token keyword">ANALYZE</span> <span
+                        class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">WHERE</span> age <span
+                        class="token operator">&gt;</span> <span class="token number">30</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ol>
+    <h3>Пример вывода <code>EXPLAIN</code> в MySQL:</h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span> <span
+                class="token operator">*</span> <span class="token keyword">FROM</span> users <span
+                class="token keyword">WHERE</span> age <span class="token operator">&gt;</span> <span
+                class="token number">30</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p>Результат:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring"></div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre>+----+-------------+-------+------+---------------+------+---------+------+------+-------------+
+| id | select_type | table | type | possible_keys | key  | key_len | rows | Extra       |
++----+-------------+-------+------+---------------+------+---------+------+------+-------------+
+|  1 | SIMPLE      | users | ALL  | NULL          | NULL | NULL    | 1000 | Using where |
++----+-------------+-------+------+---------------+------+---------+------+------+-------------+</pre>
+    </div>
+    <p>Здесь видно, что запрос выполняет полное сканирование таблицы (<code>type: ALL</code>), и индекс не используется
+        (<code>key: NULL</code>). Это может быть сигналом для создания индекса на столбце <code>age</code>.</p>
+    <h3>Заключение:</h3>
+    <p>Используйте <code>EXPLAIN</code>, чтобы понять, как ваш запрос выполняется, и найти способы его оптимизации. Это
+        особенно полезно для сложных запросов или при работе с большими объемами данных.</p></div>
+</body>
+</html>

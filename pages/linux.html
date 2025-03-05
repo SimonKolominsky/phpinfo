@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><h3>Работа с файлами и директориями</h3>
+    <ol start="1">
+        <li><p><strong><code>ls</code></strong> — список файлов и директорий.</p>
+            <ul>
+                <li><p><code>ls -l</code> — подробный список.</p></li>
+                <li><p><code>ls -a</code> — показать скрытые файлы.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>cd</code></strong> — сменить директорию.</p>
+            <ul>
+                <li><p><code>cd ~</code> — перейти в домашнюю директорию.</p></li>
+                <li><p><code>cd ..</code> — перейти на уровень выше.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>pwd</code></strong> — показать текущую директорию.</p></li>
+        <li><p><strong><code>mkdir</code></strong> — создать директорию.</p>
+            <ul>
+                <li><p><code>mkdir -p dir1/dir2</code> — создать вложенные директории.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>rm</code></strong> — удалить файл или директорию.</p>
+            <ul>
+                <li><p><code>rm file.txt</code> — удалить файл.</p></li>
+                <li><p><code>rm -r dir</code> — удалить директорию рекурсивно.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>cp</code></strong> — копировать файл или директорию.</p>
+            <ul>
+                <li><p><code>cp file1 file2</code> — копировать файл.</p></li>
+                <li><p><code>cp -r dir1 dir2</code> — копировать директорию.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>mv</code></strong> — переместить или переименовать файл/директорию.</p>
+            <ul>
+                <li><p><code>mv file1 file2</code> — переименовать файл.</p></li>
+                <li><p><code>mv file1 dir/</code> — переместить файл.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>touch</code></strong> — создать пустой файл или обновить время его изменения.</p></li>
+        <li><p><strong><code>cat</code></strong> — вывести содержимое файла.</p></li>
+        <li><p><strong><code>less</code></strong> или <strong><code>more</code></strong> — просмотр файла постранично.
+        </p></li>
+        <li><p><strong><code>head</code></strong> — показать начало файла.</p>
+            <ul>
+                <li><p><code>head -n 10 file.txt</code> — первые 10 строк.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>tail</code></strong> — показать конец файла.</p>
+            <ul>
+                <li><p><code>tail -f file.log</code> — следить за изменениями файла в реальном времени.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>find</code></strong> — поиск файлов.</p>
+            <ul>
+                <li><p><code>find /path -name "*.txt"</code> — найти все <code>.txt</code> файлы.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>grep</code></strong> — поиск текста в файлах.</p>
+            <ul>
+                <li><p><code>grep "pattern" file.txt</code> — найти строки, содержащие "pattern".</p></li>
+                <li><p><code>grep -r "pattern" /path</code> — рекурсивный поиск в директории.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Работа с процессами</h3>
+    <ol start="1">
+        <li><p><strong><code>ps</code></strong> — список процессов.</p>
+            <ul>
+                <li><p><code>ps aux</code> — подробный список всех процессов.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>top</code></strong> или <strong><code>htop</code></strong> — мониторинг процессов в
+            реальном времени.</p></li>
+        <li><p><strong><code>kill</code></strong> — завершить процесс.</p>
+            <ul>
+                <li><p><code>kill PID</code> — завершить процесс по ID.</p></li>
+                <li><p><code>kill -9 PID</code> — принудительное завершение.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>pkill</code></strong> — завершить процесс по имени.</p>
+            <ul>
+                <li><p><code>pkill process_name</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>bg</code></strong> и <strong><code>fg</code></strong> — управление фоновыми и активными
+            задачами.</p></li>
+    </ol>
+    <h3>Сеть</h3>
+    <ol start="1">
+        <li><p><strong><code>ping</code></strong> — проверить доступность хоста.</p>
+            <ul>
+                <li><p><code>ping google.com</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>curl</code></strong> или <strong><code>wget</code></strong> — загрузка файлов из интернета.
+        </p>
+            <ul>
+                <li><p><code>curl -O URL</code>.</p></li>
+                <li><p><code>wget URL</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>ssh</code></strong> — подключение к удаленному серверу.</p>
+            <ul>
+                <li><p><code>ssh user@host</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>scp</code></strong> — копирование файлов через SSH.</p>
+            <ul>
+                <li><p><code>scp file.txt user@host:/path</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>netstat</code></strong> или <strong><code>ss</code></strong> — информация о сетевых
+            соединениях.</p>
+            <ul>
+                <li><p><code>netstat -tuln</code>.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Управление пакетами</h3>
+    <ol start="1">
+        <li><p><strong><code>apt</code></strong> (Debian/Ubuntu):</p>
+            <ul>
+                <li><p><code>apt update</code> — обновить список пакетов.</p></li>
+                <li><p><code>apt install package</code> — установить пакет.</p></li>
+                <li><p><code>apt remove package</code> — удалить пакет.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>yum</code></strong> или <strong><code>dnf</code></strong> (CentOS/RHEL/Fedora):</p>
+            <ul>
+                <li><p><code>yum install package</code>.</p></li>
+                <li><p><code>yum remove package</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>pip</code></strong> (Python):</p>
+            <ul>
+                <li><p><code>pip install package</code>.</p></li>
+                <li><p><code>pip uninstall package</code>.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Системная информация</h3>
+    <ol start="1">
+        <li><p><strong><code>uname</code></strong> — информация о системе.</p>
+            <ul>
+                <li><p><code>uname -a</code> — вся информация.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>df</code></strong> — информация о дисковом пространстве.</p>
+            <ul>
+                <li><p><code>df -h</code> — в удобном формате.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>du</code></strong> — размер файлов и директорий.</p>
+            <ul>
+                <li><p><code>du -sh dir</code> — суммарный размер директории.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>free</code></strong> — информация о памяти.</p>
+            <ul>
+                <li><p><code>free -h</code> — в удобном формате.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Разработка</h3>
+    <ol start="1">
+        <li><p><strong><code>git</code></strong> — система контроля версий.</p>
+            <ul>
+                <li><p><code>git clone URL</code> — клонировать репозиторий.</p></li>
+                <li><p><code>git status</code> — статус репозитория.</p></li>
+                <li><p><code>git add file</code> — добавить файл в индекс.</p></li>
+                <li><p><code>git commit -m "message"</code> — зафиксировать изменения.</p></li>
+                <li><p><code>git push</code> — отправить изменения на сервер.</p></li>
+                <li><p><code>git pull</code> — получить изменения с сервера.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>make</code></strong> — сборка проектов.</p>
+            <ul>
+                <li><p><code>make</code> — запуск сборки.</p></li>
+                <li><p><code>make clean</code> — очистка.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>gcc</code></strong> или <strong><code>g++</code></strong> — компиляция C/C++.</p>
+            <ul>
+                <li><p><code>gcc file.c -o output</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>python</code></strong> или <strong><code>python3</code></strong> — запуск Python скриптов.
+        </p>
+            <ul>
+                <li><p><code>python script.py</code>.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Права доступа</h3>
+    <ol start="1">
+        <li><p><strong><code>chmod</code></strong> — изменить права доступа.</p>
+            <ul>
+                <li><p><code>chmod 755 file</code> — установить права.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>chown</code></strong> — изменить владельца файла.</p>
+            <ul>
+                <li><p><code>chown user:group file</code>.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Архивация</h3>
+    <ol start="1">
+        <li><p><strong><code>tar</code></strong> — работа с архивами.</p>
+            <ul>
+                <li><p><code>tar -cvf archive.tar dir</code> — создать архив.</p></li>
+                <li><p><code>tar -xvf archive.tar</code> — распаковать архив.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>zip</code></strong> и <strong><code>unzip</code></strong> — работа с ZIP архивами.</p>
+            <ul>
+                <li><p><code>zip archive.zip file</code> — создать ZIP.</p></li>
+                <li><p><code>unzip archive.zip</code> — распаковать ZIP.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Переменные окружения</h3>
+    <ol start="1">
+        <li><p><strong><code>export</code></strong> — установить переменную окружения.</p>
+            <ul>
+                <li><p><code>export VAR=value</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>echo</code></strong> — вывести значение переменной.</p>
+            <ul>
+                <li><p><code>echo $VAR</code>.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Другое</h3>
+    <ol start="1">
+        <li><p><strong><code>man</code></strong> — справочная информация о команде.</p>
+            <ul>
+                <li><p><code>man ls</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>alias</code></strong> — создать псевдоним для команды.</p>
+            <ul>
+                <li><p><code>alias ll='ls -la'</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong><code>history</code></strong> — история команд.</p>
+            <ul>
+                <li><p><code>history | grep "command"</code>.</p></li>
+            </ul>
+        </li>
+    </ol></div>
+</body>
+</html>

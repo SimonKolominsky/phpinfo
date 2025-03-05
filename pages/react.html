@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Реактивное программирование (RP)
+    фокусируется на работе с асинхронными потоками данных, где изменения автоматически распространяются через цепочки
+    обработчиков. В PHP эта парадигма реализуется с помощью библиотек, таких как <strong>RxPHP</strong> (порт ReactiveX)
+    и <strong>ReactPHP</strong>. Примеры ниже демонстрируют основные концепции.</p>
+    <hr>
+    <h3>Установка RxPHP</h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">bash</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token function">composer</span> require reactivex/rxphp</pre>
+    </div>
+    <hr>
+    <h3>Пример 1: Простой Observable</h3>
+    <p>Создание потока данных из массива и подписка на него:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">use</span> <span class="token package">Rx<span
+                class="token punctuation">\</span>Observable</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Создание Observable из массива</span>
+<span class="token class-name static-context">Observable</span><span class="token operator">::</span><span
+                    class="token function">fromArray</span><span class="token punctuation">(</span><span
+                    class="token punctuation">[</span><span class="token number">1</span><span
+                    class="token punctuation">,</span> <span class="token number">2</span><span
+                    class="token punctuation">,</span> <span class="token number">3</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">subscribe</span><span
+                    class="token punctuation">(</span>
+        <span class="token keyword">function</span> <span class="token punctuation">(</span><span
+                    class="token variable">$value</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token keyword">echo</span> <span
+                    class="token string double-quoted-string">"Next: <span class="token interpolation"><span
+                    class="token variable">$value</span></span>\n"</span><span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span><span class="token punctuation">,</span> <span
+                    class="token comment">// onNext</span>
+        <span class="token keyword">function</span> <span class="token punctuation">(</span><span
+                    class="token variable">$error</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token keyword">echo</span> <span
+                    class="token string double-quoted-string">"Error: <span class="token interpolation"><span
+                    class="token variable">$error</span></span>\n"</span><span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span><span class="token punctuation">,</span> <span
+                    class="token comment">// onError</span>
+        <span class="token keyword">function</span> <span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">echo</span> <span
+                    class="token string double-quoted-string">"Completed\n"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span>           <span
+                    class="token comment">// onCompleted</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Вывод:</span>
+<span class="token comment">// Next: 1</span>
+<span class="token comment">// Next: 2</span>
+<span class="token comment">// Next: 3</span>
+<span class="token comment">// Completed</span></pre>
+    </div>
+    <hr>
+    <h3>Пример 2: Асинхронные операции с интервалом</h3>
+    <p>Использование <code>interval</code> для генерации событий через заданные промежутки времени.<br><em>Потребуется
+        интеграция с циклом событий (например, ReactPHP):</em></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">require</span> <span class="token string single-quoted-string">'vendor/autoload.php'</span><span
+                class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">React<span class="token punctuation">\</span>EventLoop<span
+                    class="token punctuation">\</span>Factory</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Rx<span class="token punctuation">\</span>Observable</span><span
+                    class="token punctuation">;</span>
+
+<span class="token variable">$loop</span> <span class="token operator">=</span> <span
+                    class="token class-name static-context">Factory</span><span class="token operator">::</span><span
+                    class="token function">create</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Настройка RxPHP для работы с циклом событий ReactPHP</span>
+<span class="token class-name class-name-fully-qualified static-context">Rx<span class="token punctuation">\</span>Scheduler</span><span
+                    class="token operator">::</span><span class="token function">setDefaultFactory</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token keyword">use</span> <span class="token punctuation">(</span><span
+                    class="token variable">$loop</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span
+                    class="token class-name class-name-fully-qualified">Rx<span class="token punctuation">\</span>Scheduler<span
+                    class="token punctuation">\</span>EventLoopScheduler</span><span
+                    class="token punctuation">(</span><span class="token variable">$loop</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Генерация чисел 0, 1, 2 с интервалом в 1 секунду</span>
+<span class="token class-name static-context">Observable</span><span class="token operator">::</span><span
+                    class="token function">interval</span><span class="token punctuation">(</span><span
+                    class="token number">1000</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">take</span><span
+                    class="token punctuation">(</span><span class="token number">3</span><span
+                    class="token punctuation">)</span> <span class="token comment">// Ограничение до 3 элементов</span>
+    <span class="token operator">-&gt;</span><span class="token function">subscribe</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token variable">$i</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">echo</span> <span class="token string double-quoted-string">"<span
+                    class="token interpolation"><span class="token variable">$i</span></span>\n"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$loop</span><span class="token operator">-&gt;</span><span
+                    class="token function">run</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Вывод (с задержкой 1 сек между значениями):</span>
+<span class="token comment">// 0</span>
+<span class="token comment">// 1</span>
+<span class="token comment">// 2</span></pre>
+    </div>
+    <hr>
+    <h3>Пример 3: Комбинирование потоков</h3>
+    <p>Объединение двух потоков с помощью оператора <code>merge</code>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">use</span> <span class="token package">Rx<span
+                class="token punctuation">\</span>Observable</span><span class="token punctuation">;</span>
+
+<span class="token variable">$obs1</span> <span class="token operator">=</span> <span
+                    class="token class-name static-context">Observable</span><span class="token operator">::</span><span
+                    class="token function">interval</span><span class="token punctuation">(</span><span
+                    class="token number">1000</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">map</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token variable">$i</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token string double-quoted-string">"A<span
+                    class="token interpolation"><span class="token variable">$i</span></span>"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$obs2</span> <span class="token operator">=</span> <span
+                    class="token class-name static-context">Observable</span><span class="token operator">::</span><span
+                    class="token function">interval</span><span class="token punctuation">(</span><span
+                    class="token number">2000</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">map</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token variable">$i</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token string double-quoted-string">"B<span
+                    class="token interpolation"><span class="token variable">$i</span></span>"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$merged</span> <span class="token operator">=</span> <span
+                    class="token variable">$obs1</span><span class="token operator">-&gt;</span><span
+                    class="token function">merge</span><span class="token punctuation">(</span><span
+                    class="token variable">$obs2</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$merged</span><span class="token operator">-&gt;</span><span class="token function">subscribe</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token variable">$value</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">echo</span> <span class="token string double-quoted-string">"<span
+                    class="token interpolation"><span class="token variable">$value</span></span>\n"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$loop</span><span class="token operator">-&gt;</span><span
+                    class="token function">run</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Вывод (пример):</span>
+<span class="token comment">// A0 (через 1 сек)</span>
+<span class="token comment">// B0 (через 2 сек)</span>
+<span class="token comment">// A1 (через 3 сек)</span>
+<span class="token comment">// B1 (через 4 сек)</span></pre>
+    </div>
+    <hr>
+    <h3>Пример 4: Фильтрация и трансформация данных</h3>
+    <p>Использование операторов <code>filter</code> и <code>map</code>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token class-name static-context">Observable</span><span class="token operator">::</span><span
+                class="token function">fromArray</span><span class="token punctuation">(</span><span
+                class="token punctuation">[</span><span class="token number">1</span><span
+                class="token punctuation">,</span> <span class="token number">2</span><span
+                class="token punctuation">,</span> <span class="token number">3</span><span
+                class="token punctuation">,</span> <span class="token number">4</span><span
+                class="token punctuation">,</span> <span class="token number">5</span><span
+                class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">filter</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token variable">$n</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token variable">$n</span> <span
+                    class="token operator">%</span> <span class="token number">2</span> <span
+                    class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span><span class="token punctuation">)</span> <span
+                    class="token comment">// Оставляем четные</span>
+    <span class="token operator">-&gt;</span><span class="token function">map</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token variable">$n</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">return</span> <span class="token variable">$n</span> <span
+                    class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span> <span
+                    class="token punctuation">}</span><span class="token punctuation">)</span>        <span
+                    class="token comment">// Умножаем на 10</span>
+    <span class="token operator">-&gt;</span><span class="token function">subscribe</span><span
+                    class="token punctuation">(</span><span class="token keyword">function</span> <span
+                    class="token punctuation">(</span><span class="token variable">$n</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token keyword">echo</span> <span class="token string double-quoted-string">"<span
+                    class="token interpolation"><span class="token variable">$n</span></span>\n"</span><span
+                    class="token punctuation">;</span> <span class="token punctuation">}</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Вывод:</span>
+<span class="token comment">// 20</span>
+<span class="token comment">// 40</span></pre>
+    </div>
+    <hr>
+    <h3>ReactPHP для асинхронных задач</h3>
+    <p>ReactPHP — библиотека для event-driven программирования, часто используется вместе с RxPHP. Пример
+        HTTP-сервера:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">use</span> <span class="token package">React<span
+                class="token punctuation">\</span>Http<span class="token punctuation">\</span>Server</span><span
+                class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">React<span
+                    class="token punctuation">\</span>Http<span class="token punctuation">\</span>Response</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">React<span class="token punctuation">\</span>EventLoop<span
+                    class="token punctuation">\</span>Factory</span><span class="token punctuation">;</span>
+
+<span class="token variable">$loop</span> <span class="token operator">=</span> <span
+                    class="token class-name static-context">Factory</span><span class="token operator">::</span><span
+                    class="token function">create</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$server</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name">Server</span><span class="token punctuation">(</span><span
+                    class="token keyword">function</span> <span class="token punctuation">(</span><span
+                    class="token variable">$request</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span
+                    class="token punctuation">(</span><span class="token number">200</span><span
+                    class="token punctuation">,</span> <span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'Content-Type'</span> <span
+                    class="token operator">=&gt;</span> <span
+                    class="token string single-quoted-string">'text/plain'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">,</span> <span
+                    class="token string double-quoted-string">"Hello RP!"</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$socket</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name class-name-fully-qualified"><span
+                    class="token punctuation">\</span>React<span class="token punctuation">\</span>Socket<span
+                    class="token punctuation">\</span>Server</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'0.0.0.0:8080'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$loop</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$server</span><span class="token operator">-&gt;</span><span
+                    class="token function">listen</span><span class="token punctuation">(</span><span
+                    class="token variable">$socket</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$loop</span><span class="token operator">-&gt;</span><span
+                    class="token function">run</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <hr>
+    <h3>Когда использовать реактивное программирование в PHP?</h3>
+    <ul>
+        <li><p><strong>Стриминг данных</strong>: Обработка реального времени (чаты, уведомления).</p></li>
+        <li><p><strong>Сложные цепочки событий</strong>: Например, API с множеством асинхронных запросов.</p></li>
+        <li><p><strong>Микросервисы</strong>: Асинхронное взаимодействие между сервисами.</p></li>
+    </ul>
+    <hr>
+    <h3>Заключение</h3>
+    <p>Реактивное программирование в PHP требует использования библиотек (RxPHP, ReactPHP) и подходит для специфических
+        задач, связанных с асинхронностью и потоками данных. Для простых сценариев достаточно стандартных подходов, но
+        RP упрощает работу с сложными event-driven системами.</p></div>
+</body>
+</html>

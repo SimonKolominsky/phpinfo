@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><h3>1. <strong>Влияние порядка условий в WHERE
+    на производительность</strong></h3>
+    <ul>
+        <li><p><strong>Теоретически</strong>: Современные СУБД (такие как PostgreSQL, MySQL, SQL Server, Oracle)
+            действительно используют сложные оптимизаторы запросов, которые способны переупорядочивать условия в WHERE
+            для повышения производительности. Они анализируют статистику, индексы и другие метаданные, чтобы выбрать
+            оптимальный план выполнения запроса.</p></li>
+        <li><p><strong>Практически</strong>: В большинстве случаев порядок условий в WHERE не имеет значения, так как
+            оптимизатор сам определит наилучший порядок выполнения. Однако в некоторых ситуациях (особенно в старых или
+            менее продвинутых СУБД) порядок может влиять на производительность.</p></li>
+    </ul>
+    <h3>2. <strong>Порядок оценки условий</strong></h3>
+    <ul>
+        <li><p><strong>Логические операторы</strong>: При использовании оператора <code>AND</code>, если первое условие
+            ложно, второе условие может не проверяться (это называется "short-circuit evaluation"). Это может быть
+            полезно, если одно из условий требует значительных вычислительных ресурсов.</p></li>
+        <li><p><strong>Старые СУБД</strong>: В некоторых старых или менее продвинутых СУБД порядок условий может влиять
+            на производительность, так как оптимизатор может не переупорядочивать условия.</p></li>
+    </ul>
+    <h3>3. <strong>Рекомендации по порядку условий</strong></h3>
+    <ul>
+        <li><p><strong>Наиболее избирательные условия сначала</strong>: Это хорошая практика, особенно если вы работаете
+            с СУБД, которая не переупорядочивает условия. Например, если одно условие отфильтровывает 90% строк, а
+            другое — только 10%, то первое условие лучше поставить в начало.</p></li>
+        <li><p><strong>Проиндексированные столбцы сначала</strong>: Если столбец с индексом используется в условии, это
+            может ускорить выполнение запроса. Однако современные оптимизаторы обычно сами учитывают наличие индексов.
+        </p></li>
+        <li><p><strong>Дешевые операции перед дорогими</strong>: Это также хорошая практика, особенно если вы
+            используете сложные функции или регулярные выражения.</p></li>
+    </ul>
+    <h3>4. <strong>Пример разницы в производительности</strong></h3>
+    <p>Ваш пример:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">-- Менее эффективно, если column2 имеет индекс, а column1 нет</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span
+                    class="token keyword">table</span> <span class="token keyword">WHERE</span> column1 <span
+                    class="token operator">=</span> <span class="token string">'value1'</span> <span
+                    class="token operator">AND</span> column2 <span class="token operator">=</span> <span
+                    class="token string">'value2'</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Более эффективно</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span
+                    class="token keyword">table</span> <span class="token keyword">WHERE</span> column2 <span
+                    class="token operator">=</span> <span class="token string">'value2'</span> <span
+                    class="token operator">AND</span> column1 <span class="token operator">=</span> <span
+                    class="token string">'value1'</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p>В большинстве современных СУБД оптимизатор сам определит, что условие с индексом (<code>column2 = 'value2'</code>)
+        должно быть выполнено первым, независимо от порядка в запросе. Однако в старых или менее продвинутых СУБД это
+        может иметь значение.</p>
+    <h3>5. <strong>Важное замечание</strong></h3>
+    <ul>
+        <li><p><strong>Использование EXPLAIN</strong>: Для точного понимания того, как СУБД выполняет запрос, всегда
+            используйте команду <code>EXPLAIN</code> (или аналогичную, в зависимости от СУБД). Она покажет план
+            выполнения запроса, включая порядок выполнения условий и использование индексов.</p></li>
+        <li><p><strong>Современные оптимизаторы</strong>: В большинстве случаев современные СУБД сами справляются с
+            оптимизацией запросов, и ручное изменение порядка условий не требуется.</p></li>
+    </ul>
+    <h3>Вывод:</h3>
+    <p>Ваше утверждение в целом верно, но в современных СУБД порядок условий в <code>WHERE</code> обычно не имеет
+        значения благодаря мощным оптимизаторам. Однако в некоторых случаях (например, в старых СУБД или при
+        использовании сложных условий) порядок может влиять на производительность. Для точного анализа всегда
+        используйте <code>EXPLAIN</code>.</p></div>
+</body>
+</html>

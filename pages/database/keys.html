@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В MySQL и PostgreSQL используются различные
+    типы ключей для обеспечения целостности данных и организации связей между таблицами. Основные типы ключей в этих
+    СУБД:</p>
+    <hr>
+    <h3><strong>1. Первичный ключ (Primary Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Уникально идентифицирует каждую запись в таблице.</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Значение должно быть уникальным и не может быть <code>NULL</code>.</p></li>
+                <li><p>В таблице может быть только один первичный ключ.</p></li>
+                <li><p>Часто используется для создания индексов.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Пример</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> users <span
+                        class="token punctuation">(</span>
+    id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    username <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span
+                            class="token number">50</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>2. Внешний ключ (Foreign Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Обеспечивает связь между таблицами, ссылаясь на первичный ключ другой
+            таблицы.</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Значение может быть <code>NULL</code>, если это разрешено.</p></li>
+                <li><p>Используется для поддержания ссылочной целостности.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Пример</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> orders <span
+                        class="token punctuation">(</span>
+    order_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    user_id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span
+                            class="token punctuation">(</span>user_id<span class="token punctuation">)</span> <span
+                            class="token keyword">REFERENCES</span> users<span class="token punctuation">(</span>id<span
+                            class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>3. Уникальный ключ (Unique Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Гарантирует уникальность значений в столбце или группе столбцов.</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Значение может быть <code>NULL</code> (в зависимости от СУБД).</p></li>
+                <li><p>В таблице может быть несколько уникальных ключей.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Пример</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> products <span
+                        class="token punctuation">(</span>
+    product_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    sku <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span
+                            class="token number">50</span><span class="token punctuation">)</span> <span
+                            class="token keyword">UNIQUE</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>4. Составной ключ (Composite Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Используется, когда уникальность обеспечивается комбинацией нескольких
+            столбцов.</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Может быть первичным или уникальным ключом.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Пример</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> orders <span
+                        class="token punctuation">(</span>
+    order_id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    product_id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span
+                            class="token punctuation">(</span>order_id<span class="token punctuation">,</span> product_id<span
+                            class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>5. Суперключ (Super Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Набор столбцов, который уникально идентифицирует запись.</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Может содержать избыточные столбцы.</p></li>
+                <li><p>Не обязательно используется в явном виде в SQL.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>6. Кандидат на ключ (Candidate Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Минимальный набор столбцов, который может быть использован как первичный
+            ключ.</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>В таблице может быть несколько кандидатов на ключ.</p></li>
+                <li><p>Один из них выбирается как первичный ключ.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>7. Альтернативный ключ (Alternate Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Кандидат на ключ, который не был выбран в качестве первичного ключа.</p>
+        </li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Часто используется как уникальный ключ.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>8. Естественный ключ (Natural Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Использует существующие данные (например, email, паспортные данные) для
+            уникальной идентификации.</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Может изменяться со временем, что усложняет поддержку.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>9. Суррогатный ключ (Surrogate Key)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Искусственно созданный ключ (например, автоинкрементный <code>id</code>).
+        </p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Не имеет смысловой нагрузки.</p></li>
+                <li><p>Упрощает управление данными.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>Особенности в MySQL и PostgreSQL</strong></h3>
+    <ul>
+        <li><p><strong>MySQL</strong>:</p>
+            <ul>
+                <li><p>Поддерживает все основные типы ключей.</p></li>
+                <li><p>Автоинкремент (<code>AUTO_INCREMENT</code>) часто используется для суррогатных ключей.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>PostgreSQL</strong>:</p>
+            <ul>
+                <li><p>Также поддерживает все основные типы ключей.</p></li>
+                <li><p>Для автоинкремента используется тип <code>SERIAL</code> или <code>IDENTITY</code>.</p></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

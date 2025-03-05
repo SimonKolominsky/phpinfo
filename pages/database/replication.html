@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Термины <strong>master</strong> и <strong>slave</strong>
+    исторически использовались в базах данных, таких как <strong>MySQL</strong> и <strong>PostgreSQL</strong>, для
+    обозначения ролей в репликации. Однако в последние годы эти термины стали считаться устаревшими и неуместными из-за
+    их ассоциации с рабством. Вместо них начали использовать более нейтральные термины.</p>
+    <h3>В MySQL:</h3>
+    <ul>
+        <li><p><strong>Master</strong> (теперь чаще называют <strong>Source</strong>) — это сервер, который является
+            основным источником данных. Он принимает запросы на запись (INSERT, UPDATE, DELETE) и реплицирует изменения
+            на другие серверы.</p></li>
+        <li><p><strong>Slave</strong> (теперь чаще называют <strong>Replica</strong>) — это сервер, который получает
+            данные от мастера (source) и используется для чтения (SELECT). Он синхронизируется с мастером для
+            обеспечения актуальности данных.</p></li>
+    </ul>
+    <p>Пример настройки репликации в MySQL:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">-- На мастере (source):</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'replica_user'</span><span
+                    class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">BY</span> <span
+                    class="token string">'password'</span><span class="token punctuation">;</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">REPLICATION</span> SLAVE <span
+                    class="token keyword">ON</span> <span class="token operator">*</span><span
+                    class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span
+                    class="token string">'replica_user'</span><span class="token variable">@'%'</span><span
+                    class="token punctuation">;</span>
+FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- На реплике (replica):</span>
+CHANGE MASTER <span class="token keyword">TO</span>
+MASTER_HOST<span class="token operator">=</span><span class="token string">'source_host'</span><span
+                    class="token punctuation">,</span>
+MASTER_USER<span class="token operator">=</span><span class="token string">'replica_user'</span><span
+                    class="token punctuation">,</span>
+MASTER_PASSWORD<span class="token operator">=</span><span class="token string">'password'</span><span
+                    class="token punctuation">,</span>
+MASTER_LOG_FILE<span class="token operator">=</span><span class="token string">'mysql-bin.000001'</span><span
+                    class="token punctuation">,</span>
+MASTER_LOG_POS<span class="token operator">=</span><span class="token number">4</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">START</span> SLAVE<span class="token punctuation">;</span></pre>
+    </div>
+    <h3>В PostgreSQL:</h3>
+    <ul>
+        <li><p><strong>Master</strong> (теперь чаще называют <strong>Primary</strong>) — это основной сервер, который
+            принимает запросы на запись.</p></li>
+        <li><p><strong>Slave</strong> (теперь чаще называют <strong>Standby</strong> или <strong>Replica</strong>) — это
+            сервер, который реплицирует данные с мастера (primary) и используется для чтения.</p></li>
+    </ul>
+    <p>Пример настройки репликации в PostgreSQL:</p>
+    <ol start="1">
+        <li><p>На <strong>primary</strong> сервере:</p>
+            <ul>
+                <li><p>Включите архивирование и настройте <code>pg_hba.conf</code> для разрешения подключений от
+                    реплики.</p></li>
+                <li><p>Создайте пользователя для репликации:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">sql</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token keyword">CREATE</span> ROLE replica_user <span class="token keyword">WITH</span> <span
+                                class="token keyword">REPLICATION</span> LOGIN PASSWORD <span class="token string">'password'</span><span
+                                class="token punctuation">;</span></pre>
+                    </div>
+                </li>
+                <li><p>Настройте <code>postgresql.conf</code>:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">conf</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre>wal_level = replica
+max_wal_senders = 3</pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p>На <strong>replica</strong> сервере:</p>
+            <ul>
+                <li><p>Остановите PostgreSQL, если он запущен.</p></li>
+                <li><p>Скопируйте данные с primary:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">bash</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre>pg_basebackup <span class="token parameter variable">-h</span> primary_host <span
+                                class="token parameter variable">-U</span> replica_user <span
+                                class="token parameter variable">-D</span> /var/lib/postgresql/data <span
+                                class="token parameter variable">-P</span> <span
+                                class="token parameter variable">-R</span></pre>
+                    </div>
+                </li>
+                <li><p>Запустите PostgreSQL.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Современные термины:</h3>
+    <ul>
+        <li><p><strong>Primary</strong> (ранее Master) — основной сервер.</p></li>
+        <li><p><strong>Replica</strong> (ранее Slave) — сервер для чтения и репликации.</p></li>
+        <li><p><strong>Source</strong> и <strong>Replica</strong> — нейтральные термины, которые все чаще используются в
+            документации и настройках.</p></li>
+    </ul>
+    <h3>Почему это важно?</h3>
+    <p>Использование нейтральных терминов помогает избежать негативных ассоциаций и делает документацию и общение более
+        инклюзивными. Многие компании и сообщества (включая MySQL, PostgreSQL и другие) уже перешли на новые
+        термины.</p>
+    <p>Если вы работаете с современными версиями СУБД, рекомендуется использовать <strong>Primary/Replica</strong> или
+        <strong>Source/Replica</strong>.</p></div>
+</body>
+</html>

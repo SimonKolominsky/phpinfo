@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Ограничения в базе данных (БД) используются
+    для обеспечения целостности данных и соблюдения бизнес-правил. Вот основные типы ограничений, которые могут быть
+    применены в реляционных базах данных:</p>
+    <hr>
+    <h3>1. <strong>PRIMARY KEY (Первичный ключ)</strong></h3>
+    <ul>
+        <li><p>Уникально идентифицирует каждую запись в таблице.</p></li>
+        <li><p>Не может содержать <code>NULL</code> значения.</p></li>
+        <li><p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> users <span
+                        class="token punctuation">(</span>
+    id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    username <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span
+                            class="token number">50</span><span class="token punctuation">)</span> <span
+                            class="token operator">NOT</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>2. <strong>FOREIGN KEY (Внешний ключ)</strong></h3>
+    <ul>
+        <li><p>Обеспечивает связь между двумя таблицами.</p></li>
+        <li><p>Ссылается на первичный ключ или уникальный ключ другой таблицы.</p></li>
+        <li><p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> orders <span
+                        class="token punctuation">(</span>
+    order_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    user_id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span
+                            class="token punctuation">(</span>user_id<span class="token punctuation">)</span> <span
+                            class="token keyword">REFERENCES</span> users<span class="token punctuation">(</span>id<span
+                            class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>3. <strong>UNIQUE (Уникальность)</strong></h3>
+    <ul>
+        <li><p>Гарантирует, что все значения в столбце уникальны.</p></li>
+        <li><p>Может содержать <code>NULL</code> значения (если не указано иное).</p></li>
+        <li><p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> products <span
+                        class="token punctuation">(</span>
+    product_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    product_code <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span
+                            class="token number">10</span><span class="token punctuation">)</span> <span
+                            class="token keyword">UNIQUE</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>4. <strong>NOT NULL (Запрет на NULL)</strong></h3>
+    <ul>
+        <li><p>Запрещает вставку <code>NULL</code> значений в столбец.</p></li>
+        <li><p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> employees <span
+                        class="token punctuation">(</span>
+    employee_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span
+                            class="token punctuation">)</span> <span class="token operator">NOT</span> <span
+                            class="token boolean">NULL</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>5. <strong>CHECK (Проверка условия)</strong></h3>
+    <ul>
+        <li><p>Ограничивает значения, которые могут быть вставлены в столбец, на основе заданного условия.</p></li>
+        <li><p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> students <span
+                        class="token punctuation">(</span>
+    student_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    age <span class="token keyword">INT</span> <span class="token keyword">CHECK</span> <span class="token punctuation">(</span>age <span
+                            class="token operator">&gt;=</span> <span class="token number">18</span><span
+                            class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>6. <strong>DEFAULT (Значение по умолчанию)</strong></h3>
+    <ul>
+        <li><p>Устанавливает значение по умолчанию для столбца, если значение не указано явно.</p></li>
+        <li><p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> orders <span
+                        class="token punctuation">(</span>
+    order_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    order_date <span class="token keyword">DATE</span> <span class="token keyword">DEFAULT</span> <span
+                            class="token keyword">CURRENT_DATE</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>7. <strong>INDEX (Индекс)</strong></h3>
+    <ul>
+        <li><p>Ускоряет поиск данных в таблице.</p></li>
+        <li><p>Не является ограничением, но часто используется для оптимизации запросов.</p></li>
+        <li><p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span
+                        class="token keyword">INDEX</span> idx_username <span class="token keyword">ON</span> users<span
+                        class="token punctuation">(</span>username<span class="token punctuation">)</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>Как проверить ограничения в существующей БД?</h3>
+    <p>Для проверки ограничений в существующей базе данных можно использовать системные таблицы или команды, зависящие
+        от СУБД:</p>
+    <ul>
+        <li><p><strong>В PostgreSQL:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>table_constraints <span
+                        class="token keyword">WHERE</span> table_name <span class="token operator">=</span> <span
+                        class="token string">'your_table'</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>В MySQL:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span
+                        class="token keyword">TABLE</span> your_table<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>В SQL Server:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">EXEC</span> sp_helpconstraint <span
+                        class="token string">'your_table'</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>В Oracle:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> constraint_name<span class="token punctuation">,</span> constraint_type<span
+                        class="token punctuation">,</span> search_condition
+<span class="token keyword">FROM</span> user_constraints
+<span class="token keyword">WHERE</span> table_name <span class="token operator">=</span> <span class="token string">'YOUR_TABLE'</span><span
+                            class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul></div>
+</body>
+</html>

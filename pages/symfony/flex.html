@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Symfony Flex — это современный инструмент
+    для управления проектами на Symfony, представленный в Symfony 4. Он заменяет старый способ настройки приложений
+    (через стандартные бандлы) и значительно упрощает процесс создания, настройки и поддержки проектов. Flex работает
+    как плагин для Composer, автоматизируя рутинные задачи и предоставляя гибкость в управлении зависимостями.</p>
+    <h3>Основные особенности Symfony Flex:</h3>
+    <ol start="1">
+        <li><p><strong>Рецепты (Recipes)</strong><br>Flex использует "рецепты" — наборы конфигураций и файлов, которые
+            автоматически применяются при установке пакетов через Composer. Рецепты хранятся в репозитории <a
+                    href="https://github.com/symfony/recipes-contrib" target="_blank" rel="noreferrer">symfony/recipes-contrib</a>
+            (для сообщества) и <a href="https://github.com/symfony/recipes" target="_blank" rel="noreferrer">symfony/recipes</a>
+            (официальные рецепты от Symfony).<br>Например, при установке пакета <code>annotations</code> Flex
+            автоматически добавит настройки для работы с аннотациями в <code>config/packages/annotations.yaml</code>.
+        </p></li>
+        <li><p><strong>Упрощённая структура проекта</strong><br>Symfony Flex убирает избыточную структуру каталогов.
+            Вместо <code>app/</code>, <code>src/</code>, <code>web/</code> и других папок используется минималистичная
+            структура:</p>
+            <ul>
+                <li><p><code>config/</code> — конфигурационные файлы (YAML, XML, PHP).</p></li>
+                <li><p><code>src/</code> — исходный код приложения.</p></li>
+                <li><p><code>public/</code> — публичные файлы (входная точка <code>index.php</code>, стили, скрипты).
+                </p></li>
+                <li><p><code>var/</code> — кэш, логи.</p></li>
+                <li><p><code>vendor/</code> — зависимости Composer.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Пакеты (Packs)</strong><br>Flex вводит концепцию "паков" — мета-пакетов, объединяющих несколько
+            связанных зависимостей. Например:</p>
+            <ul>
+                <li><p><code>composer require symfony/apache-pack</code> — добавляет настройки для Apache.</p></li>
+                <li><p><code>composer require symfony/orm-pack</code> — устанавливает Doctrine ORM и его интеграцию с
+                    Symfony.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Автоматическая настройка</strong><br>При установке пакета Flex автоматически:</p>
+            <ul>
+                <li><p>Регистрирует бандлы в <code>config/bundles.php</code>.</p></li>
+                <li><p>Создаёт базовые конфигурационные файлы.</p></li>
+                <li><p>Добавляет примеры кода (например, контроллеры или шаблоны Twig).</p></li>
+                <li><p>Настраивает переменные окружения в <code>.env</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Переменные окружения</strong><br>Flex активно использует файл <code>.env</code> для хранения
+            настроек, таких как <code>DATABASE_URL</code>, что упрощает управление конфигурацией для разных сред
+            (разработка, прод).</p></li>
+    </ol>
+    <h3>Пример работы Symfony Flex:</h3>
+    <ol start="1">
+        <li><p>Установка пакета:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require logger</pre>
+            </div>
+            <p>Flex автоматически:</p>
+            <ul>
+                <li><p>Установит пакет <code>symfony/logger</code>.</p></li>
+                <li><p>Добавит бандл <code>MonologBundle</code> в <code>config/bundles.php</code>.</p></li>
+                <li><p>Создаст конфигурацию в <code>config/packages/monolog.yaml</code>.</p></li>
+                <li><p>Обновит <code>.env</code> для настройки уровня логирования.</p></li>
+            </ul>
+        </li>
+        <li><p>Удаление пакета:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> remove logger</pre>
+            </div>
+            <p>Flex удалит связанные конфигурации (если рецепт поддерживает откат).</p></li>
+    </ol>
+    <h3>Преимущества:</h3>
+    <ul>
+        <li><p><strong>Сокращение boilerplate-кода</strong> — больше не нужно вручную регистрировать бандлы или
+            настраивать пакеты.</p></li>
+        <li><p><strong>Стандартизация</strong> — рецепты обеспечивают единый подход к настройке зависимостей.</p></li>
+        <li><p><strong>Быстрый старт</strong> — новые пакеты сразу готовы к использованию.</p></li>
+        <li><p><strong>Гибкость</strong> — можно переопределить автоматически сгенерированные конфигурации.</p></li>
+    </ul>
+    <h3>Ограничения:</h3>
+    <ul>
+        <li><p><strong>Зависимость от рецептов</strong> — если рецепта для пакета нет, его придётся настраивать вручную.
+        </p></li>
+        <li><p><strong>Несовместимость с Symfony 3</strong> — Flex работает только для Symfony 4 и выше.</p></li>
+    </ul>
+    <h3>Как начать использовать Symfony Flex?</h3>
+    <ol start="1">
+        <li><p>Убедитесь, что у вас установлен Composer 2+.</p></li>
+        <li><p>Создайте проект:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> create-project symfony/skeleton:<span
+                        class="token string">"6.*"</span> my_project</pre>
+            </div>
+            <p>Готово! Flex активируется автоматически.</p></li>
+    </ol>
+    <p>Symfony Flex делает разработку на Symfony быстрее и удобнее, особенно для новичков. Он убирает рутину, позволяя
+        сосредоточиться на написании кода, а не на настройке инфраструктуры.</p></div>
+</body>
+</html>

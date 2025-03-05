@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная шпаргалка</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+        }
+        
+        #wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+        
+        #sidebar {
+            min-width: 300px;
+            max-width: 300px;
+            transition: all 0.3s;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        #sidebar.collapsed {
+            min-width: 60px;
+            max-width: 60px;
+        }
+        
+        #sidebar.collapsed .sidebar-header h3, 
+        #sidebar.collapsed .sidebar-items .nav-link span,
+        #sidebar.collapsed .sidebar-subheading {
+            display: none;
+        }
+        
+        #content {
+            min-height: 100vh;
+            transition: all 0.3s;
+            margin-left: 300px;
+            width: calc(100% - 300px);
+        }
+        
+        #sidebar.collapsed ~ #content {
+            margin-left: 60px;
+            width: calc(100% - 60px);
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+        }
+        
+        .sidebar-items .nav-link {
+            padding: 10px 20px;
+            color: #495057;
+            border-radius: 0;
+        }
+        
+        .sidebar-items .nav-link:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+        
+        .sidebar-items .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .sidebar-items .nav-link.active {
+            background-color: rgba(0, 123, 255, 0.2);
+        }
+        
+        .sidebar-subheading {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #6c757d;
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+        
+        iframe {
+            width: 100%;
+            height: calc(100vh - 56px);
+            border: none;
+        }
+        
+        .content-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 56px);
+            color: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -300px;
+            }
+            
+            #sidebar.active {
+                margin-left: 0;
+            }
+            
+            #content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            #sidebar.active ~ #content {
+                margin-left: 300px;
+                width: calc(100% - 300px);
+            }
+            
+            #sidebar.collapsed.active ~ #content {
+                margin-left: 60px;
+                width: calc(100% - 60px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Боковое меню -->
+        <nav id="sidebar" class="bg-light border-end">
+            <div class="sidebar-header border-bottom d-flex justify-content-between align-items-center">
+                <h3 class="m-0 text-primary">Шпаргалка</h3>
+                <button type="button" id="sidebarCollapseBtn" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-items mt-3">
+                <!-- HTML раздел -->
+                <div class="sidebar-subheading">HTML</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="pages/html-basics.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-code-slash"></i>
+                            <span>Основы HTML</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/html-forms.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-input-cursor-text"></i>
+                            <span>Формы HTML</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/html-tables.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-table"></i>
+                            <span>Таблицы HTML</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- CSS раздел -->
+                <div class="sidebar-subheading">CSS</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="pages/css-selectors.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-brush"></i>
+                            <span>Селекторы CSS</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/css-flexbox.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-layout-split"></i>
+                            <span>Flexbox</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/css-grid.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-grid-3x3-gap"></i>
+                            <span>CSS Grid</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Bootstrap раздел -->
+                <div class="sidebar-subheading">Bootstrap 5</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="pages/bs-grid.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-columns-gap"></i>
+                            <span>Сетка Bootstrap</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/bs-components.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-boxes"></i>
+                            <span>Компоненты</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/bs-utilities.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-tools"></i>
+                            <span>Утилиты</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- JavaScript раздел -->
+                <div class="sidebar-subheading">JavaScript</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="pages/js-basics.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-braces"></i>
+                            <span>Основы JS</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/js-dom.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-diagram-3"></i>
+                            <span>DOM-манипуляции</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/js-ajax.html" class="nav-link" target="contentFrame">
+                            <i class="bi bi-arrow-repeat"></i>
+                            <span>AJAX и Fetch</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Основной контент -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button type="button" id="mobileMenuBtn" class="btn btn-sm btn-outline-primary d-md-none">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <span class="navbar-text" id="currentTopicTitle">Шпаргалка</span>
+                </div>
+            </nav>
+            
+            <div id="contentContainer">
+                <iframe name="contentFrame" id="contentFrame" src="pages/welcome.html" title="Контент шпаргалки"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle с Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Получаем элементы DOM
+        const sidebar = document.getElementById('sidebar');
+        const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const currentTopicTitle = document.getElementById('currentTopicTitle');
+        const contentFrame = document.getElementById('contentFrame');
+        
+        // Функция для переключения состояния бокового меню
+        function toggleSidebar() {
+            sidebar.classList.toggle('collapsed');
+        }
+        
+        // Обработчик клика по кнопке сворачивания меню
+        sidebarCollapseBtn.addEventListener('click', toggleSidebar);
+        
+        // Обработчик для мобильной кнопки меню
+        mobileMenuBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+        });
+        
+        // Обработчики для навигационных ссылок
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Удалить активный класс со всех ссылок
+                navLinks.forEach(l => l.classList.remove('active'));
+                
+                // Добавить активный класс текущей ссылке
+                this.classList.add('active');
+                
+                // Обновить заголовок на основе выбранной ссылки
+                currentTopicTitle.textContent = this.querySelector('span').textContent;
+                
+                // На мобильных устройствах скрыть меню после выбора
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+        
+        // Отслеживание загрузки iframe для обновления заголовка
+        contentFrame.addEventListener('load', function() {
+            try {
+                // Пытаемся получить заголовок из загруженного документа
+                const iframeTitle = contentFrame.contentDocument.title;
+                if (iframeTitle) {
+                    currentTopicTitle.textContent = iframeTitle;
+                    
+                    // Находим и активируем соответствующую ссылку в меню
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === contentFrame.contentWindow.location.href.split('/').pop()) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            } catch(e) {
+                // Обработка ошибок доступа к кросс-доменному iframe
+                console.log("Не удалось получить заголовок iframe");
+            }
+        });
+    </script>
+</body>
+</html>

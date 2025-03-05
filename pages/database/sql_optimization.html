@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Оптимальное составление SQL-запросов — это
+    важный аспект работы с базами данных, который напрямую влияет на производительность системы. Правильно составленный
+    запрос не только выполняется быстрее, но и снижает нагрузку на сервер базы данных. Давайте разберем ключевые
+    принципы и рекомендации для составления эффективных SQL-запросов.</p>
+    <hr>
+    <h2><strong>1. Понимание структуры данных и индексов</strong></h2>
+    <h3><strong>1.1. Используйте индексы</strong></h3>
+    <ul>
+        <li><p><strong>Индексы</strong> ускоряют поиск данных, но они работают только в том случае, если запрос
+            использует их правильно.</p></li>
+        <li><p>Убедитесь, что ваши запросы используют индексированные столбцы в условиях <code>WHERE</code>,
+            <code>JOIN</code>, <code>ORDER BY</code> и <code>GROUP BY</code>.</p></li>
+        <li><p>Избегайте функций или преобразований над индексированными столбцами (например, <code>WHERE UPPER(column)
+            = 'VALUE'</code>), так как это может привести к полному сканированию таблицы (full table scan).</p></li>
+    </ul>
+    <h3><strong>1.2. Составные индексы</strong></h3>
+    <ul>
+        <li><p>Если запрос фильтрует по нескольким столбцам, используйте составные индексы. Например, для запроса:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> orders <span
+                        class="token keyword">WHERE</span> customer_id <span class="token operator">=</span> <span
+                        class="token number">123</span> <span class="token operator">AND</span> order_date <span
+                        class="token operator">&gt;</span> <span class="token string">'2023-01-01'</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+            <p>Составной индекс на <code>(customer_id, order_date)</code> будет эффективным.</p></li>
+    </ul>
+    <hr>
+    <h2><strong><a href="indexes_where.html">2. Оптимизация условий в <code>WHERE</code></a></strong></h2>
+    <h3><strong>2.1. Используйте простые условия</strong></h3>
+    <ul>
+        <li><p>Чем проще условие, тем легче СУБД его оптимизировать. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">WHERE</span> <span class="token keyword">column</span> <span
+                        class="token operator">=</span> <span class="token keyword">value</span></pre>
+            </div>
+            <p>Лучше, чем:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">WHERE</span> <span class="token keyword">column</span> <span
+                        class="token operator">LIKE</span> <span class="token string">'%value%'</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3><strong>2.2. Избегайте отрицательных условий</strong></h3>
+    <ul>
+        <li><p>Условия с <code>NOT</code>, <code>&lt;&gt;</code>, <code>!=</code> или <code>NOT IN</code> часто приводят
+            к полному сканированию таблицы. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">WHERE</span> <span class="token keyword">column</span> <span
+                        class="token operator">&lt;&gt;</span> <span class="token string">'value'</span></pre>
+            </div>
+            <p>Лучше переписать такие запросы, если это возможно.</p></li>
+    </ul>
+    <h3><strong>2.3. Используйте <code>BETWEEN</code> вместо комбинации <code>&gt;=</code> и <code>&lt;=</code></strong>
+    </h3>
+    <ul>
+        <li><p>Условие <code>BETWEEN</code> читается проще и может быть оптимизировано СУБД:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">WHERE</span> <span class="token keyword">column</span> <span
+                        class="token operator">BETWEEN</span> <span class="token number">10</span> <span
+                        class="token operator">AND</span> <span class="token number">20</span></pre>
+            </div>
+            <p>Вместо:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">WHERE</span> <span class="token keyword">column</span> <span
+                        class="token operator">&gt;=</span> <span class="token number">10</span> <span
+                        class="token operator">AND</span> <span class="token keyword">column</span> <span
+                        class="token operator">&lt;=</span> <span class="token number">20</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3><strong>2.4. Избегайте функций в условиях</strong></h3>
+    <ul>
+        <li><p>Функции в условиях <code>WHERE</code> могут препятствовать использованию индексов. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">WHERE</span> <span class="token keyword">YEAR</span><span
+                        class="token punctuation">(</span>order_date<span class="token punctuation">)</span> <span
+                        class="token operator">=</span> <span class="token number">2023</span></pre>
+            </div>
+            <p>Лучше переписать так:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">WHERE</span> order_date <span class="token operator">&gt;=</span> <span
+                        class="token string">'2023-01-01'</span> <span
+                        class="token operator">AND</span> order_date <span class="token operator">&lt;</span> <span
+                        class="token string">'2024-01-01'</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h2><strong>3. Оптимизация <code>JOIN</code></strong></h2>
+    <h3><strong>3.1. Используйте индексы для соединений</strong></h3>
+    <ul>
+        <li><p>Убедитесь, что столбцы, используемые в <code>JOIN</code>, индексированы. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> orders
+<span class="token keyword">JOIN</span> customers <span class="token keyword">ON</span> orders<span
+                            class="token punctuation">.</span>customer_id <span class="token operator">=</span> customers<span
+                            class="token punctuation">.</span>id<span class="token punctuation">;</span></pre>
+            </div>
+            <p>Здесь <code>customer_id</code> и <code>id</code> должны быть индексированы.</p></li>
+    </ul>
+    <h3><strong>3.2. Минимизируйте количество строк перед <code>JOIN</code></strong></h3>
+    <ul>
+        <li><p>Если возможно, отфильтруйте данные перед соединением. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> <span class="token punctuation">(</span><span
+                        class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> orders <span
+                        class="token keyword">WHERE</span> order_date <span class="token operator">&gt;</span> <span
+                        class="token string">'2023-01-01'</span><span class="token punctuation">)</span> <span
+                        class="token keyword">AS</span> filtered_orders
+<span class="token keyword">JOIN</span> customers <span class="token keyword">ON</span> filtered_orders<span
+                            class="token punctuation">.</span>customer_id <span class="token operator">=</span> customers<span
+                            class="token punctuation">.</span>id<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3><strong>3.3. Используйте правильный тип <code>JOIN</code></strong></h3>
+    <ul>
+        <li><p>Выбирайте подходящий тип соединения (<code>INNER JOIN</code>, <code>LEFT JOIN</code>, <code>RIGHT
+            JOIN</code>) в зависимости от задачи. Например, <code>INNER JOIN</code> работает быстрее, чем <code>LEFT
+            JOIN</code>, так как возвращает только совпадающие строки.</p></li>
+    </ul>
+    <hr>
+    <h2><strong>4. Оптимизация <code>SELECT</code></strong></h2>
+    <h3><strong>4.1. Выбирайте только нужные столбцы</strong></h3>
+    <ul>
+        <li><p>Избегайте <code>SELECT *</code>, если вам нужны только конкретные столбцы. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> id<span class="token punctuation">,</span> name <span
+                        class="token keyword">FROM</span> customers<span class="token punctuation">;</span></pre>
+            </div>
+            <p>Вместо:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> customers<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3><strong>4.2. Используйте <code>LIMIT</code> и <code>OFFSET</code> для пагинации</strong></h3>
+    <ul>
+        <li><p>Если вы работаете с большими объемами данных, используйте <code>LIMIT</code> и <code>OFFSET</code> для
+            постраничной выборки:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> orders <span class="token keyword">LIMIT</span> <span
+                        class="token number">10</span> <span class="token keyword">OFFSET</span> <span
+                        class="token number">20</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3><strong>4.3. Избегайте подзапросов, если их можно заменить на <code>JOIN</code></strong></h3>
+    <ul>
+        <li><p>Подзапросы могут быть менее эффективными, чем соединения. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> orders <span
+                        class="token keyword">WHERE</span> customer_id <span class="token operator">IN</span> <span
+                        class="token punctuation">(</span><span class="token keyword">SELECT</span> id <span
+                        class="token keyword">FROM</span> customers <span
+                        class="token keyword">WHERE</span> country <span class="token operator">=</span> <span
+                        class="token string">'USA'</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+            <p>Лучше переписать так:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> orders<span class="token punctuation">.</span><span
+                        class="token operator">*</span> <span class="token keyword">FROM</span> orders
+<span class="token keyword">JOIN</span> customers <span class="token keyword">ON</span> orders<span
+                            class="token punctuation">.</span>customer_id <span class="token operator">=</span> customers<span
+                            class="token punctuation">.</span>id
+<span class="token keyword">WHERE</span> customers<span class="token punctuation">.</span>country <span
+                            class="token operator">=</span> <span class="token string">'USA'</span><span
+                            class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h2><strong>5. Оптимизация <code>GROUP BY</code> и <code>ORDER BY</code></strong></h2>
+    <h3><strong>5.1. Используйте индексы для сортировки и группировки</strong></h3>
+    <ul>
+        <li><p>Если вы используете <code>ORDER BY</code> или <code>GROUP BY</code>, убедитесь, что столбцы, по которым
+            происходит сортировка или группировка, индексированы.</p></li>
+    </ul>
+    <h3><strong>5.2. Минимизируйте количество строк перед группировкой</strong></h3>
+    <ul>
+        <li><p>Если возможно, отфильтруйте данные перед <code>GROUP BY</code>. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> customer_id<span class="token punctuation">,</span> <span
+                        class="token function">COUNT</span><span class="token punctuation">(</span><span
+                        class="token operator">*</span><span class="token punctuation">)</span> <span
+                        class="token keyword">FROM</span> orders <span
+                        class="token keyword">WHERE</span> order_date <span class="token operator">&gt;</span> <span
+                        class="token string">'2023-01-01'</span> <span class="token keyword">GROUP</span> <span
+                        class="token keyword">BY</span> customer_id<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h2><strong>6. Оптимизация работы с большими данными</strong></h2>
+    <h3><strong>6.1. Используйте временные таблицы</strong></h3>
+    <ul>
+        <li><p>Если запрос слишком сложный, разбейте его на несколько этапов, используя временные таблицы:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TEMPORARY</span> <span
+                        class="token keyword">TABLE</span> temp_orders <span class="token keyword">AS</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> orders <span
+                            class="token keyword">WHERE</span> order_date <span class="token operator">&gt;</span> <span
+                            class="token string">'2023-01-01'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> temp_orders <span
+                            class="token keyword">JOIN</span> customers <span class="token keyword">ON</span> temp_orders<span
+                            class="token punctuation">.</span>customer_id <span class="token operator">=</span> customers<span
+                            class="token punctuation">.</span>id<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3><strong>6.2. Используйте пакетную обработку</strong></h3>
+    <ul>
+        <li><p>Если вы работаете с большими объемами данных, разбивайте операции на пакеты. Например, обновляйте данные
+            не все сразу, а частями.</p></li>
+    </ul>
+    <hr>
+    <h2><strong>7. Анализ и оптимизация запросов</strong></h2>
+    <h3><strong>7.1. Используйте <code>EXPLAIN</code></strong></h3>
+    <ul>
+        <li><p>В большинстве СУБД (например, MySQL, PostgreSQL) можно использовать команду <code>EXPLAIN</code>, чтобы
+            понять, как выполняется запрос:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span> <span
+                        class="token operator">*</span> <span class="token keyword">FROM</span> orders <span
+                        class="token keyword">WHERE</span> customer_id <span class="token operator">=</span> <span
+                        class="token number">123</span><span class="token punctuation">;</span></pre>
+            </div>
+            <p>Это покажет план выполнения запроса и поможет найти узкие места.</p></li>
+    </ul>
+    <h3><strong>7.2. Мониторинг производительности</strong></h3>
+    <ul>
+        <li><p>Используйте инструменты мониторинга (например, <code>pg_stat_activity</code> в PostgreSQL или <code>SHOW
+            PROCESSLIST</code> в MySQL) для анализа медленных запросов.</p></li>
+    </ul>
+    <hr>
+    <h2><strong>8. Общие рекомендации</strong></h2>
+    <h3><strong>8.1. Избегайте избыточных данных</strong></h3>
+    <ul>
+        <li><p>Убедитесь, что ваша база данных нормализована, чтобы избежать дублирования данных.</p></li>
+    </ul>
+    <h3><strong>8.2. Регулярно обновляйте статистику</strong></h3>
+    <ul>
+        <li><p>В некоторых СУБД (например, PostgreSQL) важно обновлять статистику таблиц, чтобы оптимизатор запросов мог
+            принимать правильные решения:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">ANALYZE</span> table_name<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3><strong>8.3. Используйте кэширование</strong></h3>
+    <ul>
+        <li><p>Если данные редко меняются, используйте кэширование на уровне приложения, чтобы снизить нагрузку на базу
+            данных.</p></li>
+    </ul>
+    <hr>
+    <h2><strong>Пример оптимизированного запроса</strong></h2>
+    <h3>Исходный запрос:</h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                class="token keyword">FROM</span> orders
+<span class="token keyword">WHERE</span> <span class="token keyword">YEAR</span><span class="token punctuation">(</span>order_date<span
+                    class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">2023</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> customer_id<span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <h3>Оптимизированный запрос:</h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">SELECT</span> id<span class="token punctuation">,</span> customer_id<span
+                class="token punctuation">,</span> order_date<span class="token punctuation">,</span> amount <span
+                class="token keyword">FROM</span> orders
+<span class="token keyword">WHERE</span> order_date <span class="token operator">&gt;=</span> <span
+                    class="token string">'2023-01-01'</span> <span class="token operator">AND</span> order_date <span
+                    class="token operator">&lt;</span> <span class="token string">'2024-01-01'</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> customer_id<span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <hr>
+    <h2><strong>Заключение</strong></h2>
+    <p>Оптимизация SQL-запросов — это процесс, который требует понимания структуры данных, индексов и особенностей
+        работы СУБД. Следуя приведенным рекомендациям, вы сможете составлять эффективные запросы, которые быстро
+        выполняются и не перегружают сервер базы данных. Регулярно анализируйте планы выполнения запросов и тестируйте
+        изменения, чтобы добиться наилучшей производительности.</p></div>
+</body>
+</html>

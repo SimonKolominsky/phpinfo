@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>DI (Dependency Injection) контейнер в
+    Symfony — это мощный инструмент для управления зависимостями и сервисами в приложении. Он позволяет гибко
+    настраивать, создавать и управлять объектами (сервисами) в приложении. Рассмотрим основные концепции, которые вы
+    упомянули: <strong>теги (tags)</strong>, <strong>inline services</strong>, <strong>ServiceLocator</strong> и
+    <strong>Compiler Pass</strong>.</p>
+    <hr>
+    <h3>1. <strong>Теги (Tags)</strong></h3>
+    <p>Теги используются для группировки сервисов, которые имеют общую функциональность или должны быть обработаны
+        определенным образом. Например, теги могут использоваться для регистрации обработчиков событий, команд консоли
+        или расширений.</p>
+    <ul>
+        <li><p><strong>Пример использования:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">yaml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key atrule">services</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.event_listener</span><span class="token punctuation">:</span>
+        <span class="token key atrule">class</span><span class="token punctuation">:</span> App\EventListener\SomeEventListener
+        <span class="token key atrule">tags</span><span class="token punctuation">:</span> <span
+                            class="token punctuation">[</span><span
+                            class="token string">'kernel.event_listener'</span><span class="token punctuation">]</span></pre>
+            </div>
+            <p>Здесь сервис <code>app.event_listener</code> помечен тегом <code>kernel.event_listener</code>, что
+                позволяет Symfony автоматически зарегистрировать его как слушатель событий.</p></li>
+        <li><p><strong>Как это работает:</strong><br>Symfony собирает все сервисы с определенным тегом и передает их в
+            соответствующий обработчик (например, для событий, команд и т.д.).</p></li>
+    </ul>
+    <hr>
+    <h3>2. <strong>Inline Services</strong></h3>
+    <p>Inline services позволяют определить сервис непосредственно внутри другого сервиса, без необходимости
+        регистрировать его в контейнере как отдельный сервис. Это полезно для небольших сервисов, которые используются
+        только в одном месте.</p>
+    <ul>
+        <li><p><strong>Пример использования:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">yaml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key atrule">services</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.main_service</span><span class="token punctuation">:</span>
+        <span class="token key atrule">class</span><span class="token punctuation">:</span> App\Service\MainService
+        <span class="token key atrule">arguments</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token tag">!service</span>
+                <span class="token key atrule">class</span><span class="token punctuation">:</span> App\Service\InlineService
+                <span class="token key atrule">arguments</span><span class="token punctuation">:</span> <span
+                            class="token punctuation">[</span><span class="token string">'%some_parameter%'</span><span
+                            class="token punctuation">]</span></pre>
+            </div>
+            <p>Здесь <code>InlineService</code> создается и передается в <code>MainService</code> как аргумент, но не
+                регистрируется в контейнере как отдельный сервис.</p></li>
+    </ul>
+    <hr>
+    <h3>3. <strong>ServiceLocator</strong></h3>
+    <p><code>ServiceLocator</code> — это специальный тип сервиса, который позволяет лениво загружать другие сервисы. Он
+        полезен, когда вам нужно получить сервисы по требованию, а не сразу при создании основного сервиса.</p>
+    <ul>
+        <li><p><strong>Пример использования:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">yaml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key atrule">services</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.service_locator</span><span class="token punctuation">:</span>
+        <span class="token key atrule">class</span><span class="token punctuation">:</span> Symfony\Component\DependencyInjection\ServiceLocator
+        <span class="token key atrule">arguments</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span>
+                <span class="token key atrule">some_service</span><span class="token punctuation">:</span> <span
+                            class="token string">'@app.some_service'</span>
+                <span class="token key atrule">another_service</span><span class="token punctuation">:</span> <span
+                            class="token string">'@app.another_service'</span></pre>
+            </div>
+            <p>В этом примере <code>ServiceLocator</code> будет содержать два сервиса, которые могут быть получены по их
+                именам (<code>some_service</code> и <code>another_service</code>).</p></li>
+        <li><p><strong>Как это работает:</strong><br>Сервисы внутри <code>ServiceLocator</code> создаются только тогда,
+            когда они запрашиваются, что может улучшить производительность.</p></li>
+    </ul>
+    <hr>
+    <h3>4. <strong>Compiler Pass</strong></h3>
+    <p><code>Compiler Pass</code> — это механизм, позволяющий изменять контейнер сервисов на этапе компиляции. Это
+        полезно для динамического добавления или изменения сервисов, например, на основе тегов или других условий.</p>
+    <ul>
+        <li><p><strong>Пример использования:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">use</span> <span class="token package">Symfony<span
+                        class="token punctuation">\</span>Component<span class="token punctuation">\</span>DependencyInjection<span
+                        class="token punctuation">\</span>Compiler<span class="token punctuation">\</span>CompilerPassInterface</span><span
+                        class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>DependencyInjection<span
+                            class="token punctuation">\</span>ContainerBuilder</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">CustomCompilerPass</span> <span
+                            class="token keyword">implements</span> <span
+                            class="token class-name">CompilerPassInterface</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">process</span><span
+                            class="token punctuation">(</span><span class="token class-name type-declaration">ContainerBuilder</span> <span
+                            class="token variable">$container</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$container</span><span
+                            class="token operator">-&gt;</span><span
+                            class="token function">findTaggedServiceIds</span><span
+                            class="token punctuation">(</span><span class="token string single-quoted-string">'app.custom_tag'</span><span
+                            class="token punctuation">)</span> <span class="token keyword">as</span> <span
+                            class="token variable">$id</span> <span class="token operator">=&gt;</span> <span
+                            class="token variable">$tags</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+            <span class="token comment">// Логика обработки сервисов с тегом 'app.custom_tag'</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Как это работает:</strong><br>Compiler Pass выполняется на этапе компиляции контейнера, когда все
+            сервисы уже зарегистрированы, но еще не созданы. Это позволяет вам изменять конфигурацию сервисов или
+            добавлять новые.</p></li>
+    </ul>
+    <hr>
+    <h3>Как всё это работает вместе?</h3>
+    <ol start="1">
+        <li><p><strong>Регистрация сервисов:</strong> Сервисы регистрируются в контейнере (через YAML, XML, PHP или
+            аннотации).</p></li>
+        <li><p><strong>Тегирование:</strong> Сервисы помечаются тегами для группировки и обработки.</p></li>
+        <li><p><strong>Inline services:</strong> Внутренние сервисы могут быть определены прямо в аргументах других
+            сервисов.</p></li>
+        <li><p><strong>ServiceLocator:</strong> Ленивая загрузка сервисов через <code>ServiceLocator</code>.</p></li>
+        <li><p><strong>Compiler Pass:</strong> На этапе компиляции контейнера выполняются дополнительные манипуляции с
+            сервисами.</p></li>
+    </ol>
+    <p>Таким образом, DI контейнер Symfony предоставляет гибкий и мощный механизм для управления зависимостями в
+        приложении.</p></div>
+</body>
+</html>

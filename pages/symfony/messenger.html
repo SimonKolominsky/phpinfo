@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Symfony Messenger — это компонент Symfony,
+    предназначенный для обработки асинхронных задач и обмена сообщениями между различными частями приложения. Он
+    позволяет разделять выполнение задач на фоновые процессы, что особенно полезно для длительных операций, таких как
+    отправка email, обработка файлов или интеграция с внешними API. Messenger также поддерживает работу с очередями
+    (queues) и шинами событий (event buses).</p>
+    <hr>
+    <h3>Основные возможности Symfony Messenger</h3>
+    <ol start="1">
+        <li><p><strong>Обработка сообщений (Messages)</strong><br>Messenger работает с сообщениями (messages) — это
+            простые PHP-объекты, которые содержат данные для обработки. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">SendEmailMessage</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$recipient</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$subject</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$body</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__construct</span><span
+                            class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span
+                            class="token variable">$recipient</span><span class="token punctuation">,</span> <span
+                            class="token keyword type-hint">string</span> <span
+                            class="token variable">$subject</span><span class="token punctuation">,</span> <span
+                            class="token keyword type-hint">string</span> <span class="token variable">$body</span><span
+                            class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">recipient</span> <span
+                            class="token operator">=</span> <span class="token variable">$recipient</span><span
+                            class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">subject</span> <span
+                            class="token operator">=</span> <span class="token variable">$subject</span><span
+                            class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">body</span> <span
+                            class="token operator">=</span> <span class="token variable">$body</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Геттеры</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Обработчики сообщений (Message Handlers)</strong><br>Каждое сообщение обрабатывается
+            соответствующим обработчиком (handler). Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">use</span> <span class="token package">Symfony<span
+                        class="token punctuation">\</span>Component<span
+                        class="token punctuation">\</span>Messenger<span
+                        class="token punctuation">\</span>Attribute<span class="token punctuation">\</span>AsMessageHandler</span><span
+                        class="token punctuation">;</span>
+
+<span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+        class="token attribute-content"><span
+        class="token attribute-class-name class-name">AsMessageHandler</span></span><span
+        class="token delimiter punctuation">]</span></span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SendEmailHandler</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__invoke</span><span
+                            class="token punctuation">(</span><span class="token class-name type-declaration">SendEmailMessage</span> <span
+                            class="token variable">$message</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Логика отправки email</span>
+        <span class="token function">mail</span><span class="token punctuation">(</span><span class="token variable">$message</span><span
+                            class="token operator">-&gt;</span><span class="token function">getRecipient</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">,</span> <span class="token variable">$message</span><span
+                            class="token operator">-&gt;</span><span class="token function">getSubject</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">,</span> <span class="token variable">$message</span><span
+                            class="token operator">-&gt;</span><span class="token function">getBody</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Транспорты (Transports)</strong><br>Messenger поддерживает различные транспорты для отправки
+            сообщений:</p>
+            <ul>
+                <li><p><strong>Синхронный</strong> — сообщения обрабатываются сразу.</p></li>
+                <li><p><strong>Асинхронный</strong> — сообщения отправляются в очередь (например, RabbitMQ, Redis,
+                    Doctrine).</p></li>
+                <li><p><strong>Собственные транспорты</strong> — возможность создания кастомных транспортов.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Шина сообщений (Message Bus)</strong><br>Messenger предоставляет шину сообщений (bus) для
+            отправки и обработки сообщений. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$messageBus</span><span class="token operator">-&gt;</span><span
+                        class="token function">dispatch</span><span class="token punctuation">(</span><span
+                        class="token keyword">new</span> <span class="token class-name">SendEmailMessage</span><span
+                        class="token punctuation">(</span><span class="token string single-quoted-string">'test@example.com'</span><span
+                        class="token punctuation">,</span> <span
+                        class="token string single-quoted-string">'Hello'</span><span class="token punctuation">,</span> <span
+                        class="token string single-quoted-string">'Test message'</span><span
+                        class="token punctuation">)</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Среднее ПО (Middleware)</strong><br>Messenger поддерживает middleware, которые позволяют
+            добавлять дополнительную логику до и после обработки сообщений (например, логирование, валидация).</p></li>
+        <li><p><strong>Обработка ошибок</strong><br>Messenger предоставляет механизмы для обработки ошибок:</p>
+            <ul>
+                <li><p>Повторная отправка сообщений.</p></li>
+                <li><p>Отправка неудачных сообщений в очередь "неудач" (failure transport).</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Пример использования Symfony Messenger</h3>
+    <ol start="1">
+        <li><p><strong>Установка компонента</strong><br>Установите компонент через Composer:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require symfony/messenger</pre>
+            </div>
+        </li>
+        <li><p><strong>Создание сообщения и обработчика</strong><br>Пример сообщения:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">// src/Message/SendEmailMessage.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Message</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SendEmailMessage</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$recipient</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$subject</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$body</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__construct</span><span
+                            class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span
+                            class="token variable">$recipient</span><span class="token punctuation">,</span> <span
+                            class="token keyword type-hint">string</span> <span
+                            class="token variable">$subject</span><span class="token punctuation">,</span> <span
+                            class="token keyword type-hint">string</span> <span class="token variable">$body</span><span
+                            class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">recipient</span> <span
+                            class="token operator">=</span> <span class="token variable">$recipient</span><span
+                            class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">subject</span> <span
+                            class="token operator">=</span> <span class="token variable">$subject</span><span
+                            class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">body</span> <span
+                            class="token operator">=</span> <span class="token variable">$body</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Геттеры</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+            <p>Пример обработчика:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">// src/MessageHandler/SendEmailHandler.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>MessageHandler</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                            class="token punctuation">\</span>Message<span class="token punctuation">\</span>SendEmailMessage</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Messenger<span class="token punctuation">\</span>Attribute<span
+                            class="token punctuation">\</span>AsMessageHandler</span><span
+                            class="token punctuation">;</span>
+
+<span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+        class="token attribute-content"><span
+        class="token attribute-class-name class-name">AsMessageHandler</span></span><span
+        class="token delimiter punctuation">]</span></span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SendEmailHandler</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__invoke</span><span
+                            class="token punctuation">(</span><span class="token class-name type-declaration">SendEmailMessage</span> <span
+                            class="token variable">$message</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Логика отправки email</span>
+        <span class="token function">mail</span><span class="token punctuation">(</span><span class="token variable">$message</span><span
+                            class="token operator">-&gt;</span><span class="token function">getRecipient</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">,</span> <span class="token variable">$message</span><span
+                            class="token operator">-&gt;</span><span class="token function">getSubject</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">,</span> <span class="token variable">$message</span><span
+                            class="token operator">-&gt;</span><span class="token function">getBody</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Отправка сообщения</strong><br>Пример отправки сообщения через контроллер:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">// src/Controller/EmailController.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Controller</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                            class="token punctuation">\</span>Message<span class="token punctuation">\</span>SendEmailMessage</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Bundle<span
+                            class="token punctuation">\</span>FrameworkBundle<span class="token punctuation">\</span>Controller<span
+                            class="token punctuation">\</span>AbstractController</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>HttpFoundation<span class="token punctuation">\</span>Response</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Messenger<span class="token punctuation">\</span>MessageBusInterface</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Routing<span
+                            class="token punctuation">\</span>Annotation<span
+                            class="token punctuation">\</span>Route</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                            class="token class-name-definition class-name">EmailController</span> <span
+                            class="token keyword">extends</span> <span
+                            class="token class-name">AbstractController</span>
+<span class="token punctuation">{</span>
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span class="token attribute-class-name class-name">Route</span><span
+            class="token punctuation">(</span><span class="token string single-quoted-string">'/send-email'</span><span
+            class="token punctuation">,</span> <span class="token attribute-class-name class-name">name</span><span
+            class="token punctuation">:</span> <span class="token string single-quoted-string">'send_email'</span><span
+            class="token punctuation">)</span></span><span class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">sendEmail</span><span
+                            class="token punctuation">(</span><span class="token class-name type-declaration">MessageBusInterface</span> <span
+                            class="token variable">$messageBus</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span
+                            class="token class-name return-type">Response</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$messageBus</span><span class="token operator">-&gt;</span><span
+                            class="token function">dispatch</span><span class="token punctuation">(</span><span
+                            class="token keyword">new</span> <span class="token class-name">SendEmailMessage</span><span
+                            class="token punctuation">(</span><span class="token string single-quoted-string">'test@example.com'</span><span
+                            class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'Hello'</span><span
+                            class="token punctuation">,</span> <span class="token string single-quoted-string">'Test message'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span
+                            class="token punctuation">(</span><span class="token string single-quoted-string">'Email sent!'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Настройка транспорта</strong><br>Пример настройки Doctrine transport в <code>config/packages/messenger.yaml</code>:
+        </p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">yaml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key atrule">framework</span><span class="token punctuation">:</span>
+    <span class="token key atrule">messenger</span><span class="token punctuation">:</span>
+        <span class="token key atrule">transports</span><span class="token punctuation">:</span>
+            <span class="token key atrule">async_emails</span><span class="token punctuation">:</span> doctrine<span
+                            class="token punctuation">:</span>//default
+
+        <span class="token key atrule">routing</span><span class="token punctuation">:</span>
+            <span class="token key atrule">App\Message\SendEmailMessage</span><span class="token punctuation">:</span> async_emails</pre>
+            </div>
+        </li>
+        <li><p><strong>Запуск воркера</strong><br>Для обработки асинхронных сообщений запустите воркер:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>php bin/console messenger:consume async_emails</pre>
+            </div>
+        </li>
+    </ol>
+    <hr>
+    <h3>Преимущества Symfony Messenger</h3>
+    <ul>
+        <li><p><strong>Асинхронная обработка</strong> — ускорение работы приложения за счёт фоновых задач.</p></li>
+        <li><p><strong>Гибкость</strong> — поддержка множества транспортов и middleware.</p></li>
+        <li><p><strong>Масштабируемость</strong> — возможность использования очередей (RabbitMQ, Redis).</p></li>
+        <li><p><strong>Интеграция</strong> — легко интегрируется с другими компонентами Symfony.</p></li>
+    </ul>
+    <hr>
+    <h3>Когда использовать Symfony Messenger?</h3>
+    <ul>
+        <li><p>Для отправки email, SMS или уведомлений.</p></li>
+        <li><p>Для обработки длительных задач (например, генерация отчётов).</p></li>
+        <li><p>Для интеграции с внешними API.</p></li>
+        <li><p>Для реализации событийной архитектуры (event-driven architecture).</p></li>
+    </ul>
+    <p>Symfony Messenger — это мощный инструмент для управления асинхронными задачами, который помогает улучшить
+        производительность и масштабируемость приложений.</p></div>
+</body>
+</html>

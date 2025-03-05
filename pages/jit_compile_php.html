@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>JIT (Just-In-Time) компиляция — это
+    технология, которая позволяет компилировать код во время его выполнения, а не заранее. Это может значительно
+    ускорить выполнение программ, так как компиляция происходит непосредственно перед исполнением, и оптимизации могут
+    быть применены с учётом текущего контекста.</p>
+    <h3>JIT в PHP</h3>
+    <p>В PHP JIT-компиляция была введена в версии 8.0, выпущенной в ноябре 2020 года. Это стало одним из самых
+        значительных улучшений в производительности PHP за последние годы.</p><h4>Как работает JIT в PHP</h4>
+    <ol start="1">
+        <li><p><strong>Интерпретация и Opcache</strong>:</p>
+            <ul>
+                <li><p>Обычно PHP-скрипты интерпретируются построчно. Для ускорения этого процесса используется Opcache,
+                    который кэширует скомпилированный байт-код (опкоды) скриптов, чтобы избежать повторной компиляции
+                    исходного кода при каждом запросе.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>JIT-компиляция</strong>:</p>
+            <ul>
+                <li><p>JIT-компиляция работает поверх Opcache. Вместо того чтобы интерпретировать байт-код,
+                    JIT-компилятор преобразует его в машинный код, который может быть выполнен напрямую процессором. Это
+                    позволяет избежать накладных расходов на интерпретацию и ускоряет выполнение кода.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Типы JIT в PHP</strong>:</p>
+            <ul>
+                <li><p>В PHP реализовано два режима JIT-компиляции:</p>
+                    <ul>
+                        <li><p><strong>Function JIT</strong>: Компилирует отдельные функции.</p></li>
+                        <li><p><strong>Tracing JIT</strong>: Компилирует "горячие" (часто выполняемые) участки кода,
+                            такие как циклы, что позволяет достичь ещё большей производительности.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <h4>Настройка JIT в PHP</h4>
+    <p>JIT в PHP настраивается через конфигурацию Opcache в файле <code>php.ini</code>. Основные параметры:</p>
+    <ul>
+        <li><p><strong>opcache.jit_buffer_size</strong>: Размер памяти, выделенной для JIT-компиляции. Например, <code>opcache.jit_buffer_size=100M</code>.
+        </p></li>
+        <li><p><strong>opcache.jit</strong>: Режим работы JIT. Возможные значения:</p>
+            <ul>
+                <li><p><code>tracing</code> (рекомендуется): Использует Tracing JIT.</p></li>
+                <li><p><code>function</code>: Использует Function JIT.</p></li>
+                <li><p><code>disable</code>: Отключает JIT.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <p>Пример конфигурации:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">ini</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token key attr-name">opcache.enable</span><span class="token punctuation">=</span><span
+                class="token value attr-value">1</span>
+<span class="token key attr-name">opcache.jit_buffer_size</span><span class="token punctuation">=</span><span
+                    class="token value attr-value">100M</span>
+<span class="token key attr-name">opcache.jit</span><span class="token punctuation">=</span><span
+                    class="token value attr-value">tracing</span></pre>
+    </div>
+    <h4>Преимущества JIT в PHP</h4>
+    <ol start="1">
+        <li><p><strong>Увеличение производительности</strong>:</p>
+            <ul>
+                <li><p>JIT может значительно ускорить выполнение CPU-интенсивных задач, таких как математические
+                    вычисления, обработка данных и т.д. В некоторых случаях прирост производительности может достигать
+                    30-50%.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Улучшенная поддержка современных приложений</strong>:</p>
+            <ul>
+                <li><p>JIT делает PHP более конкурентоспособным для высоконагруженных приложений, таких как
+                    веб-фреймворки (например, Laravel, Symfony) и системы управления контентом (например,
+                    WordPress).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Гибкость</strong>:</p>
+            <ul>
+                <li><p>JIT можно включать или отключать в зависимости от потребностей приложения.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h4>Ограничения JIT в PHP</h4>
+    <ol start="1">
+        <li><p><strong>Не для всех задач</strong>:</p>
+            <ul>
+                <li><p>JIT наиболее эффективен для CPU-интенсивных задач. Для приложений, которые в основном работают с
+                    вводом-выводом (I/O), таких как веб-серверы, выигрыш может быть незначительным.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Требует памяти</strong>:</p>
+            <ul>
+                <li><p>JIT использует дополнительную память для хранения скомпилированного машинного кода, что может
+                    быть критично для серверов с ограниченными ресурсами.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Сложность отладки</strong>:</p>
+            <ul>
+                <li><p>Поскольку JIT компилирует код на лету, отладка может стать сложнее, особенно если возникают
+                    проблемы с оптимизациями.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Пример использования JIT</h3>
+    <p>Рассмотрим простой пример, где JIT может дать заметный прирост производительности:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$start</span> <span class="token operator">=</span> <span
+                    class="token function">microtime</span><span class="token punctuation">(</span><span
+                    class="token constant boolean">true</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token variable">$i</span> <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span> <span class="token variable">$i</span> <span
+                    class="token operator">&lt;</span> <span class="token number">1_000_000</span><span
+                    class="token punctuation">;</span> <span class="token variable">$i</span><span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token variable">$result</span> <span class="token operator">=</span> <span
+                    class="token function">sqrt</span><span class="token punctuation">(</span><span
+                    class="token variable">$i</span><span class="token punctuation">)</span> <span
+                    class="token operator">*</span> <span class="token function">log</span><span
+                    class="token punctuation">(</span><span class="token variable">$i</span> <span
+                    class="token operator">+</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$end</span> <span class="token operator">=</span> <span
+                    class="token function">microtime</span><span class="token punctuation">(</span><span
+                    class="token constant boolean">true</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"Time taken: "</span> <span
+                    class="token operator">.</span> <span class="token punctuation">(</span><span
+                    class="token variable">$end</span> <span class="token operator">-</span> <span
+                    class="token variable">$start</span><span class="token punctuation">)</span> <span
+                    class="token operator">.</span> <span
+                    class="token string double-quoted-string">" seconds\n"</span><span
+                    class="token punctuation">;</span></span></pre>
+    </div>
+    <p>С JIT этот код выполнится быстрее, так как математические операции будут оптимизированы.</p>
+    <h3>Заключение</h3>
+    <p>JIT-компиляция в PHP — это мощный инструмент для повышения производительности, особенно для CPU-интенсивных
+        задач. Однако её использование требует понимания, когда и как её применять, чтобы получить максимальную выгоду.
+        Если ваше приложение требует высокой производительности, JIT может стать важным шагом в оптимизации.</p></div>
+</body>
+</html>

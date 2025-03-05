@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment">// Интерфейс компонента</span>
+<span class="token keyword">interface</span> <span class="token class-name-definition class-name">Message</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">send</span><span class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Конкретный компонент</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">BasicMessage</span> <span class="token keyword">implements</span> <span class="token class-name">Message</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">send</span><span class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$text</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Базовый декоратор</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name-definition class-name">MessageDecorator</span> <span class="token keyword">implements</span> <span class="token class-name">Message</span> <span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token variable">$message</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$message</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">message</span> <span class="token operator">=</span> <span class="token variable">$message</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Декоратор для шифрования</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">EncryptedMessage</span> <span class="token keyword">extends</span> <span class="token class-name">MessageDecorator</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">send</span><span class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span class="token punctuation">{</span>
+        <span class="token variable">$base</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">message</span><span class="token operator">-&gt;</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">base64_encode</span><span class="token punctuation">(</span><span class="token variable">$base</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Декоратор для добавления HTML-тегов</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">HTMLMessage</span> <span class="token keyword">extends</span> <span class="token class-name">MessageDecorator</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">send</span><span class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span class="token punctuation">{</span>
+        <span class="token variable">$base</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">message</span><span class="token operator">-&gt;</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token string double-quoted-string">"&lt;div class='message'&gt;<span class="token interpolation"><span class="token variable">$base</span></span>&lt;/div&gt;"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$message</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BasicMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Простое сообщение</span>
+<span class="token keyword">echo</span> <span class="token variable">$message</span><span class="token operator">-&gt;</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"Hello World"</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token string double-quoted-string">"\n"</span><span class="token punctuation">;</span>
+<span class="token comment">// Вывод: Hello World</span>
+
+<span class="token comment">// Сообщение с шифрованием</span>
+<span class="token variable">$encrypted</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EncryptedMessage</span><span class="token punctuation">(</span><span class="token variable">$message</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$encrypted</span><span class="token operator">-&gt;</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"Secret Data"</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token string double-quoted-string">"\n"</span><span class="token punctuation">;</span>
+<span class="token comment">// Вывод: U2VjcmV0IERhdGE=</span>
+
+<span class="token comment">// Сочетание декораторов</span>
+<span class="token variable">$htmlEncrypted</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HTMLMessage</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">EncryptedMessage</span><span class="token punctuation">(</span><span class="token variable">$message</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$htmlEncrypted</span><span class="token operator">-&gt;</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"Double Decorated"</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token string double-quoted-string">"\n"</span><span class="token punctuation">;</span>
+<span class="token comment">// Вывод: &lt;div class='message'&gt;RG91YmxlIERlY29yYXRlZA==&lt;/div&gt;</span>
+<span class="token delimiter important">?&gt;</span></span></pre></div><p>Этот пример демонстрирует:</p><ol start="1"><li><p>Базовый интерфейс <code>Message</code></p></li><li><p>Конкретную реализацию <code>BasicMessage</code></p></li><li><p>Абстрактный декоратор <code>MessageDecorator</code></p></li><li><p>Два конкретных декоратора:</p><ul><li><p><code>EncryptedMessage</code> для кодирования сообщения в base64</p></li><li><p><code>HTMLMessage</code> для оборачивания сообщения в HTML-тег</p></li></ul></li></ol><p>Особенности паттерна:</p><ul><li><p>Декораторы можно комбинировать в любом порядке</p></li><li><p>Новые декораторы можно добавлять, не изменяя существующий код</p></li><li><p>Декораторы прозрачны для клиентского кода</p></li><li><p>Функциональность добавляется динамически во время выполнения</p></li></ul><p>Вы можете легко добавить новые декораторы (например, для сжатия данных, логирования или проверки прав доступа), следуя той же схеме реализации.</p></div>
+</body>
+</html>

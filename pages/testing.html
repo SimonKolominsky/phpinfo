@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В тестировании программного обеспечения,
+    особенно в контексте PHP, можно выделить несколько типов объектов, которые часто тестируются. Вот основные из
+    них:</p>
+    <h3>1. <strong>Классы и методы</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть класс <code>Calculator</code> с методом <code>add($a, $b)</code>,
+            который складывает два числа.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что метод <code>add</code> возвращает правильный результат для различных
+            входных данных.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">Calculator</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">add</span><span class="token punctuation">(</span><span
+                    class="token variable">$a</span><span class="token punctuation">,</span> <span
+                    class="token variable">$b</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$a</span> <span
+                    class="token operator">+</span> <span class="token variable">$b</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Пример теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">CalculatorTest</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">TestCase</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testAdd</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$calculator</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">Calculator</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span class="token number">5</span><span
+                    class="token punctuation">,</span> <span class="token variable">$calculator</span><span
+                    class="token operator">-&gt;</span><span class="token function">add</span><span
+                    class="token punctuation">(</span><span class="token number">2</span><span
+                    class="token punctuation">,</span> <span class="token number">3</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>2. <strong>Функции</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть функция <code>isEven($number)</code>, которая проверяет, является ли
+            число четным.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что функция возвращает <code>true</code> для четных чисел и
+            <code>false</code> для нечетных.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">isEven</span><span class="token punctuation">(</span><span
+                class="token variable">$number</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token variable">$number</span> <span
+                    class="token operator">%</span> <span class="token number">2</span> <span
+                    class="token operator">===</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Пример теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">FunctionTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testIsEven</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                    class="token punctuation">(</span><span class="token function">isEven</span><span
+                    class="token punctuation">(</span><span class="token number">4</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertFalse</span><span
+                    class="token punctuation">(</span><span class="token function">isEven</span><span
+                    class="token punctuation">(</span><span class="token number">5</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>3. <strong>Модели данных</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть модель <code>User</code>, которая представляет пользователя в базе
+            данных.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что модель правильно сохраняет и извлекает данные из базы данных.</p>
+        </li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$name</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token variable">$email</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span class="token variable">$name</span><span
+                    class="token punctuation">,</span> <span class="token variable">$email</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">name</span> <span
+                    class="token operator">=</span> <span class="token variable">$name</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">email</span> <span
+                    class="token operator">=</span> <span class="token variable">$email</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getName</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">name</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getEmail</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">email</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Пример теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">UserTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testUser</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$user</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">User</span><span
+                    class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"John Doe"</span><span class="token punctuation">,</span> <span
+                    class="token string double-quoted-string">"john@example.com"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"John Doe"</span><span class="token punctuation">,</span> <span
+                    class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token function">getName</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"john@example.com"</span><span
+                    class="token punctuation">,</span> <span class="token variable">$user</span><span
+                    class="token operator">-&gt;</span><span class="token function">getEmail</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>4. <strong>Контроллеры</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть контроллер <code>UserController</code>, который обрабатывает запросы,
+            связанные с пользователями.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что контроллер правильно обрабатывает запросы и возвращает ожидаемые
+            ответы.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">UserController</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">show</span><span class="token punctuation">(</span><span
+                    class="token variable">$id</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token comment">// Логика получения пользователя по ID</span>
+        <span class="token keyword">return</span> <span
+                    class="token string double-quoted-string">"User ID: "</span> <span
+                    class="token operator">.</span> <span class="token variable">$id</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Пример теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">UserControllerTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testShow</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$controller</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">UserController</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"User ID: 1"</span><span
+                    class="token punctuation">,</span> <span class="token variable">$controller</span><span
+                    class="token operator">-&gt;</span><span class="token function">show</span><span
+                    class="token punctuation">(</span><span class="token number">1</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>5. <strong>Роуты и API</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть API-эндпоинт <code>/api/users</code>, который возвращает список
+            пользователей.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что эндпоинт возвращает правильный JSON-ответ.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Пример теста с использованием PHPUnit и Guzzle для тестирования API</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">GuzzleHttp<span class="token punctuation">\</span>Client</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">ApiTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testGetUsers</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$client</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name">Client</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$response</span> <span class="token operator">=</span> <span
+                    class="token variable">$client</span><span class="token operator">-&gt;</span><span
+                    class="token function">get</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'http://localhost/api/users'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span class="token number">200</span><span
+                    class="token punctuation">,</span> <span class="token variable">$response</span><span
+                    class="token operator">-&gt;</span><span class="token function">getStatusCode</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertJson</span><span
+                    class="token punctuation">(</span><span class="token variable">$response</span><span
+                    class="token operator">-&gt;</span><span class="token function">getBody</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>6. <strong>Виджеты и компоненты</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть виджет <code>Pagination</code>, который отображает пагинацию на
+            странице.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что виджет правильно отображает ссылки на страницы.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">Pagination</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">render</span><span
+                    class="token punctuation">(</span><span class="token variable">$currentPage</span><span
+                    class="token punctuation">,</span> <span class="token variable">$totalPages</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Логика отображения пагинации</span>
+        <span class="token keyword">return</span> <span
+                    class="token string double-quoted-string">"Current Page: "</span> <span
+                    class="token operator">.</span> <span class="token variable">$currentPage</span> <span
+                    class="token operator">.</span> <span
+                    class="token string double-quoted-string">", Total Pages: "</span> <span
+                    class="token operator">.</span> <span class="token variable">$totalPages</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Пример теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">PaginationTest</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">TestCase</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testRender</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$pagination</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">Pagination</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span class="token string double-quoted-string">"Current Page: 1, Total Pages: 10"</span><span
+                    class="token punctuation">,</span> <span class="token variable">$pagination</span><span
+                    class="token operator">-&gt;</span><span class="token function">render</span><span
+                    class="token punctuation">(</span><span class="token number">1</span><span
+                    class="token punctuation">,</span> <span class="token number">10</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>7. <strong>Сервисы и зависимости</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть сервис <code>EmailService</code>, который отправляет электронные
+            письма.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что сервис правильно отправляет письма и обрабатывает ошибки.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">EmailService</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">send</span><span class="token punctuation">(</span><span
+                    class="token variable">$to</span><span class="token punctuation">,</span> <span
+                    class="token variable">$subject</span><span class="token punctuation">,</span> <span
+                    class="token variable">$message</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token comment">// Логика отправки письма</span>
+        <span class="token keyword">return</span> <span class="token constant boolean">true</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Пример теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">EmailServiceTest</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">TestCase</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testSend</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$emailService</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">EmailService</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                    class="token punctuation">(</span><span class="token variable">$emailService</span><span
+                    class="token operator">-&gt;</span><span class="token function">send</span><span
+                    class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"test@example.com"</span><span
+                    class="token punctuation">,</span> <span
+                    class="token string double-quoted-string">"Subject"</span><span
+                    class="token punctuation">,</span> <span
+                    class="token string double-quoted-string">"Message"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>8. <strong>Конфигурации и настройки</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть конфигурационный файл <code>config.php</code>, который содержит
+            настройки приложения.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что конфигурационный файл содержит ожидаемые значения.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// config.php</span>
+<span class="token keyword">return</span> <span class="token punctuation">[</span>
+    <span class="token string single-quoted-string">'debug'</span> <span class="token operator">=&gt;</span> <span
+                    class="token constant boolean">true</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'database'</span> <span class="token operator">=&gt;</span> <span
+                    class="token punctuation">[</span>
+        <span class="token string single-quoted-string">'host'</span> <span class="token operator">=&gt;</span> <span
+                    class="token string single-quoted-string">'localhost'</span><span class="token punctuation">,</span>
+        <span class="token string single-quoted-string">'user'</span> <span class="token operator">=&gt;</span> <span
+                    class="token string single-quoted-string">'root'</span><span class="token punctuation">,</span>
+        <span class="token string single-quoted-string">'password'</span> <span
+                    class="token operator">=&gt;</span> <span
+                    class="token string single-quoted-string">'password'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Пример теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">ConfigTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testConfig</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$config</span> <span class="token operator">=</span> <span class="token keyword">include</span> <span
+                    class="token string single-quoted-string">'config.php'</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                    class="token punctuation">(</span><span class="token variable">$config</span><span
+                    class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'debug'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span class="token string single-quoted-string">'localhost'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$config</span><span
+                    class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'database'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'host'</span><span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>9. <strong>Интеграционные тесты</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть приложение, которое взаимодействует с базой данных и внешним API.</p>
+        </li>
+        <li><p><strong>Тест:</strong> Проверка, что приложение правильно взаимодействует с этими внешними системами.</p>
+        </li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Пример интеграционного теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">IntegrationTest</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">TestCase</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testDatabaseAndApiIntegration</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token comment">// Логика тестирования интеграции</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                    class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Пример утверждения</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>10. <strong>Юнит-тесты</strong></h3>
+    <ul>
+        <li><p><strong>Пример:</strong> У вас есть отдельный метод или функция, которые нужно протестировать
+            изолированно.</p></li>
+        <li><p><strong>Тест:</strong> Проверка, что метод или функция работает корректно в изолированной среде.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Пример юнит-теста с использованием PHPUnit</span>
+<span class="token keyword">use</span> <span class="token package">PHPUnit<span class="token punctuation">\</span>Framework<span
+                    class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">UnitTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testSomething</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                    class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Пример утверждения</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>Заключение</h3>
+    <p>Тестирование в PHP охватывает широкий спектр объектов, от простых функций и классов до сложных интеграционных
+        сценариев. Использование фреймворков, таких как PHPUnit, значительно упрощает процесс написания и выполнения
+        тестов.</p></div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p><strong>Zval в PHP</strong> — это внутренняя
+    структура данных, используемая движком Zend для хранения информации о переменных. Поскольку PHP является языком с
+    динамической типизацией, zval позволяет управлять типами данных, памятью и ссылками во время выполнения. Рассмотрим
+    ключевые аспекты:</p>
+    <hr>
+    <h3><strong>Компоненты структуры zval</strong></h3>
+    <ol start="1">
+        <li><p><strong>value (значение)</strong><br>Хранит непосредственно значение переменной (например, число, строку,
+            массив).<br>До PHP 7 использовался union (объединение) для разных типов данных. В PHP 7+ значение вынесено в
+            отдельные структуры для оптимизации памяти.</p></li>
+        <li><p><strong>type (тип данных)</strong><br>Определяет текущий тип переменной (например, <code>IS_INT</code>,
+            <code>IS_STRING</code>, <code>IS_ARRAY</code>).<br>Проверить тип можно с помощью функций вроде <code>is_int()</code>
+            или <code>gettype()</code>.</p></li>
+        <li><p><strong>refcount (счётчик ссылок)</strong><br>Указывает, сколько переменных ссылаются на это
+            значение.<br>Например, при копировании <code>$a = $b</code> увеличивается <code>refcount</code>, а не
+            создаётся копия данных (механизм <strong>Copy-on-Write</strong>).<br>Когда <code>refcount</code> достигает
+            нуля, память освобождается.</p></li>
+        <li><p><strong>flags (флаги)</strong><br>Дополнительные метаданные, например:</p>
+            <ul>
+                <li><p><code>IS_REFERENCE</code> — переменная является ссылкой (<code>&amp;$a</code>).</p></li>
+                <li><p><code>IS_CONSTANT</code> — значение нельзя изменить.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3><strong>Эволюция zval в PHP 7</strong></h3>
+    <p>До PHP 7 zval хранил и значение, и метаданные в одной структуре, что было неэффективно. В PHP 7+:</p>
+    <ul>
+        <li><p>Значение вынесено в отдельные структуры (например, <code>zend_string</code> для строк,
+            <code>zend_array</code> для массивов).</p></li>
+        <li><p>Уменьшен размер zval (с 24 байт до 16 байт).</p></li>
+        <li><p>Для простых типов (числа, булевы) значение теперь хранится непосредственно в zval, без выделения
+            дополнительной памяти.</p></li>
+    </ul>
+    <p><strong>Пример оптимизации:</strong></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$a</span> <span class="token operator">=</span> <span
+                class="token number">42</span><span class="token punctuation">;</span> <span class="token comment">// PHP 7+ хранит число напрямую в zval, без отдельного выделения памяти.</span></pre>
+    </div>
+    <hr>
+    <h3><strong>Пример работы с zval</strong></h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$a</span> <span class="token operator">=</span> <span
+                class="token string double-quoted-string">"Hello"</span><span class="token punctuation">;</span> <span
+                class="token comment">// Создаётся zval с type=IS_STRING, refcount=1.</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span class="token variable">$a</span><span
+                    class="token punctuation">;</span>      <span class="token comment">// refcount увеличивается до 2 (копирования строки не происходит).</span>
+<span class="token variable">$b</span> <span class="token operator">.=</span> <span
+                    class="token string double-quoted-string">" World"</span><span
+                    class="token punctuation">;</span> <span class="token comment">// При изменении $b срабатывает Copy-on-Write: создаётся новая строка, refcount $a уменьшается до 1.</span></pre>
+    </div>
+    <hr>
+    <h3><strong>Ссылки и zval</strong></h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$a</span> <span class="token operator">=</span> <span
+                class="token number">10</span><span class="token punctuation">;</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span
+                    class="token operator">&amp;</span><span class="token variable">$a</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Устанавливается флаг IS_REFERENCE, refcount=2.</span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token number">20</span><span
+                    class="token punctuation">;</span>  <span
+                    class="token comment">// Изменение отразится и на $b.</span></pre>
+    </div>
+    <hr>
+    <h3><strong>Почему это важно для разработчиков?</strong></h3>
+    <ul>
+        <li><p><strong>Эффективность памяти:</strong> Понимание механизма Copy-on-Write помогает избегать ненужного
+            копирования данных.</p></li>
+        <li><p><strong>Работа со ссылками:</strong> Неосторожное использование <code>&amp;</code> может привести к
+            непредсказуемому поведению.</p></li>
+        <li><p><strong>Оптимизация PHP 7+:</strong> Нововведения значительно ускорили выполнение скриптов.</p></li>
+    </ul>
+    <hr>
+    <h3><strong>Полезные функции</strong></h3>
+    <ul>
+        <li><p><code>debug_zval_dump($var)</code> — выводит информацию о zval (refcount, тип).</p></li>
+        <li><p><code>xdebug_debug_zval()</code> — аналогичная функция через Xdebug.</p></li>
+    </ul>
+    <hr>
+    <p><strong>Итог:</strong> Zval — основа работы с переменными в PHP. Его внутреннее устройство объясняет многие
+        особенности языка, такие как передача по значению/ссылке и управление памятью.</p></div>
+</body>
+</html>

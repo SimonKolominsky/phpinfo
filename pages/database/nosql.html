@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Не реляционные данные (NoSQL) — это данные,
+    которые не организованы в виде таблиц с фиксированными строками и столбцами, как в реляционных базах данных. Они
+    используются для работы с большими объемами неструктурированных или полуструктурированных данных, а также в случаях,
+    когда требуется высокая производительность, горизонтальное масштабирование и гибкость в хранении данных. Вот
+    основные типы нереляционных данных и соответствующие им базы данных:</p>
+    <hr>
+    <h3>1. <strong>Документоориентированные базы данных (Document Stores)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Данные хранятся в виде документов, обычно в формате JSON, BSON или XML. Каждый
+            документ может иметь свою уникальную структуру.</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>MongoDB</strong></p></li>
+                <li><p><strong>Couchbase</strong></p></li>
+                <li><p><strong>CouchDB</strong></p></li>
+                <li><p><strong>Firestore</strong> (от Google)</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Хранение профилей пользователей, контента, каталогов товаров.</p></li>
+    </ul>
+    <hr>
+    <h3>2. <strong>Ключ-значение (Key-Value Stores)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Данные хранятся в виде пар "ключ-значение". Ключ — это уникальный
+            идентификатор, а значение — это данные, которые могут быть любого типа.</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>Redis</strong></p></li>
+                <li><p><strong>Amazon DynamoDB</strong></p></li>
+                <li><p><strong>Riak</strong></p></li>
+                <li><p><strong>Memcached</strong></p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Кэширование, сессии, хранение настроек.</p></li>
+    </ul>
+    <hr>
+    <h3>3. <strong>Колоночные базы данных (Column-Family Stores)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Данные хранятся в виде колонок, а не строк. Это позволяет эффективно хранить и
+            обрабатывать большие объемы данных, особенно в аналитических задачах.</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>Apache Cassandra</strong></p></li>
+                <li><p><strong>HBase</strong></p></li>
+                <li><p><strong>ScyllaDB</strong></p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Аналитика больших данных, временные ряды, логи.</p></li>
+    </ul>
+    <hr>
+    <h3>4. <strong>Графовые базы данных (Graph Databases)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Данные хранятся в виде узлов (сущностей) и ребер (связей между ними). Это
+            позволяет эффективно работать с сильно связанными данными.</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>Neo4j</strong></p></li>
+                <li><p><strong>Amazon Neptune</strong></p></li>
+                <li><p><strong>ArangoDB</strong></p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Социальные сети, рекомендательные системы, анализ связей.</p></li>
+    </ul>
+    <hr>
+    <h3>5. <strong>Поисковые системы (Search Engines)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Специализированные базы данных для полнотекстового поиска и анализа текстовых
+            данных.</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>Elasticsearch</strong></p></li>
+                <li><p><strong>Apache Solr</strong></p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Поиск по сайтам, логам, аналитика текстовых данных.</p></li>
+    </ul>
+    <hr>
+    <h3>6. <strong>Временные ряды (Time-Series Databases)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Оптимизированы для хранения и обработки данных, которые изменяются во времени
+            (например, метрики, показатели датчиков).</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>InfluxDB</strong></p></li>
+                <li><p><strong>Prometheus</strong></p></li>
+                <li><p><strong>TimescaleDB</strong> (расширение для PostgreSQL)</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Мониторинг, IoT, финансовые данные.</p></li>
+    </ul>
+    <hr>
+    <h3>7. <strong>Объектные базы данных (Object-Oriented Databases)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Данные хранятся в виде объектов, как в объектно-ориентированных языках
+            программирования.</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>db4o</strong></p></li>
+                <li><p><strong>ObjectDB</strong></p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Приложения, где данные тесно связаны с объектами в коде.</p></li>
+    </ul>
+    <hr>
+    <h3>8. <strong>Многомодельные базы данных (Multi-Model Databases)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Поддерживают несколько моделей данных (например, документы, графы,
+            ключ-значение) в одной системе.</p></li>
+        <li><p><strong>Примеры баз данных</strong>:</p>
+            <ul>
+                <li><p><strong>ArangoDB</strong></p></li>
+                <li><p><strong>OrientDB</strong></p></li>
+                <li><p><strong>Couchbase</strong></p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Универсальные решения для сложных задач.</p></li>
+    </ul>
+    <hr>
+    <h3>9. <strong>Блочные и файловые хранилища (Blob/File Storage)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Используются для хранения больших бинарных объектов (изображения, видео,
+            файлы).</p></li>
+        <li><p><strong>Примеры</strong>:</p>
+            <ul>
+                <li><p><strong>Amazon S3</strong></p></li>
+                <li><p><strong>Google Cloud Storage</strong></p></li>
+                <li><p><strong>Azure Blob Storage</strong></p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Хранение медиафайлов, резервное копирование.</p></li>
+    </ul>
+    <hr>
+    <h3>10. <strong>Базы данных для обработки событий (Event Stores)</strong></h3>
+    <ul>
+        <li><p><strong>Описание</strong>: Хранят данные в виде последовательности событий, что полезно для систем,
+            основанных на событиях.</p></li>
+        <li><p><strong>Примеры</strong>:</p>
+            <ul>
+                <li><p><strong>EventStoreDB</strong></p></li>
+                <li><p><strong>Apache Kafka</strong> (хотя это скорее брокер сообщений, он может использоваться как
+                    хранилище событий).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование</strong>: Event-driven архитектуры, аудит, системы уведомлений.</p></li>
+    </ul>
+    <hr>
+    <h3>Когда использовать NoSQL?</h3>
+    <ul>
+        <li><p><strong>Неструктурированные данные</strong>: Данные не имеют четкой схемы.</p></li>
+        <li><p><strong>Горизонтальное масштабирование</strong>: Необходимость распределения данных на множество
+            серверов.</p></li>
+        <li><p><strong>Высокая производительность</strong>: Требуется низкая задержка и высокая пропускная способность.
+        </p></li>
+        <li><p><strong>Гибкость</strong>: Часто изменяющаяся структура данных.</p></li>
+    </ul></div>
+</body>
+</html>

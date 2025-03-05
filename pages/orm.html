@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Шаблоны проектирования в ORM
+    (Object-Relational Mapping) помогают упростить взаимодействие с базой данных, делая код более читаемым и
+    поддерживаемым. В PHP популярные ORM, такие как Doctrine или Eloquent, используют различные шаблоны проектирования.
+    Рассмотрим несколько примеров:</p>
+    <h3>1. <strong>Active Record</strong></h3>
+    <p>Active Record — это шаблон, при котором объект представляет собой строку в таблице базы данных. Объект содержит
+        как данные, так и методы для работы с ними.</p>
+    <p>Пример с использованием Eloquent (ORM для Laravel):</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">namespace</span> <span class="token package">App<span
+                class="token punctuation">\</span>Models</span><span class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\</span>Database<span
+                    class="token punctuation">\</span>Eloquent<span class="token punctuation">\</span>Model</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">User</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">Model</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Таблица, связанная с моделью</span>
+    <span class="token keyword">protected</span> <span class="token variable">$table</span> <span
+                    class="token operator">=</span> <span class="token string single-quoted-string">'users'</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token comment">// Поля, которые можно массово назначать</span>
+    <span class="token keyword">protected</span> <span class="token variable">$fillable</span> <span
+                    class="token operator">=</span> <span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'name'</span><span
+                    class="token punctuation">,</span> <span
+                    class="token string single-quoted-string">'email'</span><span
+                    class="token punctuation">,</span> <span class="token string single-quoted-string">'password'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">User</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token property">name</span> <span class="token operator">=</span> <span
+                    class="token string single-quoted-string">'John Doe'</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token property">email</span> <span class="token operator">=</span> <span
+                    class="token string single-quoted-string">'john@example.com'</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token property">password</span> <span class="token operator">=</span> <span
+                    class="token function">bcrypt</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'password'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token function">save</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Получение данных</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span
+                    class="token class-name static-context">User</span><span class="token operator">::</span><span
+                    class="token function">find</span><span class="token punctuation">(</span><span
+                    class="token number">1</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$user</span><span
+                    class="token operator">-&gt;</span><span class="token property">name</span><span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <h3>2. <strong>Data Mapper</strong></h3>
+    <p>Data Mapper — это шаблон, при котором объекты и база данных полностью разделены. ORM отвечает за маппинг данных
+        между объектами и базой данных.</p>
+    <p>Пример с использованием Doctrine (ORM для Symfony):</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">namespace</span> <span class="token package">App<span
+                class="token punctuation">\</span>Entity</span><span class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">Doctrine<span
+                    class="token punctuation">\</span>ORM<span class="token punctuation">\</span>Mapping</span> <span
+                    class="token keyword">as</span> <span class="token constant">ORM</span><span
+                    class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * @ORM\Entity
+ * @ORM\Table(name="users")
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">User</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">/**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */</span>
+    <span class="token keyword">private</span> <span class="token variable">$id</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * @ORM\Column(type="string")
+     */</span>
+    <span class="token keyword">private</span> <span class="token variable">$name</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * @ORM\Column(type="string")
+     */</span>
+    <span class="token keyword">private</span> <span class="token variable">$email</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token comment">// Геттеры и сеттеры</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getId</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token operator">?</span><span class="token keyword return-type">int</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">id</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getName</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token operator">?</span><span
+                    class="token keyword return-type">string</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">name</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">setName</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span
+                    class="token variable">$name</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">self</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">name</span> <span
+                    class="token operator">=</span> <span class="token variable">$name</span><span
+                    class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getEmail</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token operator">?</span><span
+                    class="token keyword return-type">string</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">email</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">setEmail</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span
+                    class="token variable">$email</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">self</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">email</span> <span
+                    class="token operator">=</span> <span class="token variable">$email</span><span
+                    class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">User</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token function">setName</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'John Doe'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token function">setEmail</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'john@example.com'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$entityManager</span><span class="token operator">-&gt;</span><span class="token function">persist</span><span
+                    class="token punctuation">(</span><span class="token variable">$user</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$entityManager</span><span class="token operator">-&gt;</span><span class="token function">flush</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+
+<span class="token comment">// Получение данных</span>
+<span class="token variable">$userRepository</span> <span class="token operator">=</span> <span class="token variable">$entityManager</span><span
+                    class="token operator">-&gt;</span><span class="token function">getRepository</span><span
+                    class="token punctuation">(</span><span class="token class-name static-context">User</span><span
+                    class="token operator">::</span><span class="token keyword">class</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span class="token variable">$userRepository</span><span
+                    class="token operator">-&gt;</span><span class="token function">find</span><span
+                    class="token punctuation">(</span><span class="token number">1</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$user</span><span
+                    class="token operator">-&gt;</span><span class="token function">getName</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <h3>3. <strong>Repository</strong></h3>
+    <p>Repository — это шаблон, который предоставляет абстракцию для доступа к данным. Он инкапсулирует логику работы с
+        базой данных и предоставляет методы для получения данных.</p>
+    <p>Пример с использованием Doctrine:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">namespace</span> <span class="token package">App<span
+                class="token punctuation">\</span>Repository</span><span class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                    class="token punctuation">\</span>Entity<span class="token punctuation">\</span>User</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Doctrine<span class="token punctuation">\</span>Bundle<span
+                    class="token punctuation">\</span>DoctrineBundle<span
+                    class="token punctuation">\</span>Repository<span class="token punctuation">\</span>ServiceEntityRepository</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Doctrine<span class="token punctuation">\</span>Persistence<span
+                    class="token punctuation">\</span>ManagerRegistry</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">UserRepository</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">ServiceEntityRepository</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">ManagerRegistry</span> <span class="token variable">$registry</span><span
+                    class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword static-context">parent</span><span class="token operator">::</span><span
+                    class="token function">__construct</span><span class="token punctuation">(</span><span
+                    class="token variable">$registry</span><span class="token punctuation">,</span> <span
+                    class="token class-name static-context">User</span><span class="token operator">::</span><span
+                    class="token keyword">class</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Кастомный метод для поиска пользователя по email</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">findByEmail</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span
+                    class="token variable">$email</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token operator">?</span><span
+                    class="token class-name return-type">User</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token function">createQueryBuilder</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'u'</span><span class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">andWhere</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'u.email = :email'</span><span
+                    class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">setParameter</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'email'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$email</span><span
+                    class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">getQuery</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">getOneOrNullResult</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$userRepository</span> <span class="token operator">=</span> <span class="token variable">$entityManager</span><span
+                    class="token operator">-&gt;</span><span class="token function">getRepository</span><span
+                    class="token punctuation">(</span><span class="token class-name static-context">User</span><span
+                    class="token operator">::</span><span class="token keyword">class</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span class="token variable">$userRepository</span><span
+                    class="token operator">-&gt;</span><span class="token function">findByEmail</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'john@example.com'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$user</span><span
+                    class="token operator">-&gt;</span><span class="token function">getName</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <h3>4. <strong>Query Object</strong></h3>
+    <p>Query Object — это шаблон, который инкапсулирует запросы к базе данных в отдельные классы, что делает код более
+        читаемым и поддерживаемым.</p>
+    <p>Пример с использованием Eloquent:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">namespace</span> <span class="token package">App<span
+                class="token punctuation">\</span>Queries</span><span class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                    class="token punctuation">\</span>Models<span class="token punctuation">\</span>User</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">UserQuery</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">findActiveUsers</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token class-name static-context">User</span><span
+                    class="token operator">::</span><span class="token function">where</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'active'</span><span
+                    class="token punctuation">,</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span><span class="token operator">-&gt;</span><span
+                    class="token function">get</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">findUsersByRole</span><span
+                    class="token punctuation">(</span><span class="token variable">$role</span><span
+                    class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token class-name static-context">User</span><span
+                    class="token operator">::</span><span class="token function">where</span><span
+                    class="token punctuation">(</span><span class="token string single-quoted-string">'role'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$role</span><span
+                    class="token punctuation">)</span><span class="token operator">-&gt;</span><span
+                    class="token function">get</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$activeUsers</span> <span class="token operator">=</span> <span
+                    class="token class-name static-context">UserQuery</span><span class="token operator">::</span><span
+                    class="token function">findActiveUsers</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$admins</span> <span class="token operator">=</span> <span
+                    class="token class-name static-context">UserQuery</span><span class="token operator">::</span><span
+                    class="token function">findUsersByRole</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'admin'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <h3>5. <strong>Unit of Work</strong></h3>
+    <p>Unit of Work — это шаблон, который отслеживает изменения объектов и автоматически синхронизирует их с базой
+        данных при вызове метода <code>flush</code>.</p>
+    <p>Пример с использованием Doctrine:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Создание нового пользователя</span>
+<span class="token variable">$user</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">User</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token function">setName</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'Jane Doe'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$user</span><span class="token operator">-&gt;</span><span
+                    class="token function">setEmail</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'jane@example.com'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Добавление пользователя в Unit of Work</span>
+<span class="token variable">$entityManager</span><span class="token operator">-&gt;</span><span class="token function">persist</span><span
+                    class="token punctuation">(</span><span class="token variable">$user</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Обновление существующего пользователя</span>
+<span class="token variable">$existingUser</span> <span class="token operator">=</span> <span class="token variable">$entityManager</span><span
+                    class="token operator">-&gt;</span><span class="token function">find</span><span
+                    class="token punctuation">(</span><span class="token class-name static-context">User</span><span
+                    class="token operator">::</span><span class="token keyword">class</span><span
+                    class="token punctuation">,</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$existingUser</span><span class="token operator">-&gt;</span><span class="token function">setName</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'John Smith'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Синхронизация изменений с базой данных</span>
+<span class="token variable">$entityManager</span><span class="token operator">-&gt;</span><span class="token function">flush</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <h3>Заключение</h3>
+    <p>Шаблоны проектирования в ORM помогают структурировать код, делая его более модульным и удобным для тестирования.
+        Выбор шаблона зависит от конкретной задачи и предпочтений разработчика. Active Record подходит для простых
+        проектов, а Data Mapper и Repository — для более сложных, где требуется четкое разделение ответственности.</p>
+</div>
+</body>
+</html>

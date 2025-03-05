@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Ваш список охватывает практически все
+    ключевые аспекты, которые могут быть затронуты на собеседовании для PHP-разработчика с опытом работы с Symfony.
+    Однако, чтобы сделать его более структурированным и удобным для подготовки, я предлагаю немного перегруппировать и
+    дополнить его. Вот улучшенная версия:</p>
+    <hr>
+    <h3><strong>1. Основы PHP</strong></h3>
+    <ul>
+        <li><p><strong>ООП в PHP</strong></p>
+            <ul>
+                <li><p>Разница между интерфейсами и абстрактными классами.</p></li>
+                <li><p>Позднее статическое связывание (Late Static Binding).</p></li>
+                <li><p>Магические методы (<code>__construct</code>, <code>__destruct</code>, <code>__call</code>, <code>__get</code>,
+                    <code>__set</code> и др.).</p></li>
+                <li><p>Замыкания и анонимные функции.</p></li>
+                <li><p>Инъекция зависимостей (Dependency Injection) и её реализация в PHP.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Автозагрузка</strong></p>
+            <ul>
+                <li><p>Разница между PSR-4 и PSR-0.</p></li>
+                <li><p>Оптимизация автозагрузки через Composer.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Работа с данными</strong></p>
+            <ul>
+                <li><p>Сериализация и десериализация данных.</p></li>
+                <li><p>Работа с JSON, XML.</p></li>
+                <li><p>Валидация данных.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Обработка ошибок</strong></p>
+            <ul>
+                <li><p>Исключения и их обработка.</p></li>
+                <li><p>Пользовательские исключения.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Память и производительность</strong></p>
+            <ul>
+                <li><p>Управление памятью в PHP.</p></li>
+                <li><p>Оптимизация производительности.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>2. Symfony Framework</strong></h3>
+    <ul>
+        <li><p><strong>Архитектура и компоненты</strong></p>
+            <ul>
+                <li><p>Основные компоненты Symfony (HttpKernel, DependencyInjection, EventDispatcher и др.).</p></li>
+                <li><p>Жизненный цикл HTTP-запроса.</p></li>
+                <li><p>Контейнер внедрения зависимостей (Dependency Injection Container).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Маршрутизация и контроллеры</strong></p>
+            <ul>
+                <li><p>Настройка маршрутизации (Routing).</p></li>
+                <li><p>Создание и работа с контроллерами.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Работа с базой данных</strong></p>
+            <ul>
+                <li><p>Doctrine ORM: сущности, репозитории, миграции.</p></li>
+                <li><p>Оптимизация запросов и работа с QueryBuilder.</p></li>
+                <li><p>Работа с DQL (Doctrine Query Language).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Безопасность</strong></p>
+            <ul>
+                <li><p>Аутентификация и авторизация.</p></li>
+                <li><p>Роли и voters.</p></li>
+                <li><p>Настройка Firewall.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Кэширование</strong></p>
+            <ul>
+                <li><p>Стратегии кэширования.</p></li>
+                <li><p>Использование Symfony Cache.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>События (Event Dispatcher)</strong></p>
+            <ul>
+                <li><p>Создание и обработка событий.</p></li>
+                <li><p>Использование Event Subscribers и Listeners.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Формы</strong></p>
+            <ul>
+                <li><p>Создание и валидация форм.</p></li>
+                <li><p>Кастомизация форм.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Асинхронные задачи</strong></p>
+            <ul>
+                <li><p>Использование Symfony Messenger.</p></li>
+                <li><p>Работа с очередями (RabbitMQ, Kafka).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Тестирование</strong></p>
+            <ul>
+                <li><p>Модульное тестирование с PHPUnit.</p></li>
+                <li><p>Функциональное тестирование с Symfony Panther.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Интернационализация</strong></p>
+            <ul>
+                <li><p>Локализация и переводы.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Отладка</strong></p>
+            <ul>
+                <li><p>Использование Symfony Profiler.</p></li>
+                <li><p>Интеграция с Blackfire для профилирования.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>3. Архитектурные вопросы</strong></h3>
+    <ul>
+        <li><p><strong>Проектирование приложений</strong></p>
+            <ul>
+                <li><p>Модульная архитектура.</p></li>
+                <li><p>Микросервисы vs монолит.</p></li>
+                <li><p>Применение DDD (Domain-Driven Design).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Оптимизация производительности</strong></p>
+            <ul>
+                <li><p>Кэширование на разных уровнях.</p></li>
+                <li><p>Оптимизация запросов к базе данных.</p></li>
+                <li><p>Использование Varnish, Nginx.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Масштабирование</strong></p>
+            <ul>
+                <li><p>Стратегии масштабирования высоконагруженных приложений.</p></li>
+                <li><p>Использование Redis, Memcached.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>CQRS и Event Sourcing</strong></p>
+            <ul>
+                <li><p>Реализация в Symfony.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Миграции и обновления</strong></p>
+            <ul>
+                <li><p>Стратегии безопасного обновления схемы базы данных.</p></li>
+                <li><p>Обеспечение обратной совместимости API.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>4. Практические задания</strong></h3>
+    <ul>
+        <li><p><strong>Проектирование API</strong></p>
+            <ul>
+                <li><p>RESTful API.</p></li>
+                <li><p>GraphQL с использованием API Platform.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Рефакторинг</strong></p>
+            <ul>
+                <li><p>Выявление проблем в существующем коде.</p></li>
+                <li><p>Улучшение читаемости и производительности.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Создание архитектуры</strong></p>
+            <ul>
+                <li><p>Проектирование для конкретного бизнес-кейса.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Работа с очередями</strong></p>
+            <ul>
+                <li><p>Реализация асинхронных задач с RabbitMQ/Kafka.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Интеграция с внешними сервисами</strong></p>
+            <ul>
+                <li><p>Работа с Elasticsearch, WebSockets (Mercure).</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>5. DevOps и CI/CD</strong></h3>
+    <ul>
+        <li><p><strong>Контейнеризация</strong></p>
+            <ul>
+                <li><p>Docker и Docker Compose.</p></li>
+                <li><p>Оркестрация с Kubernetes.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>CI/CD</strong></p>
+            <ul>
+                <li><p>Настройка пайплайнов (GitLab CI, GitHub Actions, Jenkins).</p></li>
+                <li><p>Автоматизация тестирования и деплоя.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Мониторинг</strong></p>
+            <ul>
+                <li><p>Prometheus, Grafana.</p></li>
+                <li><p>Централизованное логирование (ELK Stack).</p></li>
+                <li><p>APM-решения (New Relic, Datadog).</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>6. Качество кода</strong></h3>
+    <ul>
+        <li><p><strong>Статический анализ</strong></p>
+            <ul>
+                <li><p>PHPStan, Psalm.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Стандарты кодирования</strong></p>
+            <ul>
+                <li><p>PHP-CS-Fixer, PHP CodeSniffer.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Тестирование</strong></p>
+            <ul>
+                <li><p>PHPUnit, Behat.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Анализ качества</strong></p>
+            <ul>
+                <li><p>SonarQube.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>7. Менеджерские и командные вопросы</strong></h3>
+    <ul>
+        <li><p><strong>Планирование и распределение задач</strong></p>
+            <ul>
+                <li><p>Agile, Scrum, Kanban.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Код-ревью</strong></p>
+            <ul>
+                <li><p>Подходы к проведению.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Менторство</strong></p>
+            <ul>
+                <li><p>Опыт обучения junior-разработчиков.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Технические решения</strong></p>
+            <ul>
+                <li><p>Как выбирать архитектуру и технологии.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Внедрение DevOps</strong></p>
+            <ul>
+                <li><p>Опыт внедрения CI/CD и автоматизации.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>8. Дополнительные технологии</strong></h3>
+    <ul>
+        <li><p><strong>Базы данных</strong></p>
+            <ul>
+                <li><p>PostgreSQL/MySQL: оптимизация запросов, индексы.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Кэширование</strong></p>
+            <ul>
+                <li><p>Redis, Memcached.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Очереди</strong></p>
+            <ul>
+                <li><p>RabbitMQ, Kafka.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Поиск</strong></p>
+            <ul>
+                <li><p>Elasticsearch.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>WebSockets</strong></p>
+            <ul>
+                <li><p>Mercure.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Контейнеризация</strong></p>
+            <ul>
+                <li><p>Docker, Kubernetes.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>9. Дополнительные вопросы</strong></h3>
+    <ul>
+        <li><p><strong>Symfony Flex</strong></p>
+            <ul>
+                <li><p>Использование рецептов.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Symfony Workflow</strong></p>
+            <ul>
+                <li><p>Построение сложных бизнес-процессов.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Feature Toggles</strong></p>
+            <ul>
+                <li><p>Использование для А/Б тестирования.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Legacy Code</strong></p>
+            <ul>
+                <li><p>Стратегии работы с устаревшим кодом.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Безопасность</strong></p>
+            <ul>
+                <li><p>Практики обеспечения безопасности приложений.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3><strong>10. Вопросы на собеседовании</strong></h3>
+    <ul>
+        <li><p><strong>Теоретические вопросы</strong></p>
+            <ul>
+                <li><p>Пример: "Как работает Event Dispatcher в Symfony?"</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Практические задачи</strong></p>
+            <ul>
+                <li><p>Пример: "Напишите простой REST API с использованием Symfony."</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Архитектурные кейсы</strong></p>
+            <ul>
+                <li><p>Пример: "Как бы вы спроектировали систему для обработки заказов?"</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Поведенческие вопросы</strong></p>
+            <ul>
+                <li><p>Пример: "Как вы решаете конфликты в команде?"</p></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

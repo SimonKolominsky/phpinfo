@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Курсор в контексте баз данных — это объект,
+    который позволяет перебирать строки в результате выполнения SQL-запроса. Курсоры используются для обработки данных
+    построчно, что особенно полезно при работе с большими объемами данных, когда загрузка всех строк в память сразу
+    может быть неэффективной или невозможной.</p>
+    <h3>Основные понятия о курсорах:</h3>
+    <ol start="1">
+        <li><p><strong>Открытие курсора</strong>: После выполнения SQL-запроса курсор открывается и указывает на начало
+            результата.</p></li>
+        <li><p><strong>Перемещение по данным</strong>: Курсор позволяет перемещаться по строкам результата (вперед,
+            назад или в произвольное место, в зависимости от типа курсора).</p></li>
+        <li><p><strong>Чтение данных</strong>: Из текущей строки можно извлечь данные.</p></li>
+        <li><p><strong>Закрытие курсора</strong>: После завершения работы курсор закрывается, чтобы освободить ресурсы.
+        </p></li>
+    </ol>
+    <h3>Применение курсоров в Doctrine (Symfony)</h3>
+    <p>Doctrine ORM — это популярная библиотека для работы с базами данных в Symfony. Она предоставляет высокоуровневый
+        API для работы с базой данных, но иногда требуется использовать низкоуровневые функции, такие как курсоры.</p>
+    <h4>Пример использования курсора в Doctrine:</h4>
+    <p>Doctrine поддерживает использование курсоров через <code>iterate()</code>. Этот метод возвращает итератор,
+        который позволяет обрабатывать результаты запроса построчно, не загружая все данные в память.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$query</span> <span class="token operator">=</span> <span
+                class="token variable">$entityManager</span><span class="token operator">-&gt;</span><span
+                class="token function">createQuery</span><span class="token punctuation">(</span><span
+                class="token string single-quoted-string">'SELECT u FROM User u'</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$iterableResult</span> <span class="token operator">=</span> <span class="token variable">$query</span><span
+                    class="token operator">-&gt;</span><span class="token function">iterate</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$iterableResult</span> <span
+                    class="token keyword">as</span> <span class="token variable">$row</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$user</span> <span class="token operator">=</span> <span
+                    class="token variable">$row</span><span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Получаем объект User</span>
+    <span class="token comment">// Обработка пользователя</span>
+    <span class="token variable">$entityManager</span><span class="token operator">-&gt;</span><span
+                    class="token function">detach</span><span class="token punctuation">(</span><span
+                    class="token variable">$user</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Отсоединяем объект от EntityManager для экономии памяти</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h4>Преимущества использования курсоров:</h4>
+    <ol start="1">
+        <li><p><strong>Экономия памяти</strong>: Данные загружаются построчно, что полезно при работе с большими
+            объемами данных.</p></li>
+        <li><p><strong>Гибкость</strong>: Можно обрабатывать данные в потоковом режиме.</p></li>
+    </ol>
+    <h4>Недостатки:</h4>
+    <ol start="1">
+        <li><p><strong>Производительность</strong>: Курсоры могут быть медленнее, чем работа с данными в памяти.</p>
+        </li>
+        <li><p><strong>Сложность</strong>: Требуется больше внимания к управлению ресурсами (например, закрытие
+            курсора).</p></li>
+    </ol>
+    <h3>Пример в Symfony с использованием DQL (Doctrine Query Language):</h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$entityManager</span> <span class="token operator">=</span> <span
+                class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                class="token function">getDoctrine</span><span class="token punctuation">(</span><span
+                class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">getManager</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span class="token variable">$entityManager</span><span
+                    class="token operator">-&gt;</span><span class="token function">createQuery</span><span
+                    class="token punctuation">(</span><span class="token string single-quoted-string">'SELECT p FROM App\Entity\Product p'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$products</span> <span class="token operator">=</span> <span
+                    class="token variable">$query</span><span class="token operator">-&gt;</span><span
+                    class="token function">iterate</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$products</span> <span
+                    class="token keyword">as</span> <span class="token variable">$row</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$product</span> <span class="token operator">=</span> <span
+                    class="token variable">$row</span><span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+    <span class="token comment">// Обработка продукта</span>
+    <span class="token variable">$entityManager</span><span class="token operator">-&gt;</span><span
+                    class="token function">detach</span><span class="token punctuation">(</span><span
+                    class="token variable">$product</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Освобождаем память</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>Когда использовать курсоры:</h3>
+    <ul>
+        <li><p>Когда результат запроса слишком большой для загрузки в память.</p></li>
+        <li><p>Когда нужно обрабатывать данные последовательно, например, для экспорта или пакетной обработки.</p></li>
+    </ul>
+    <h3>Альтернативы курсорам:</h3>
+    <ul>
+        <li><p><strong>Пакетная обработка</strong>: Разделение данных на части и обработка каждой части отдельно.</p>
+        </li>
+        <li><p><strong>Использование пагинации</strong>: Загрузка данных постранично.</p></li>
+    </ul>
+    <h3>Заключение</h3>
+    <p>Курсоры — это мощный инструмент для работы с большими объемами данных в базах данных. В Doctrine и Symfony они
+        реализованы через метод <code>iterate()</code>, который позволяет эффективно обрабатывать данные построчно.
+        Однако их использование требует внимания к управлению памятью и производительностью.</p></div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Блокировки в базах данных (СУБД)
+    используются для обеспечения согласованности данных при параллельном доступе. Они предотвращают конфликты между
+    транзакциями, но могут влиять на производительность. Основные виды блокировок:</p>
+    <hr>
+    <h3>1. <strong>По уровню блокировки</strong></h3>
+    <ul>
+        <li><p><strong>Блокировка строки (Row-level lock)</strong><br>Блокируется только конкретная строка таблицы.
+            Позволяет другим транзакциям работать с остальными строками.<br><em>Пример:</em> <code>UPDATE users SET name
+                = 'Alice' WHERE id = 1;</code> (блокируется строка с <code>id = 1</code>).</p></li>
+        <li><p><strong>Блокировка страницы (Page-level lock)</strong><br>Блокируется группа строк (страница данных).
+            Используется реже, так как может вызывать избыточные блокировки.</p></li>
+        <li><p><strong>Блокировка таблицы (Table-level lock)</strong><br>Блокируется вся таблица. Используется при
+            операциях, затрагивающих множество строк (например, <code>ALTER TABLE</code>).</p></li>
+        <li><p><strong>Блокировка базы данных (Database-level lock)</strong><br>Редко применяется, обычно для резервного
+            копирования или миграций.</p></li>
+    </ul>
+    <hr>
+    <h3>2. <strong>По типу доступа</strong></h3>
+    <ul>
+        <li><p><strong>Разделяемая блокировка (Shared Lock, S-lock)</strong><br>Разрешает чтение данных, но запрещает
+            изменение. Используется для <code>SELECT</code>.<br><em>Пример:</em> <code>SELECT * FROM users LOCK IN SHARE
+                MODE;</code> (в MySQL).</p></li>
+        <li><p><strong>Эксклюзивная блокировка (Exclusive Lock, X-lock)</strong><br>Запрещает чтение и изменение данных
+            другими транзакциями. Используется для <code>INSERT</code>, <code>UPDATE</code>,
+            <code>DELETE</code>.<br><em>Пример:</em> <code>SELECT * FROM users FOR UPDATE;</code> (блокировка для
+            изменения).</p></li>
+        <li><p><strong>Блокировка намерения (Intent Lock)</strong><br>Указывает намерение заблокировать дочерний объект
+            (например, строку или страницу).</p>
+            <ul>
+                <li><p><strong>IS (Intent Shared)</strong>: Намерение установить разделяемую блокировку.</p></li>
+                <li><p><strong>IX (Intent Exclusive)</strong>: Намерение установить эксклюзивную блокировку.</p></li>
+                <li><p><strong>SIX (Shared with Intent Exclusive)</strong>: Комбинация S и IX.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3>3. <strong>По времени удержания</strong></h3>
+    <ul>
+        <li><p><strong>Пессимистичная блокировка</strong><br>Блокировка удерживается до конца транзакции. Используется,
+            если высока вероятность конфликтов.<br><em>Пример:</em> <code>BEGIN; SELECT ... FOR UPDATE; COMMIT;</code>
+        </p></li>
+        <li><p><strong>Оптимистичная блокировка</strong><br>Блокировка не применяется явно. Конфлик проверяется при
+            коммите (например, через версии строк).<br><em>Пример:</em> Использование поля <code>version</code> в
+            таблице для проверки изменений.</p></li>
+    </ul>
+    <hr>
+    <h3>4. <strong>По явности</strong></h3>
+    <ul>
+        <li><p><strong>Неявная блокировка</strong><br>Автоматически накладывается СУБД при выполнении операций
+            (например, <code>UPDATE</code> блокирует строку).</p></li>
+        <li><p><strong>Явная блокировка</strong><br>Задается вручную через SQL-запросы.<br><em>Пример:</em> <code>LOCK
+            TABLE users IN EXCLUSIVE MODE;</code> (в PostgreSQL).</p></li>
+    </ul>
+    <hr>
+    <h3>5. <strong>Специальные блокировки</strong></h3>
+    <ul>
+        <li><p><strong>Мертвая блокировка (Deadlock)</strong><br>Возникает, когда транзакции взаимно блокируют друг
+            друга. СУБД автоматически обнаруживает и прерывает одну из них.</p></li>
+        <li><p><strong>Блокировка обновления (Update Lock, U-lock)</strong><br>Промежуточная блокировка для
+            предотвращения взаимоблокировок при <code>UPDATE</code>. Переходит в X-lock при изменении данных.</p></li>
+    </ul>
+    <hr>
+    <h3>6. <strong>Режимы блокировок в разных СУБД</strong></h3>
+    <ul>
+        <li><p><strong>PostgreSQL</strong>: Реализует многопоточность через MVCC (версионирование), блокировки
+            используются для явных операций.</p></li>
+        <li><p><strong>MySQL (InnoDB)</strong>: Поддерживает блокировки строк и таблиц, автоматическое разрешение
+            deadlock.</p></li>
+        <li><p><strong>Oracle</strong>: Использует сложные механизмы блокировок (например, row-level locks с
+            автоматическим эскалацией).</p></li>
+    </ul>
+    <hr>
+    <h3>Как управлять блокировками?</h3>
+    <ul>
+        <li><p>Настраивайте уровень изоляции транзакций (Read Committed, Repeatable Read и т.д.).</p></li>
+        <li><p>Используйте <code>NOWAIT</code> или таймауты для избежания долгих ожиданий.</p></li>
+        <li><p>Минимизируйте время удержания блокировок.</p></li>
+        <li><p>Избегайте долгих транзакций с множеством изменений.</p></li>
+    </ul>
+    <p>Блокировки — это баланс между целостностью данных и производительностью. Используйте их аккуратно!</p></div>
+
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В SQL транзакции завершаются либо <strong>явно</strong>
+    (через <code>COMMIT</code> или <code>ROLLBACK</code>), либо <strong>досрочно</strong> из-за ошибок, принудительных
+    команд или внешних факторов. Вот основные способы досрочного завершения:</p>
+    <hr>
+    <h3>1. <strong>Явные команды</strong></h3>
+    <ul>
+        <li><p><strong><code>ROLLBACK</code></strong><br>Отменяет все изменения в текущей транзакции и завершает ее.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> accounts <span class="token keyword">SET</span> balance <span
+                            class="token operator">=</span> balance <span class="token operator">-</span> <span
+                            class="token number">100</span> <span class="token keyword">WHERE</span> user_id <span
+                            class="token operator">=</span> <span class="token number">1</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">ROLLBACK</span><span class="token punctuation">;</span> <span class="token comment">-- Отмена всех изменений</span></pre>
+            </div>
+        </li>
+        <li><p><strong><code>ABORT</code></strong><br>В некоторых СУБД (например, PostgreSQL) это синоним
+            <code>ROLLBACK</code>.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> logs <span
+                            class="token keyword">WHERE</span> created_at <span class="token operator">&lt;</span> <span
+                            class="token string">'2020-01-01'</span><span class="token punctuation">;</span>
+ABORT<span class="token punctuation">;</span> <span class="token comment">-- Аналог ROLLBACK</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>2. <strong>Автоматический откат</strong></h3>
+    <ul>
+        <li><p><strong>Ошибки в транзакции</strong><br>Если в транзакции возникает ошибка (например, нарушение
+            ограничений, синтаксическая ошибка), СУБД автоматически выполняет <code>ROLLBACK</code>.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> users <span class="token punctuation">(</span>id<span
+                            class="token punctuation">,</span> name<span class="token punctuation">)</span> <span
+                            class="token keyword">VALUES</span> <span class="token punctuation">(</span><span
+                            class="token number">1</span><span class="token punctuation">,</span> <span
+                            class="token string">'Alice'</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span> <span class="token comment">-- Успех</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> users <span class="token punctuation">(</span>id<span
+                            class="token punctuation">,</span> name<span class="token punctuation">)</span> <span
+                            class="token keyword">VALUES</span> <span class="token punctuation">(</span><span
+                            class="token number">1</span><span class="token punctuation">,</span> <span
+                            class="token string">'Bob'</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span> <span class="token comment">-- Ошибка: дубликат id</span>
+<span class="token comment">-- Транзакция автоматически откатывается</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Deadlock (взаимоблокировка)</strong><br>СУБД обнаруживает взаимоблокировку и завершает одну из
+            транзакций с ошибкой (остальные продолжают работу).</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">-- Транзакция 1</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> accounts <span class="token keyword">SET</span> balance <span
+                            class="token operator">=</span> <span class="token number">100</span> <span
+                            class="token keyword">WHERE</span> user_id <span class="token operator">=</span> <span
+                            class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment">-- Транзакция 2</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> accounts <span class="token keyword">SET</span> balance <span
+                            class="token operator">=</span> <span class="token number">200</span> <span
+                            class="token keyword">WHERE</span> user_id <span class="token operator">=</span> <span
+                            class="token number">2</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> accounts <span class="token keyword">SET</span> balance <span
+                            class="token operator">=</span> <span class="token number">300</span> <span
+                            class="token keyword">WHERE</span> user_id <span class="token operator">=</span> <span
+                            class="token number">1</span><span class="token punctuation">;</span> <span
+                            class="token comment">-- Deadlock</span>
+<span class="token comment">-- СУБД прерывает одну из транзакций</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>3. <strong>Принудительное завершение</strong></h3>
+    <ul>
+        <li><p><strong>Команды администратора</strong><br>Администратор БД может принудительно завершить транзакцию
+            (например, через <code>KILL</code> в <strong>SQL Server</strong> или <code>pg_terminate_backend()</code> в
+            <strong>PostgreSQL</strong>).</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">-- PostgreSQL</span>
+<span class="token keyword">SELECT</span> pg_terminate_backend<span class="token punctuation">(</span>pid<span
+                            class="token punctuation">)</span> <span class="token keyword">FROM</span> pg_stat_activity <span
+                            class="token keyword">WHERE</span> state <span class="token operator">=</span> <span
+                            class="token string">'idle in transaction'</span><span
+                            class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>4. <strong>Закрытие соединения</strong></h3>
+    <p>Если клиентское приложение разрывает соединение с БД <strong>без явного <code>COMMIT</code> или
+        <code>ROLLBACK</code></strong>, СУБД автоматически откатывает транзакцию (если не включен режим авто-коммита).
+    </p>
+    <hr>
+    <h3>5. <strong>Специфичные команды СУБД</strong></h3>
+    <ul>
+        <li><p><strong>Oracle</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">ROLLBACK</span> <span class="token keyword">FORCE</span> <span
+                        class="token string">'transaction_id'</span><span class="token punctuation">;</span> <span
+                        class="token comment">-- Принудительный откат транзакции.</span></pre>
+            </div>
+        </li>
+        <li><p><strong>MySQL</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">KILL</span> <span class="token punctuation">[</span>CONNECTION <span
+                        class="token operator">|</span> QUERY<span class="token punctuation">]</span> process_id<span
+                        class="token punctuation">;</span> <span
+                        class="token comment">-- Завершение сессии или запроса.</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>Примеры</h3><h4>PostgreSQL</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> products <span class="token keyword">SET</span> price <span
+                    class="token operator">=</span> <span class="token number">50</span> <span class="token keyword">WHERE</span> id <span
+                    class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token comment">-- Если выполнить ROLLBACK или ABORT, изменения отменятся.</span></pre>
+    </div>
+    <h4>MySQL</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">START</span> <span class="token keyword">TRANSACTION</span><span
+                class="token punctuation">;</span>
+<span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> orders <span class="token keyword">WHERE</span> <span
+                    class="token keyword">status</span> <span class="token operator">=</span> <span
+                    class="token string">'cancelled'</span><span class="token punctuation">;</span>
+<span class="token comment">-- Принудительный ROLLBACK через ошибку:</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> invalid_table <span
+                    class="token keyword">VALUES</span> <span class="token punctuation">(</span><span
+                    class="token number">1</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span
+                    class="token comment">-- Ошибка → автоматический ROLLBACK</span></pre>
+    </div>
+    <hr>
+    <h3>Важно!</h3>
+    <ul>
+        <li><p>Уровень изоляции транзакций влияет на видимость изменений для других транзакций.</p></li>
+        <li><p>В режиме <strong>авто-коммита</strong> (по умолчанию в большинстве СУБД) каждая команда выполняется как
+            отдельная транзакция.</p></li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p><code>SAVEPOINT</code> — это механизм в SQL,
+    который позволяет создавать "точки сохранения" внутри транзакции. Эти точки позволяют откатывать изменения не всей
+    транзакции, а только до определенного момента, что полезно для управления сложными транзакциями с множеством
+    операций.</p>
+    <h3>Основные аспекты <code>SAVEPOINT</code>:</h3>
+    <ol start="1">
+        <li><p><strong>Создание точки сохранения</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SAVEPOINT</span> savepoint_name<span class="token punctuation">;</span></pre>
+            </div>
+            <p>Где <code>savepoint_name</code> — это уникальное имя точки сохранения.</p></li>
+        <li><p><strong>Откат к точке сохранения</strong>:<br>Если произошла ошибка или нужно отменить часть изменений,
+            можно выполнить:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">ROLLBACK</span> <span class="token keyword">TO</span> <span
+                        class="token keyword">SAVEPOINT</span> savepoint_name<span
+                        class="token punctuation">;</span></pre>
+            </div>
+            <p>Это откатит все изменения, сделанные после создания точки сохранения, но не затронет изменения до
+                неё.</p></li>
+        <li><p><strong>Удаление точки сохранения</strong>:<br>После завершения части транзакции или если точка
+            сохранения больше не нужна, её можно удалить:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">RELEASE</span> <span class="token keyword">SAVEPOINT</span> savepoint_name<span
+                        class="token punctuation">;</span></pre>
+            </div>
+            <p>После этого откат к этой точке сохранения будет невозможен.</p></li>
+    </ol>
+    <h3>Пример использования:</h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Первая операция</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> employees <span
+                    class="token punctuation">(</span>name<span class="token punctuation">,</span> salary<span
+                    class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span
+                    class="token punctuation">(</span><span class="token string">'Alice'</span><span
+                    class="token punctuation">,</span> <span class="token number">50000</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Создаем точку сохранения</span>
+<span class="token keyword">SAVEPOINT</span> after_insert<span class="token punctuation">;</span>
+
+<span class="token comment">-- Вторая операция</span>
+<span class="token keyword">UPDATE</span> employees <span class="token keyword">SET</span> salary <span
+                    class="token operator">=</span> <span class="token number">60000</span> <span class="token keyword">WHERE</span> name <span
+                    class="token operator">=</span> <span class="token string">'Alice'</span><span
+                    class="token punctuation">;</span>
+
+<span class="token comment">-- Ошибка или необходимость отката</span>
+<span class="token keyword">ROLLBACK</span> <span class="token keyword">TO</span> <span
+                    class="token keyword">SAVEPOINT</span> after_insert<span class="token punctuation">;</span>
+
+<span class="token comment">-- Третья операция</span>
+<span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> name <span
+                    class="token operator">=</span> <span class="token string">'Alice'</span><span
+                    class="token punctuation">;</span>
+
+<span class="token comment">-- Завершаем транзакцию</span>
+<span class="token keyword">COMMIT</span><span class="token punctuation">;</span></pre>
+    </div>
+    <h3>Важные моменты:</h3>
+    <ul>
+        <li><p><code>SAVEPOINT</code> работает только внутри транзакции (после <code>BEGIN</code> и до
+            <code>COMMIT</code> или <code>ROLLBACK</code>).</p></li>
+        <li><p>Если выполняется <code>ROLLBACK</code> без указания точки сохранения, откатывается вся транзакция.</p>
+        </li>
+        <li><p>Точки сохранения могут быть вложенными, но их имена должны быть уникальными в пределах транзакции.</p>
+        </li>
+    </ul>
+    <h3>Поддержка в СУБД:</h3>
+    <ul>
+        <li><p><code>SAVEPOINT</code> поддерживается в большинстве современных СУБД, таких как PostgreSQL, MySQL,
+            Oracle, SQL Server и других. Однако синтаксис и поведение могут незначительно отличаться.</p></li>
+    </ul>
+    <p>Использование <code>SAVEPOINT</code> помогает управлять сложными транзакциями, минимизируя риски потери данных и
+        упрощая отладку.</p></div>
+</body>
+</html>

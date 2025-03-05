@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В программировании <strong>связанность
+    модулей</strong> (coupling) и <strong>связность</strong> (cohesion) — это два важных понятия, которые помогают
+    оценивать качество архитектуры программного обеспечения. Они описывают, насколько хорошо организованы модули
+    программы и как они взаимодействуют друг с другом.</p>
+    <hr>
+    <h3>1. <strong>Связанность модулей (Coupling)</strong></h3>
+    <p>Связанность модулей — это мера того, насколько один модуль зависит от другого. Чем меньше связанность, тем лучше,
+        так как это делает код более гибким, поддерживаемым и переиспользуемым.</p><h4>Типы связанности (от худшего к
+        лучшему):</h4>
+    <ul>
+        <li><p><strong>Жесткая связанность (Content Coupling)</strong>: Один модуль напрямую изменяет данные или
+            поведение другого модуля.</p></li>
+        <li><p><strong>Общая связанность (Common Coupling)</strong>: Модули используют общие глобальные данные.</p></li>
+        <li><p><strong>Внешняя связанность (External Coupling)</strong>: Модули зависят от внешних интерфейсов или
+            протоколов.</p></li>
+        <li><p><strong>Управляющая связанность (Control Coupling)</strong>: Один модуль передает управляющие флаги или
+            параметры другому.</p></li>
+        <li><p><strong>Связанность по данным (Data Coupling)</strong>: Модули взаимодействуют только через передачу
+            данных (идеальный случай).</p></li>
+    </ul>
+    <h4>Пример на PHP:</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Жесткая связанность (плохо)</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">A</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">process</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$b</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">B</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$b</span><span class="token operator">-&gt;</span><span class="token function">internalLogic</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Модуль A знает о внутренней логике модуля B</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">B</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">internalLogic</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Processing data"</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Связанность по данным (хорошо)</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">A</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">process</span><span
+                    class="token punctuation">(</span><span class="token class-name type-declaration">B</span> <span
+                    class="token variable">$b</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$b</span><span class="token operator">-&gt;</span><span class="token function">processData</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Модуль A взаимодействует с модулем B через интерфейс</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">B</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">processData</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Processing data"</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>2. <strong>Связность (Cohesion)</strong></h3>
+    <p>Связность — это мера того, насколько элементы внутри одного модуля связаны между собой. Чем выше связность, тем
+        лучше, так как это означает, что модуль выполняет одну четкую задачу.</p><h4>Типы связности (от худшего к
+        лучшему):</h4>
+    <ul>
+        <li><p><strong>Случайная связность (Coincidental Cohesion)</strong>: Элементы объединены случайно.</p></li>
+        <li><p><strong>Логическая связность (Logical Cohesion)</strong>: Элементы объединены по логической категории, но
+            выполняют разные задачи.</p></li>
+        <li><p><strong>Временная связность (Temporal Cohesion)</strong>: Элементы выполняются в одно и то же время, но
+            не связаны логически.</p></li>
+        <li><p><strong>Процедурная связность (Procedural Cohesion)</strong>: Элементы выполняются в определенном
+            порядке.</p></li>
+        <li><p><strong>Коммуникационная связность (Communicational Cohesion)</strong>: Элементы работают с одними и теми
+            же данными.</p></li>
+        <li><p><strong>Функциональная связность (Functional Cohesion)</strong>: Все элементы модуля работают для
+            выполнения одной задачи (идеальный случай).</p></li>
+    </ul>
+    <h4>Пример на PHP:</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Низкая связность (плохо)</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">UserManager</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">createUser</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token comment">/* ... */</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sendEmail</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span
+                    class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">logActivity</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span
+                    class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Высокая связность (хорошо)</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">UserCreator</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">createUser</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span> <span
+                    class="token comment">/* ... */</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">EmailSender</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sendEmail</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span
+                    class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">ActivityLogger</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">logActivity</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span
+                    class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>Итог:</h3>
+    <ul>
+        <li><p><strong>Связанность модулей (Coupling)</strong>: Стремитесь к минимальной связанности, чтобы модули были
+            независимыми.</p></li>
+        <li><p><strong>Связность (Cohesion)</strong>: Стремитесь к высокой связности, чтобы каждый модуль выполнял одну
+            четкую задачу.</p></li>
+    </ul>
+    <p>Эти принципы помогают создавать более чистый, поддерживаемый и масштабируемый код.</p></div>
+</body>
+</html>

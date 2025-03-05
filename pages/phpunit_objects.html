@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В PHPUnit моки (mock-объекты) и другие
+    сущности используются для тестирования кода, который зависит от других классов или сервисов. Моки позволяют
+    имитировать поведение этих зависимостей, чтобы изолировать тестируемый код и убедиться, что он работает
+    корректно.</p>
+    <h3>Основные концепции</h3>
+    <ol start="1">
+        <li><p><strong>Моки (Mock Objects)</strong>:</p>
+            <ul>
+                <li><p>Моки используются для создания объектов, которые имитируют поведение реальных объектов.</p></li>
+                <li><p>Они полезны, когда вы хотите протестировать класс, который зависит от других классов, и вы не
+                    хотите использовать реальные зависимости в тестах.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Стабы (Stubs)</strong>:</p>
+            <ul>
+                <li><p>Стабы похожи на моки, но они используются для возвращения заранее определенных значений при
+                    вызове методов.</p></li>
+                <li><p>Они полезны, когда вы хотите имитировать поведение метода, чтобы он возвращал конкретное
+                    значение.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Шпионы (Spies)</strong>:</p>
+            <ul>
+                <li><p>Шпионы — это моки, которые также позволяют проверять, какие методы были вызваны и с какими
+                    аргументами.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Подделки (Fakes)</strong>:</p>
+            <ul>
+                <li><p>Подделки — это упрощенные реализации реальных объектов, которые используются для тестирования.
+                    Они могут быть полезны, когда реальная реализация слишком сложна или требует внешних ресурсов
+                    (например, базы данных).</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Примеры использования</h3><h4>Создание мок-объекта</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">use</span> <span class="token package">PHPUnit<span
+                class="token punctuation">\</span>Framework<span class="token punctuation">\</span>TestCase</span><span
+                class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SomeClassTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testSomething</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Создаем мок-объект для класса SomeDependency</span>
+        <span class="token variable">$mock</span> <span class="token operator">=</span> <span class="token variable">$this</span><span
+                    class="token operator">-&gt;</span><span class="token function">createMock</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name static-context">SomeDependency</span><span
+                    class="token operator">::</span><span class="token keyword">class</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Настраиваем мок-объект</span>
+        <span class="token variable">$mock</span><span class="token operator">-&gt;</span><span class="token function">method</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'someMethod'</span><span
+                    class="token punctuation">)</span>
+             <span class="token operator">-&gt;</span><span class="token function">willReturn</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'mocked value'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Используем мок-объект в тесте</span>
+        <span class="token variable">$someClass</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">SomeClass</span><span
+                    class="token punctuation">(</span><span class="token variable">$mock</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$someClass</span><span
+                    class="token operator">-&gt;</span><span class="token function">doSomething</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'mocked value'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$result</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h4>Создание стаба</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">use</span> <span class="token package">PHPUnit<span
+                class="token punctuation">\</span>Framework<span class="token punctuation">\</span>TestCase</span><span
+                class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SomeClassTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testSomething</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Создаем стаб для класса SomeDependency</span>
+        <span class="token variable">$stub</span> <span class="token operator">=</span> <span class="token variable">$this</span><span
+                    class="token operator">-&gt;</span><span class="token function">createStub</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name static-context">SomeDependency</span><span
+                    class="token operator">::</span><span class="token keyword">class</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Настраиваем стаб</span>
+        <span class="token variable">$stub</span><span class="token operator">-&gt;</span><span class="token function">method</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'someMethod'</span><span
+                    class="token punctuation">)</span>
+             <span class="token operator">-&gt;</span><span class="token function">willReturn</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'stubbed value'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Используем стаб в тесте</span>
+        <span class="token variable">$someClass</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">SomeClass</span><span
+                    class="token punctuation">(</span><span class="token variable">$stub</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$someClass</span><span
+                    class="token operator">-&gt;</span><span class="token function">doSomething</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'stubbed value'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$result</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h4>Проверка вызовов методов (шпионы)</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">use</span> <span class="token package">PHPUnit<span
+                class="token punctuation">\</span>Framework<span class="token punctuation">\</span>TestCase</span><span
+                class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SomeClassTest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">TestCase</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">testSomething</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Создаем мок-объект с возможностью проверки вызовов</span>
+        <span class="token variable">$mock</span> <span class="token operator">=</span> <span class="token variable">$this</span><span
+                    class="token operator">-&gt;</span><span class="token function">getMockBuilder</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name static-context">SomeDependency</span><span
+                    class="token operator">::</span><span class="token keyword">class</span><span
+                    class="token punctuation">)</span>
+                     <span class="token operator">-&gt;</span><span class="token function">setMethods</span><span
+                    class="token punctuation">(</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'someMethod'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span>
+                     <span class="token operator">-&gt;</span><span class="token function">getMock</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+
+        <span class="token comment">// Ожидаем, что метод someMethod будет вызван один раз с аргументом 'test'</span>
+        <span class="token variable">$mock</span><span class="token operator">-&gt;</span><span class="token function">expects</span><span
+                    class="token punctuation">(</span><span class="token variable">$this</span><span
+                    class="token operator">-&gt;</span><span class="token function">once</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span>
+             <span class="token operator">-&gt;</span><span class="token function">method</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'someMethod'</span><span
+                    class="token punctuation">)</span>
+             <span class="token operator">-&gt;</span><span class="token function">with</span><span
+                    class="token punctuation">(</span><span class="token string single-quoted-string">'test'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Используем мок-объект в тесте</span>
+        <span class="token variable">$someClass</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">SomeClass</span><span
+                    class="token punctuation">(</span><span class="token variable">$mock</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$someClass</span><span class="token operator">-&gt;</span><span
+                    class="token function">doSomething</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>Заключение</h3>
+    <p>Моки, стабы, шпионы и подделки — это мощные инструменты в PHPUnit, которые позволяют изолировать тестируемый код
+        и убедиться, что он работает корректно. Они особенно полезны при тестировании классов, которые зависят от других
+        классов или внешних сервисов.</p></div>
+</body>
+</html>

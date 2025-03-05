@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p><strong>Идемпотентность</strong> — это
+    свойство операции или функции, которое означает, что повторное её применение не изменяет результат после первого
+    выполнения. Другими словами, если операция идемпотентна, то её многократное выполнение эквивалентно однократному.
+</p>
+    <h3>Примеры идемпотентности:</h3>
+    <ol start="1">
+        <li><p><strong>В математике</strong>:</p>
+            <ul>
+                <li><p>Функция <code>abs(x)</code> (модуль числа) идемпотентна, потому что <code>abs(abs(x)) =
+                    abs(x)</code>.</p></li>
+                <li><p>Операция умножения на ноль: <code>x * 0 = 0</code>, и повторное умножение на ноль не изменит
+                    результат.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>В программировании</strong>:</p>
+            <ul>
+                <li><p>Метод, который устанавливает значение переменной в определённое состояние, например:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">python</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token keyword">def</span> <span class="token function">set_value</span><span
+                                class="token punctuation">(</span>x<span class="token punctuation">)</span><span
+                                class="token punctuation">:</span>
+    <span class="token keyword">global</span> value
+    value <span class="token operator">=</span> <span class="token number">10</span></pre>
+                    </div>
+                    <p>Сколько бы раз вы ни вызвали <code>set_value</code>, результат будет одинаковым.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>В веб-разработке (HTTP-методы)</strong>:</p>
+            <ul>
+                <li><p><strong>GET</strong>: Идемпотентен, так как повторные запросы не изменяют состояние сервера.</p>
+                </li>
+                <li><p><strong>PUT</strong>: Идемпотентен, так как повторные запросы с одинаковыми данными будут
+                    перезаписывать ресурс тем же значением.</p></li>
+                <li><p><strong>DELETE</strong>: Идемпотентен, так как повторные запросы на удаление не изменяют
+                    состояние сервера после первого удаления.</p></li>
+                <li><p><strong>POST</strong>: Не идемпотентен, так как каждый запрос может создавать новый ресурс или
+                    изменять состояние сервера.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>В базах данных</strong>:</p>
+            <ul>
+                <li><p>Операция <code>UPDATE</code>, которая устанавливает значение поля в определённое состояние,
+                    идемпотентна:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">sql</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token keyword">UPDATE</span> users <span
+                                class="token keyword">SET</span> <span class="token keyword">status</span> <span
+                                class="token operator">=</span> <span class="token string">'active'</span> <span
+                                class="token keyword">WHERE</span> id <span class="token operator">=</span> <span
+                                class="token number">1</span><span class="token punctuation">;</span></pre>
+                    </div>
+                    <p>Повторное выполнение этого запроса не изменит результат.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Почему идемпотентность важна?</h3>
+    <ol start="1">
+        <li><p><strong>Надёжность</strong>:</p>
+            <ul>
+                <li><p>Идемпотентные операции безопасны для повторного выполнения, что особенно важно в распределённых
+                    системах, где возможны сбои и повторные запросы.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Упрощение логики</strong>:</p>
+            <ul>
+                <li><p>Если операция идемпотентна, не нужно беспокоиться о побочных эффектах при её повторном
+                    выполнении.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Сетевые протоколы</strong>:</p>
+            <ul>
+                <li><p>В HTTP идемпотентность позволяет клиентам безопасно повторять запросы при сбоях сети.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Как проверить идемпотентность?</h3>
+    <ol start="1">
+        <li><p>Выполните операцию один раз и зафиксируйте результат.</p></li>
+        <li><p>Повторите операцию и убедитесь, что результат не изменился.</p></li>
+    </ol>
+    <h3>Пример неидемпотентной операции:</h3>
+    <ul>
+        <li><p>Увеличение значения на 1:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">python</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>counter <span class="token operator">=</span> <span class="token number">0</span>
+counter <span class="token operator">+=</span> <span class="token number">1</span></pre>
+            </div>
+            <p>Каждый вызов этой операции изменяет значение <code>counter</code>.</p></li>
+    </ul>
+    <h3>Идемпотентность в распределённых системах:</h3>
+    <p>В распределённых системах идемпотентность критически важна для обеспечения согласованности данных. Например, если
+        сетевой запрос завершился с ошибкой, клиент может безопасно повторить его, если операция идемпотентна.</p>
+    </div>
+</body>
+</html>

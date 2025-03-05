@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><hr><h2>Порождающие шаблоны (Creational Patterns)</h2><h3>1. <strong>Abstract Factory (Абстрактная фабрика)</strong></h3><p>Создает семейства связанных объектов без указания их конкретных классов.</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token keyword">interface</span> <span class="token class-name-definition class-name">Button</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name-definition class-name">Checkbox</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">check</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Фабрика для Windows</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">WinButton</span> <span class="token keyword">implements</span> <span class="token class-name">Button</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Windows Button"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">WinCheckbox</span> <span class="token keyword">implements</span> <span class="token class-name">Checkbox</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">check</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Windows Checkbox"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Фабрика для MacOS</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">MacButton</span> <span class="token keyword">implements</span> <span class="token class-name">Button</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"MacOS Button"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">MacCheckbox</span> <span class="token keyword">implements</span> <span class="token class-name">Checkbox</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">check</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"MacOS Checkbox"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Абстрактная фабрика</span>
+<span class="token keyword">interface</span> <span class="token class-name-definition class-name">GUIFactory</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">createButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Button</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">createCheckbox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Checkbox</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">WinFactory</span> <span class="token keyword">implements</span> <span class="token class-name">GUIFactory</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">createButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Button</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">WinButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">createCheckbox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Checkbox</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">WinCheckbox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">MacFactory</span> <span class="token keyword">implements</span> <span class="token class-name">GUIFactory</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">createButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Button</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">MacButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">createCheckbox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Checkbox</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">MacCheckbox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$os</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'mac'</span><span class="token punctuation">;</span>
+<span class="token variable">$factory</span> <span class="token operator">=</span> <span class="token keyword">match</span> <span class="token punctuation">(</span><span class="token variable">$os</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token string single-quoted-string">'win'</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token class-name">WinFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'mac'</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token class-name">MacFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token variable">$button</span> <span class="token operator">=</span> <span class="token variable">$factory</span><span class="token operator">-&gt;</span><span class="token function">createButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$button</span><span class="token operator">-&gt;</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// "MacOS Button"</span></pre></div><h3>2. <strong>Builder (Строитель)</strong></h3><p>Позволяет создавать сложные объекты пошагово.</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">Pizza</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$size</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token variable">$cheese</span> <span class="token operator">=</span> <span class="token constant boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token variable">$pepperoni</span> <span class="token operator">=</span> <span class="token constant boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token variable">$size</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">size</span> <span class="token operator">=</span> <span class="token variable">$size</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">addCheese</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">cheese</span> <span class="token operator">=</span> <span class="token constant boolean">true</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">addPepperoni</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">pepperoni</span> <span class="token operator">=</span> <span class="token constant boolean">true</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">PizzaBuilder</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$pizza</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token variable">$size</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">pizza</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Pizza</span><span class="token punctuation">(</span><span class="token variable">$size</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">addCheese</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">pizza</span><span class="token operator">-&gt;</span><span class="token function">addCheese</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">addPepperoni</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">pizza</span><span class="token operator">-&gt;</span><span class="token function">addPepperoni</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Pizza</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">pizza</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$pizza</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PizzaBuilder</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'large'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">addCheese</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">addPepperoni</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token operator">-&gt;</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></div><hr><h2>Структурные шаблоны (Structural Patterns)</h2><h3>3. <strong>Adapter (Адаптер)</strong></h3><p>Преобразует интерфейс класса в другой интерфейс, ожидаемый клиентом.</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token comment">// Старый класс с несовместимым интерфейсом</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">OldPrinter</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">printDocument</span><span class="token punctuation">(</span><span class="token variable">$text</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Старый принтер: <span class="token interpolation"><span class="token variable">$text</span></span>"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Новый интерфейс</span>
+<span class="token keyword">interface</span> <span class="token class-name-definition class-name">PrinterInterface</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">print</span><span class="token punctuation">(</span><span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Адаптер</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">PrinterAdapter</span> <span class="token keyword">implements</span> <span class="token class-name">PrinterInterface</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$oldPrinter</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token class-name type-declaration">OldPrinter</span> <span class="token variable">$oldPrinter</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">oldPrinter</span> <span class="token operator">=</span> <span class="token variable">$oldPrinter</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">print</span><span class="token punctuation">(</span><span class="token variable">$text</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">oldPrinter</span><span class="token operator">-&gt;</span><span class="token function">printDocument</span><span class="token punctuation">(</span><span class="token variable">$text</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Клиентский код</span>
+<span class="token variable">$printer</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PrinterAdapter</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">OldPrinter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$printer</span><span class="token operator">-&gt;</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Старый принтер: Hello</span></pre></div><h3>4. <strong>Decorator (Декоратор)</strong></h3><p>Динамически добавляет объекту новые обязанности.</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token keyword">interface</span> <span class="token class-name-definition class-name">Coffee</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">int</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SimpleCoffee</span> <span class="token keyword">implements</span> <span class="token class-name">Coffee</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">int</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Базовый декоратор</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name-definition class-name">CoffeeDecorator</span> <span class="token keyword">implements</span> <span class="token class-name">Coffee</span> <span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token variable">$coffee</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token class-name type-declaration">Coffee</span> <span class="token variable">$coffee</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">coffee</span> <span class="token operator">=</span> <span class="token variable">$coffee</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">MilkDecorator</span> <span class="token keyword">extends</span> <span class="token class-name">CoffeeDecorator</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">int</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">coffee</span><span class="token operator">-&gt;</span><span class="token function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SugarDecorator</span> <span class="token keyword">extends</span> <span class="token class-name">CoffeeDecorator</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword return-type">int</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">coffee</span><span class="token operator">-&gt;</span><span class="token function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$coffee</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleCoffee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$coffee</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MilkDecorator</span><span class="token punctuation">(</span><span class="token variable">$coffee</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$coffee</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SugarDecorator</span><span class="token punctuation">(</span><span class="token variable">$coffee</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$coffee</span><span class="token operator">-&gt;</span><span class="token function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 13</span></pre></div><hr><h2>Поведенческие шаблоны (Behavioral Patterns)</h2><h3>5. <strong>Strategy (Стратегия)</strong></h3><p>Определяет семейство алгоритмов и делает их взаимозаменяемыми.</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token keyword">interface</span> <span class="token class-name-definition class-name">PaymentStrategy</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">pay</span><span class="token punctuation">(</span><span class="token keyword type-hint">int</span> <span class="token variable">$amount</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">CreditCardPayment</span> <span class="token keyword">implements</span> <span class="token class-name">PaymentStrategy</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">pay</span><span class="token punctuation">(</span><span class="token keyword type-hint">int</span> <span class="token variable">$amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Оплата картой: <span class="token interpolation"><span class="token variable">$amount</span></span>"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">PayPalPayment</span> <span class="token keyword">implements</span> <span class="token class-name">PaymentStrategy</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">pay</span><span class="token punctuation">(</span><span class="token keyword type-hint">int</span> <span class="token variable">$amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Оплата через PayPal: <span class="token interpolation"><span class="token variable">$amount</span></span>"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">ShoppingCart</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$strategy</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">setStrategy</span><span class="token punctuation">(</span><span class="token class-name type-declaration">PaymentStrategy</span> <span class="token variable">$strategy</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">strategy</span> <span class="token operator">=</span> <span class="token variable">$strategy</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">checkout</span><span class="token punctuation">(</span><span class="token keyword type-hint">int</span> <span class="token variable">$amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">strategy</span><span class="token operator">-&gt;</span><span class="token function">pay</span><span class="token punctuation">(</span><span class="token variable">$amount</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$cart</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ShoppingCart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$cart</span><span class="token operator">-&gt;</span><span class="token function">setStrategy</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CreditCardPayment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$cart</span><span class="token operator">-&gt;</span><span class="token function">checkout</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Оплата картой: 100</span></pre></div><h3>6. <strong>Command (Команда)</strong></h3><p>Инкапсулирует запрос как объект.</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token keyword">interface</span> <span class="token class-name-definition class-name">Command</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Light</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">turnOn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Свет включен"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">turnOff</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Свет выключен"</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">LightOnCommand</span> <span class="token keyword">implements</span> <span class="token class-name">Command</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$light</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token class-name type-declaration">Light</span> <span class="token variable">$light</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">light</span> <span class="token operator">=</span> <span class="token variable">$light</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">light</span><span class="token operator">-&gt;</span><span class="token function">turnOn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">RemoteControl</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$command</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">setCommand</span><span class="token punctuation">(</span><span class="token class-name type-declaration">Command</span> <span class="token variable">$command</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">command</span> <span class="token operator">=</span> <span class="token variable">$command</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">pressButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">command</span><span class="token operator">-&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$light</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Light</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$remote</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RemoteControl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$remote</span><span class="token operator">-&gt;</span><span class="token function">setCommand</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LightOnCommand</span><span class="token punctuation">(</span><span class="token variable">$light</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$remote</span><span class="token operator">-&gt;</span><span class="token function">pressButton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Свет включен</span></pre></div><hr><h2>Другие популярные шаблоны</h2><h3>7. <strong>Repository (Репозиторий)</strong></h3><p>Абстрагирует доступ к данным (часто используется с ORM).</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">UserRepository</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$model</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">__construct</span><span class="token punctuation">(</span><span class="token class-name type-declaration">User</span> <span class="token variable">$model</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">model</span> <span class="token operator">=</span> <span class="token variable">$model</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">getById</span><span class="token punctuation">(</span><span class="token keyword type-hint">int</span> <span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">model</span><span class="token operator">-&gt;</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token variable">$id</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">getAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">model</span><span class="token operator">-&gt;</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование (например, в Laravel)</span>
+<span class="token variable">$userRepo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserRepository</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$users</span> <span class="token operator">=</span> <span class="token variable">$userRepo</span><span class="token operator">-&gt;</span><span class="token function">getAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre></div><h3>8. <strong>Chain of Responsibility (Цепочка обязанностей)</strong></h3><p>Передает запрос по цепочке обработчиков.</p><div class="md-code-block"><div class="md-code-block-banner-wrap"><div class="md-code-block-banner"><div class="md-code-block-infostring">php</div><div class="md-code-block-action"><div class="ds-markdown-code-copy-button">Copy</div></div></div></div><pre><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name-definition class-name">Handler</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$next</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">setNext</span><span class="token punctuation">(</span><span class="token class-name type-declaration">Handler</span> <span class="token variable">$handler</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token class-name return-type">Handler</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">next</span> <span class="token operator">=</span> <span class="token variable">$handler</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token variable">$handler</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">next</span><span class="token operator">-&gt;</span><span class="token function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token constant">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">AuthHandler</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$request</span> <span class="token operator">===</span> <span class="token string single-quoted-string">'auth'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Аутентификация пройдена\n"</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword static-context">parent</span><span class="token operator">::</span><span class="token function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">LoggingHandler</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Логирование запроса: <span class="token interpolation"><span class="token variable">$request</span></span>\n"</span><span class="token punctuation">;</span>
+        <span class="token keyword static-context">parent</span><span class="token operator">::</span><span class="token function">handle</span><span class="token punctuation">(</span><span class="token variable">$request</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$chain</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AuthHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$chain</span><span class="token operator">-&gt;</span><span class="token function">setNext</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoggingHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$chain</span><span class="token operator">-&gt;</span><span class="token function">handle</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'auth'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Логирование запроса: auth</span>
+<span class="token comment">// Аутентификация пройдена</span></pre></div><hr><h2>Когда что использовать?</h2><ul><li><p><strong>Abstract Factory</strong>: Когда нужно создавать группы связанных объектов.</p></li><li><p><strong>Builder</strong>: Для пошагового создания сложных объектов (например, SQL-запросов).</p></li><li><p><strong>Adapter</strong>: Для интеграции классов с несовместимыми интерфейсами.</p></li><li><p><strong>Strategy</strong>: Если требуется менять алгоритмы выполнения задачи динамически.</p></li></ul></div>
+</body>
+</html>

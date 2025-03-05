@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><h3>Подробный разбор структур данных в SPL
+    (Standard PHP Library)</h3>
+    <p>SPL предоставляет высокопроизводительные реализации распространенных структур данных, оптимизированные для
+        различных задач. Рассмотрим ключевые классы и их применение:</p>
+    <hr>
+    <h4><strong>1. Стек (<code>SplStack</code>)</strong></h4>
+    <ul>
+        <li><p><strong>Принцип</strong>: LIFO (Last In, First Out).</p></li>
+        <li><p><strong>Основа</strong>: Наследуется от <code>SplDoublyLinkedList</code>.</p></li>
+        <li><p><strong>Методы</strong>:</p>
+            <ul>
+                <li><p><code>push($value)</code>: Добавляет элемент в конец стека.</p></li>
+                <li><p><code>pop()</code>: Удаляет и возвращает последний элемент.</p></li>
+                <li><p><code>top()</code>: Возвращает последний элемент без удаления.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$stack</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplStack</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$stack</span><span class="token operator">-&gt;</span><span
+                    class="token function">push</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'A'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$stack</span><span class="token operator">-&gt;</span><span
+                    class="token function">push</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'B'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$stack</span><span
+                    class="token operator">-&gt;</span><span class="token function">pop</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// B</span>
+<span class="token keyword">echo</span> <span class="token variable">$stack</span><span
+                    class="token operator">-&gt;</span><span class="token function">top</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// A</span></pre>
+    </div>
+    <p><strong>Когда использовать</strong>:</p>
+    <ul>
+        <li><p>Алгоритмы обхода в глубину (DFS).</p></li>
+        <li><p>Отмена операций (undo/redo).</p></li>
+        <li><p>Парсинг выражений (например, проверка скобок).</p></li>
+    </ul>
+    <hr>
+    <h4><strong>2. Очередь (<code>SplQueue</code>)</strong></h4>
+    <ul>
+        <li><p><strong>Принцип</strong>: FIFO (First In, First Out).</p></li>
+        <li><p><strong>Основа</strong>: Также наследуется от <code>SplDoublyLinkedList</code>.</p></li>
+        <li><p><strong>Методы</strong>:</p>
+            <ul>
+                <li><p><code>enqueue($value)</code>: Добавляет элемент в конец очереди.</p></li>
+                <li><p><code>dequeue()</code>: Удаляет и возвращает первый элемент.</p></li>
+                <li><p><code>bottom()</code>: Возвращает первый элемент без удаления.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$queue</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplQueue</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$queue</span><span class="token operator">-&gt;</span><span
+                    class="token function">enqueue</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'Задача 1'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$queue</span><span class="token operator">-&gt;</span><span
+                    class="token function">enqueue</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'Задача 2'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$queue</span><span
+                    class="token operator">-&gt;</span><span class="token function">dequeue</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Задача 1</span>
+<span class="token keyword">echo</span> <span class="token variable">$queue</span><span
+                    class="token operator">-&gt;</span><span class="token function">bottom</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>  <span class="token comment">// Задача 2</span></pre>
+    </div>
+    <p><strong>Когда использовать</strong>:</p>
+    <ul>
+        <li><p>Обработка задач в порядке поступления.</p></li>
+        <li><p>Базовые реализации брокеров сообщений.</p></li>
+        <li><p>Алгоритмы обхода в ширину (BFS).</p></li>
+    </ul>
+    <hr>
+    <h4><strong>3. Куча (<code>SplHeap</code>, <code>SplMaxHeap</code>, <code>SplMinHeap</code>)</strong></h4>
+    <ul>
+        <li><p><strong>Принцип</strong>: Упорядоченная структура, где родительский элемент всегда больше/меньше
+            дочерних.</p></li>
+        <li><p><strong>Типы</strong>:</p>
+            <ul>
+                <li><p><code>SplMaxHeap</code>: Максимальный элемент наверху.</p></li>
+                <li><p><code>SplMinHeap</code>: Минимальный элемент наверху.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Методы</strong>:</p>
+            <ul>
+                <li><p><code>insert($value)</code>: Добавляет элемент.</p></li>
+                <li><p><code>extract()</code>: Удаляет и возвращает корневой элемент.</p></li>
+                <li><p><code>top()</code>: Возвращает корневой элемент без удаления.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$heap</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplMaxHeap</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$heap</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token number">30</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$heap</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token number">10</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$heap</span><span
+                    class="token operator">-&gt;</span><span class="token function">extract</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// 30</span></pre>
+    </div>
+    <p><strong>Когда использовать</strong>:</p>
+    <ul>
+        <li><p>Реализация приоритетных очередей.</p></li>
+        <li><p>Алгоритмы, требующие быстрого доступа к экстремальным значениям (например, алгоритм Дейкстры).</p></li>
+    </ul>
+    <hr>
+    <h4><strong>4. Приоритетная очередь (<code>SplPriorityQueue</code>)</strong></h4>
+    <ul>
+        <li><p><strong>Особенность</strong>: Элементы хранятся с приоритетом.</p></li>
+        <li><p><strong>Методы</strong>:</p>
+            <ul>
+                <li><p><code>insert($value, $priority)</code>: Добавляет элемент с приоритетом.</p></li>
+                <li><p><code>extract()</code>: Удаляет элемент с наивысшим приоритетом.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$pq</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                class="token class-name">SplPriorityQueue</span><span class="token punctuation">(</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$pq</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'Низкий приоритет'</span><span
+                    class="token punctuation">,</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$pq</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'Высокий приоритет'</span><span class="token punctuation">,</span> <span
+                    class="token number">3</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$pq</span><span class="token operator">-&gt;</span><span
+                    class="token function">extract</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Высокий приоритет</span></pre>
+    </div>
+    <p><strong>Настройка порядка</strong>:<br>Можно задать флаг <code>SplPriorityQueue::EXTR_PRIORITY</code> для
+        извлечения приоритета вместо значения.</p>
+    <hr>
+    <h4><strong>5. Двусвязный список (<code>SplDoublyLinkedList</code>)</strong></h4>
+    <ul>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Позволяет перемещаться в обоих направлениях.</p></li>
+                <li><p>Эффективные вставка и удаление в начале/конце.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Методы</strong>:</p>
+            <ul>
+                <li><p><code>push($value)</code>, <code>pop()</code>, <code>unshift($value)</code>, <code>shift()</code>.
+                </p></li>
+                <li><p>Итерация в прямом/обратном порядке.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$list</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplDoublyLinkedList</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$list</span><span class="token operator">-&gt;</span><span
+                    class="token function">push</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'A'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$list</span><span class="token operator">-&gt;</span><span
+                    class="token function">push</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'B'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$list</span><span class="token operator">-&gt;</span><span
+                    class="token function">unshift</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'C'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Список: C -&gt; A -&gt; B</span>
+
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span
+                    class="token variable">$list</span> <span class="token keyword">as</span> <span
+                    class="token variable">$item</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token variable">$item</span><span
+                    class="token punctuation">;</span> <span class="token comment">// C, A, B</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>Когда использовать</strong>:</p>
+    <ul>
+        <li><p>Частые операции вставки/удаления в начале и конце.</p></li>
+        <li><p>Реализация сложных структур (например, deque).</p></li>
+    </ul>
+    <hr>
+    <h4><strong>6. Фиксированный массив (<code>SplFixedArray</code>)</strong></h4>
+    <ul>
+        <li><p><strong>Особенность</strong>: Выделяет память заранее, что ускоряет доступ.</p></li>
+        <li><p><strong>Размер</strong>: Задается при инициализации, но может быть изменен.</p></li>
+    </ul>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$arr</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                class="token class-name">SplFixedArray</span><span class="token punctuation">(</span><span
+                class="token number">3</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$arr</span><span class="token punctuation">[</span><span class="token number">0</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token string single-quoted-string">'Яблоко'</span><span class="token punctuation">;</span>
+<span class="token variable">$arr</span><span class="token punctuation">[</span><span class="token number">1</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token string single-quoted-string">'Банан'</span><span class="token punctuation">;</span>
+<span class="token variable">$arr</span><span class="token operator">-&gt;</span><span
+                    class="token function">setSize</span><span class="token punctuation">(</span><span
+                    class="token number">4</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// Увеличиваем размер</span>
+<span class="token variable">$arr</span><span class="token punctuation">[</span><span class="token number">3</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token string single-quoted-string">'Груша'</span><span
+                    class="token punctuation">;</span></pre>
+    </div>
+    <p><strong>Преимущества</strong>:</p>
+    <ul>
+        <li><p>До 30% быстрее обычных массивов для числовых индексов.</p></li>
+        <li><p>Экономия памяти при работе с большими наборами данных.</p></li>
+    </ul>
+    <hr>
+    <h3>Сравнение SPL и обычных массивов</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Операция</th>
+            <th>Массив</th>
+            <th>SPL-структура</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Вставка в начало</td>
+            <td>O(n) (медленно)</td>
+            <td>O(1) (быстро)</td>
+        </tr>
+        <tr>
+            <td>Удаление из конца</td>
+            <td>O(1)</td>
+            <td>O(1)</td>
+        </tr>
+        <tr>
+            <td>Итерация</td>
+            <td>Быстрая</td>
+            <td>Зависит от структуры</td>
+        </tr>
+        <tr>
+            <td>Память</td>
+            <td>Гибкое выделение</td>
+            <td>Оптимизировано</td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h3>Примеры реальных задач</h3>
+    <ol start="1">
+        <li><p><strong>Обработка логов</strong>:</p>
+            <ul>
+                <li><p>Используйте <code>SplStack</code> для вывода последних N записей.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Планировщик задач</strong>:</p>
+            <ul>
+                <li><p><code>SplPriorityQueue</code> для управления задачами с разными приоритетами.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Кэширование</strong>:</p>
+            <ul>
+                <li><p><code>SplFixedArray</code> для хранения фиксированного количества элементов с быстрым доступом.
+                </p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Предостережения</h3>
+    <ul>
+        <li><p><strong>Итерация</strong>: Некоторые структуры (например, <code>SplStack</code>) итерируются в обратном
+            порядке.</p></li>
+        <li><p><strong>Типизация</strong>: SPL-структуры работают с любыми типами данных, но отсутствует строгая
+            типизация.</p></li>
+        <li><p><strong>Производительность</strong>: Для простых операций (например, <code>array_push</code>) обычные
+            массивы могут быть быстрее.</p></li>
+    </ul>
+    <hr>
+    <h3>Документация</h3>
+    <ul>
+        <li><p>Официальная документация SPL: <a href="https://www.php.net/manual/ru/book.spl.php" target="_blank"
+                                                rel="noreferrer">https://www.php.net/manual/ru/book.spl.php</a></p></li>
+        <li><p>Подробнее о <code>SplPriorityQueue</code>: <a
+                href="https://www.php.net/manual/ru/class.splpriorityqueue.php" target="_blank" rel="noreferrer">https://www.php.net/manual/ru/class.splpriorityqueue.php</a>
+        </p></li>
+    </ul>
+    <p>SPL-структуры — это мощный инструмент для оптимизации кода. Их стоит использовать, когда стандартных массивов
+        недостаточно для решения задачи.</p></div>
+</body>
+</html>

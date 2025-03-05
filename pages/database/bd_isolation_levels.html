@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="font-claude-message  relative  leading-[1.65rem]  [&amp;>div>div>:is(p,ul,ol)]:pr-4  md:[&amp;>div>div>:is(p,ul,ol)]:pr-8  [&amp;_pre>div]:bg-bg-300  [&amp;_.ignore-pre-bg>div]:bg-transparent">
+    <div>
+        <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><h1 class="text-2xl font-bold mt-1 text-text-200"
+                                                                      level="1">Уровни изоляции транзакций</h1>
+            <p class="whitespace-pre-wrap break-words">Уровни изоляции транзакций определяют, насколько одна транзакция
+                изолирована от изменений, которые вносят другие транзакции. Каждый уровень предоставляет различные
+                гарантии, защищая от определенных аномалий. Рассмотрим их подробнее:</p>
+            <h2 class="text-xl font-bold text-text-200 mt-1 -mb-0.5" level="2">1. Read Uncommitted (чтение
+                незафиксированных данных)</h2>
+            <p class="whitespace-pre-wrap break-words"><strong>Характеристики:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Самый низкий уровень изоляции</li>
+                <li class="whitespace-normal break-words" index="1">Транзакция может видеть незафиксированные изменения
+                    других транзакций
+                </li>
+                <li class="whitespace-normal break-words" index="2">Не устанавливает блокировки чтения</li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Возможные аномалии:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0"><strong>Грязное чтение (Dirty Read)</strong> —
+                    чтение данных, которые были изменены, но еще не зафиксированы другой транзакцией
+                </li>
+                <li class="whitespace-normal break-words" index="1"><strong>Неповторяющееся чтение (Non-repeatable
+                    Read)</strong></li>
+                <li class="whitespace-normal break-words" index="2"><strong>Фантомное чтение (Phantom Read)</strong>
+                </li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Пример:</strong>
+                Транзакция A читает данные, которые были изменены транзакцией B, но транзакция B впоследствии выполняет
+                откат (rollback), и прочитанные данные оказываются недействительными.</p>
+            <h2 class="text-xl font-bold text-text-200 mt-1 -mb-0.5" level="2">2. Read Committed (чтение зафиксированных
+                данных)</h2>
+            <p class="whitespace-pre-wrap break-words"><strong>Характеристики:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Транзакция видит только зафиксированные изменения
+                    других транзакций
+                </li>
+                <li class="whitespace-normal break-words" index="1">Устанавливает короткие блокировки чтения</li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Возможные аномалии:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0"><strong>Неповторяющееся чтение</strong></li>
+                <li class="whitespace-normal break-words" index="1"><strong>Фантомное чтение</strong></li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Пример:</strong>
+                Транзакция A читает строку. Транзакция B изменяет эту строку и фиксирует изменения. Если транзакция A
+                снова читает ту же строку, она получит другие данные.</p>
+            <h2 class="text-xl font-bold text-text-200 mt-1 -mb-0.5" level="2">3. Repeatable Read (повторяемое
+                чтение)</h2>
+            <p class="whitespace-pre-wrap break-words"><strong>Характеристики:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Гарантирует, что если транзакция читает строку
+                    данных, она получит те же данные при повторном чтении этой строки
+                </li>
+                <li class="whitespace-normal break-words" index="1">Устанавливает блокировки чтения до конца
+                    транзакции
+                </li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Возможные аномалии:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0"><strong>Фантомное чтение</strong></li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Пример:</strong>
+                Транзакция A выполняет запрос, возвращающий набор строк. Транзакция B вставляет новые строки, которые
+                соответствуют условиям запроса транзакции A, и фиксирует изменения. Если транзакция A повторно выполнит
+                запрос, она может увидеть дополнительные ("фантомные") строки.</p>
+            <h2 class="text-xl font-bold text-text-200 mt-1 -mb-0.5" level="2">4. Serializable (сериализуемость)</h2>
+            <p class="whitespace-pre-wrap break-words"><strong>Характеристики:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Самый высокий уровень изоляции</li>
+                <li class="whitespace-normal break-words" index="1">Полная изоляция: транзакции выполняются так, как
+                    если бы они выполнялись последовательно
+                </li>
+                <li class="whitespace-normal break-words" index="2">Устанавливает блокировки чтения и диапазонные
+                    блокировки
+                </li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Защита от всех аномалий:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Грязное чтение</li>
+                <li class="whitespace-normal break-words" index="1">Неповторяющееся чтение</li>
+                <li class="whitespace-normal break-words" index="2">Фантомное чтение</li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words"><strong>Пример:</strong>
+                Даже если другие транзакции вставляют, обновляют или удаляют данные, транзакция увидит только те данные,
+                которые существовали на момент ее начала.</p>
+            <h2 class="text-xl font-bold text-text-200 mt-1 -mb-0.5" level="2">5. Дополнительные уровни в некоторых
+                СУБД</h2>
+            <h3 class="text-lg font-bold text-text-200 mt-1 -mb-1.5" level="3">Snapshot Isolation (Oracle, PostgreSQL,
+                SQL Server)</h3>
+            <p class="whitespace-pre-wrap break-words"><strong>Характеристики:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Транзакция работает со снимком данных, сделанным на
+                    момент начала транзакции
+                </li>
+                <li class="whitespace-normal break-words" index="1">Использует многоверсионность (MVCC) вместо
+                    блокировок
+                </li>
+                <li class="whitespace-normal break-words" index="2">Защищает от грязного и неповторяющегося чтения, но
+                    может допускать аномалии сериализации
+                </li>
+            </ul>
+            <h3 class="text-lg font-bold text-text-200 mt-1 -mb-1.5" level="3">Read Committed Snapshot Isolation (SQL
+                Server)</h3>
+            <p class="whitespace-pre-wrap break-words"><strong>Характеристики:</strong></p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Вариант Read Committed, использующий снимки данных
+                </li>
+                <li class="whitespace-normal break-words" index="1">Каждое чтение видит последнюю зафиксированную версию
+                    данных на момент начала оператора чтения
+                </li>
+            </ul>
+            <h2 class="text-xl font-bold text-text-200 mt-1 -mb-0.5" level="2">Сравнительная таблица</h2>
+            <pre class="font-styrene border-border-100/50 overflow-x-scroll w-full rounded border-[0.5px] shadow-[0_2px_12px_hsl(var(--always-black)/5%)]"><table
+                    class="bg-bg-100 min-w-full border-separate border-spacing-0 text-sm leading-[1.88888] whitespace-normal"><thead
+                    class="border-b-border-100/50 border-b-[0.5px] text-left"><tr
+                    class="[tbody>&amp;]:odd:bg-bg-500/10"><th
+                    class="text-text-000 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Уровень изоляции</th><th
+                    class="text-text-000 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Грязное чтение</th><th
+                    class="text-text-000 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Неповторяющееся чтение</th><th
+                    class="text-text-000 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Фантомное чтение</th><th
+                    class="text-text-000 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] font-400 px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Производительность</th></tr></thead><tbody><tr
+                    class="[tbody>&amp;]:odd:bg-bg-500/10"><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Read Uncommitted</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Возможно</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Возможно</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Возможно</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Наивысшая</td></tr><tr
+                    class="[tbody>&amp;]:odd:bg-bg-500/10"><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Read Committed</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Нет</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Возможно</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Возможно</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Высокая</td></tr><tr
+                    class="[tbody>&amp;]:odd:bg-bg-500/10"><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Repeatable Read</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Нет</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Нет</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Возможно</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Средняя</td></tr><tr
+                    class="[tbody>&amp;]:odd:bg-bg-500/10"><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Serializable</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Нет</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Нет</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Нет</td><td
+                    class="border-t-border-100/50 [&amp;:not(:first-child)]:-x-[hsla(var(--border-100) / 0.5)] border-t-[0.5px] px-2 [&amp;:not(:first-child)]:border-l-[0.5px]">Низкая</td></tr></tbody></table></pre>
+            <h2 class="text-xl font-bold text-text-200 mt-1 -mb-0.5" level="2">Особенности реализации в разных СУБД</h2>
+            <p class="whitespace-pre-wrap break-words">Реализация уровней изоляции может различаться в разных СУБД:</p>
+            <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0"><strong>PostgreSQL</strong>: Использует MVCC. Даже
+                    уровень Read Uncommitted на практике работает как Read Committed.
+                </li>
+                <li class="whitespace-normal break-words" index="1"><strong>MySQL (InnoDB)</strong>: REPEATABLE READ по
+                    умолчанию, но не гарантирует полную защиту от фантомных чтений.
+                </li>
+                <li class="whitespace-normal break-words" index="2"><strong>Oracle</strong>: Не имеет уровня READ
+                    UNCOMMITTED, использует READ COMMITTED по умолчанию и предлагает SERIALIZABLE.
+                </li>
+                <li class="whitespace-normal break-words" index="3"><strong>SQL Server</strong>: Предлагает все уровни и
+                    дополнительно SNAPSHOT ISOLATION.
+                </li>
+            </ul>
+            <p class="whitespace-pre-wrap break-words">Выбор уровня изоляции должен быть основан на требованиях
+                приложения, балансируя целостность данных и производительность.</p></div>
+    </div>
+</div>
+</body>
+</html>

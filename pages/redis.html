@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><h3>Redis</h3><h4>1. <strong>Что такое Redis?</strong></h4>
+    <p>Redis (Remote Dictionary Server) — это <strong>хранилище данных в памяти</strong> с открытым исходным кодом. Он
+        работает как <strong>key-value хранилище</strong>, но поддерживает сложные структуры данных: строки, списки,
+        хеши, множества и т.д. Основные особенности:</p>
+    <ul>
+        <li><p><strong>Высокая производительность</strong>: данные хранятся в RAM, что обеспечивает скорость доступа в
+            микросекунды.</p></li>
+        <li><p><strong>Персистентность</strong>: данные можно сохранять на диск (RDB-снимки или AOF-логи).</p></li>
+        <li><p><strong>Репликация</strong>: поддержка мастер-реплика для отказоустойчивости.</p></li>
+        <li><p><strong>Pub/Sub</strong>: система сообщений для реализации реального времени.</p></li>
+    </ul>
+    <h4>2. <strong>Структуры данных в Redis</strong></h4>
+    <ul>
+        <li><p><strong>Строки (Strings)</strong>:</p>
+            <ul>
+                <li><p>Простейший тип. Пример: <code>SET user:1 "Alice"</code>.</p></li>
+                <li><p>Используются для кэширования, счетчиков, сессий.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Списки (Lists)</strong>:</p>
+            <ul>
+                <li><p>Коллекции в виде Linked List. Пример: <code>LPUSH tasks "task1"</code>.</p></li>
+                <li><p>Подходят для очередей (например, фоновых задач).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Хеши (Hashes)</strong>:</p>
+            <ul>
+                <li><p>Хранение объектов. Пример: <code>HSET user:1 name "Alice" age 30</code>.</p></li>
+                <li><p>Удобны для работы с сущностями (пользователи, товары).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Множества (Sets)</strong>:</p>
+            <ul>
+                <li><p>Уникальные неупорядоченные элементы. Пример: <code>SADD tags "php" "redis"</code>.</p></li>
+                <li><p>Используются для тегов, уникальных списков.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Сортированные множества (Sorted Sets)</strong>:</p>
+            <ul>
+                <li><p>Элементы с весом для сортировки. Пример: <code>ZADD leaderboard 100 "user1"</code>.</p></li>
+                <li><p>Подходят для рейтингов, топ-листов.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <h4>3. <strong>Подключение к Redis из PHP</strong></h4>
+    <p>Для работы с Redis в PHP есть два популярных варианта:</p>
+    <p><strong>a. Расширение <code>phpredis</code> (нативное)</strong></p>
+    <ul>
+        <li><p>Устанавливается через PECL: <code>pecl install redis</code>.</p></li>
+        <li><p>Пример кода:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$redis</span> <span class="token operator">=</span> <span
+                        class="token keyword">new</span> <span class="token class-name">Redis</span><span
+                        class="token punctuation">(</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                            class="token function">connect</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'127.0.0.1'</span><span class="token punctuation">,</span> <span
+                            class="token number">6379</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                            class="token function">set</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'key'</span><span
+                            class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'value'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$redis</span><span
+                            class="token operator">-&gt;</span><span class="token function">get</span><span
+                            class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'key'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                            class="token comment">// 'value'</span></pre>
+            </div>
+        </li>
+    </ul>
+    <p><strong>b. Библиотека <code>predis</code> (чистый PHP)</strong></p>
+    <ul>
+        <li><p>Устанавливается через Composer: <code>composer require predis/predis</code>.</p></li>
+        <li><p>Пример кода:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">require</span> <span class="token string single-quoted-string">'vendor/autoload.php'</span><span
+                        class="token punctuation">;</span>
+<span class="token variable">$client</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                            class="token class-name class-name-fully-qualified">Predis<span
+                            class="token punctuation">\</span>Client</span><span class="token punctuation">(</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$client</span><span class="token operator">-&gt;</span><span
+                            class="token function">set</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'key'</span><span
+                            class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'value'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$client</span><span
+                            class="token operator">-&gt;</span><span class="token function">get</span><span
+                            class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'key'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                            class="token comment">// 'value'</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h4>4. <strong>Примеры использования</strong></h4>
+    <p><strong>a. Кэширование данных</strong></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Сохраняем результат запроса к БД на 10 минут</span>
+<span class="token variable">$key</span> <span class="token operator">=</span> <span
+                    class="token string single-quoted-string">'cached_users'</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span
+                    class="token variable">$users</span> <span class="token operator">=</span> <span
+                    class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                    class="token function">get</span><span class="token punctuation">(</span><span
+                    class="token variable">$key</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$users</span> <span class="token operator">=</span> <span
+                    class="token variable">$db</span><span class="token operator">-&gt;</span><span
+                    class="token function">query</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'SELECT * FROM users'</span><span
+                    class="token punctuation">)</span><span class="token operator">-&gt;</span><span
+                    class="token function">fetchAll</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$redis</span><span class="token operator">-&gt;</span><span class="token function">setex</span><span
+                    class="token punctuation">(</span><span class="token variable">$key</span><span
+                    class="token punctuation">,</span> <span class="token number">600</span><span
+                    class="token punctuation">,</span> <span class="token function">serialize</span><span
+                    class="token punctuation">(</span><span class="token variable">$users</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">return</span> <span class="token function">unserialize</span><span
+                    class="token punctuation">(</span><span class="token variable">$users</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p><strong>b. Управление сессиями</strong></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Настройка Redis как хранилища сессий</span>
+<span class="token function">ini_set</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'session.save_handler'</span><span
+                    class="token punctuation">,</span> <span
+                    class="token string single-quoted-string">'redis'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">ini_set</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'session.save_path'</span><span class="token punctuation">,</span> <span
+                    class="token string single-quoted-string">'tcp://127.0.0.1:6379'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">session_start</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p><strong>c. Очередь задач</strong></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Добавление задачи в список</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                    class="token function">lpush</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'tasks'</span><span
+                    class="token punctuation">,</span> <span class="token function">json_encode</span><span
+                    class="token punctuation">(</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'type'</span> <span
+                    class="token operator">=&gt;</span> <span
+                    class="token string single-quoted-string">'email'</span><span
+                    class="token punctuation">,</span> <span class="token string single-quoted-string">'to'</span> <span
+                    class="token operator">=&gt;</span> <span class="token string single-quoted-string">'user@example.com'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Обработка задач в фоне (worker)</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span
+                    class="token variable">$task</span> <span class="token operator">=</span> <span
+                    class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                    class="token function">brpop</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'tasks'</span><span
+                    class="token punctuation">,</span> <span class="token number">0</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token function">processTask</span><span class="token punctuation">(</span><span class="token function">json_decode</span><span
+                    class="token punctuation">(</span><span class="token variable">$task</span><span
+                    class="token punctuation">[</span><span class="token number">1</span><span
+                    class="token punctuation">]</span><span class="token punctuation">,</span> <span
+                    class="token constant boolean">true</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p><strong>d. Счетчик просмотров</strong></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Инкремент счетчика для статьи</span>
+<span class="token variable">$articleId</span> <span class="token operator">=</span> <span
+                    class="token number">42</span><span class="token punctuation">;</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                    class="token function">incr</span><span class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"article:<span class="token interpolation"><span
+                    class="token variable">$articleId</span></span>:views"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$views</span> <span class="token operator">=</span> <span
+                    class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                    class="token function">get</span><span class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"article:<span class="token interpolation"><span
+                    class="token variable">$articleId</span></span>:views"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <h4>5. <strong>Pub/Sub для реального времени</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// Издатель (publisher)</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                    class="token function">publish</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'notifications'</span><span
+                    class="token punctuation">,</span> <span class="token string single-quoted-string">'Новое сообщение!'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Подписчик (subscriber, работает в отдельном процессе)</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span class="token function">subscribe</span><span
+                    class="token punctuation">(</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'notifications'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">,</span> <span
+                    class="token keyword">function</span> <span class="token punctuation">(</span><span
+                    class="token variable">$redis</span><span class="token punctuation">,</span> <span
+                    class="token variable">$channel</span><span class="token punctuation">,</span> <span
+                    class="token variable">$message</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Получено сообщение: <span
+                    class="token interpolation"><span class="token variable">$message</span></span>"</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <h4>6. <strong>Лучшие практики</strong></h4>
+    <ul>
+        <li><p><strong>TTL (Time-To-Live)</strong>: Устанавливайте срок жизни ключам, чтобы избежать утечек памяти.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                        class="token function">expire</span><span class="token punctuation">(</span><span
+                        class="token string single-quoted-string">'key'</span><span
+                        class="token punctuation">,</span> <span class="token number">3600</span><span
+                        class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                        class="token comment">// Удалить через час</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Конвейеризация (Pipeline)</strong>: Группировка команд для сокращения задержек.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                        class="token function">pipeline</span><span class="token punctuation">(</span><span
+                        class="token keyword">function</span> <span class="token punctuation">(</span><span
+                        class="token variable">$pipe</span><span class="token punctuation">)</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                            class="token variable">$i</span> <span class="token operator">=</span> <span
+                            class="token number">0</span><span class="token punctuation">;</span> <span
+                            class="token variable">$i</span> <span class="token operator">&lt;</span> <span
+                            class="token number">1000</span><span class="token punctuation">;</span> <span
+                            class="token variable">$i</span><span class="token operator">++</span><span
+                            class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$pipe</span><span class="token operator">-&gt;</span><span class="token function">set</span><span
+                            class="token punctuation">(</span><span class="token string double-quoted-string">"key:<span
+                            class="token interpolation"><span class="token variable">$i</span></span>"</span><span
+                            class="token punctuation">,</span> <span class="token variable">$i</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Транзакции (MULTI/EXEC)</strong>: Атомарное выполнение операций.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                        class="token function">multi</span><span class="token punctuation">(</span><span
+                        class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                            class="token function">incr</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'counter'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                            class="token function">expire</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'counter'</span><span
+                            class="token punctuation">,</span> <span class="token number">10</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                            class="token function">exec</span><span class="token punctuation">(</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h4>7. <strong>Типичные ошибки</strong></h4>
+    <ul>
+        <li><p><strong>Игнорирование персистентности</strong>: Если данные важны, настройте RDB или AOF.</p></li>
+        <li><p><strong>Хранение больших данных в одном ключе</strong>: Это может привести к блокировкам.</p></li>
+        <li><p><strong>Отсутствие мониторинга</strong>: Следите за использованием памяти (<code>INFO MEMORY</code>).</p>
+        </li>
+    </ul>
+    <h4>8. <strong>Redis vs Memcached</strong></h4>
+    <ul>
+        <li><p><strong>Redis</strong>:</p>
+            <ul>
+                <li><p>Богатые структуры данных.</p></li>
+                <li><p>Поддержка персистентности.</p></li>
+                <li><p>Pub/Sub, Lua-скрипты.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Memcached</strong>:</p>
+            <ul>
+                <li><p>Проще, меньше потребление памяти.</p></li>
+                <li><p>Лучше для простого кэширования.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <h4>9. <strong>Полезные инструменты</strong></h4>
+    <ul>
+        <li><p><strong>Redis CLI</strong>: <code>redis-cli monitor</code> для отладки.</p></li>
+        <li><p><strong>Adminer с плагином Redis</strong>: Визуальное управление данными.</p></li>
+        <li><p><strong>RedisInsight</strong>: GUI от разработчиков Redis.</p></li>
+    </ul>
+    <h4>10. <strong>Документация и ресурсы</strong></h4>
+    <ul>
+        <li><p><a href="https://redis.io/documentation" target="_blank" rel="noreferrer">Официальная документация</a>
+        </p></li>
+        <li><p><a href="https://github.com/phpredis/phpredis" target="_blank" rel="noreferrer">phpredis на GitHub</a>
+        </p></li>
+        <li><p><a href="https://github.com/predis/predis" target="_blank" rel="noreferrer">Predis на GitHub</a></p></li>
+    </ul>
+</div>
+</body>
+</html>

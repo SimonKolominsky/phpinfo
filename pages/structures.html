@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>PHP предоставляет несколько встроенных
+    структур данных и инструментов для работы с ними. Вот основные из них:</p>
+    <hr>
+    <h3>1. <strong>Массивы (Arrays)</strong></h3>
+    <p>Гибкая структура, которая может работать как:</p>
+    <ul>
+        <li><p><strong>Индексированный массив</strong> (список):</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$fruits</span> <span class="token operator">=</span> <span
+                        class="token punctuation">[</span><span
+                        class="token string single-quoted-string">'Яблоко'</span><span
+                        class="token punctuation">,</span> <span
+                        class="token string single-quoted-string">'Банан'</span><span class="token punctuation">,</span> <span
+                        class="token string single-quoted-string">'Апельсин'</span><span
+                        class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$fruits</span><span
+                            class="token punctuation">[</span><span class="token number">0</span><span
+                            class="token punctuation">]</span><span class="token punctuation">;</span> <span
+                            class="token comment">// Яблоко</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Ассоциативный массив</strong> (словарь/хэш-таблица):</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$user</span> <span class="token operator">=</span> <span
+                        class="token punctuation">[</span>
+    <span class="token string single-quoted-string">'name'</span> <span class="token operator">=&gt;</span> <span
+                            class="token string single-quoted-string">'Иван'</span><span
+                            class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'age'</span> <span class="token operator">=&gt;</span> <span
+                            class="token number">30</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'city'</span> <span class="token operator">=&gt;</span> <span
+                            class="token string single-quoted-string">'Москва'</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$user</span><span
+                            class="token punctuation">[</span><span
+                            class="token string single-quoted-string">'city'</span><span
+                            class="token punctuation">]</span><span class="token punctuation">;</span> <span
+                            class="token comment">// Москва</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Многомерный массив</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$users</span> <span class="token operator">=</span> <span
+                        class="token punctuation">[</span>
+    <span class="token punctuation">[</span><span class="token string single-quoted-string">'id'</span> <span
+                            class="token operator">=&gt;</span> <span class="token number">1</span><span
+                            class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'name'</span> <span
+                            class="token operator">=&gt;</span> <span
+                            class="token string single-quoted-string">'Анна'</span><span
+                            class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token string single-quoted-string">'id'</span> <span
+                            class="token operator">=&gt;</span> <span class="token number">2</span><span
+                            class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'name'</span> <span
+                            class="token operator">=&gt;</span> <span
+                            class="token string single-quoted-string">'Петр'</span><span
+                            class="token punctuation">]</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ul>
+    <p><strong>Основные операции</strong>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token function">array_push</span><span class="token punctuation">(</span><span
+                class="token variable">$fruits</span><span class="token punctuation">,</span> <span
+                class="token string single-quoted-string">'Груша'</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span> <span class="token comment">// Добавить в конец</span>
+<span class="token variable">$last</span> <span class="token operator">=</span> <span
+                    class="token function">array_pop</span><span class="token punctuation">(</span><span
+                    class="token variable">$fruits</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>     <span class="token comment">// Удалить последний</span>
+<span class="token function">array_unshift</span><span class="token punctuation">(</span><span class="token variable">$fruits</span><span
+                    class="token punctuation">,</span> <span
+                    class="token string single-quoted-string">'Манго'</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Добавить в начало</span></pre>
+    </div>
+    <hr>
+    <h3>2. <strong><a href="structure_spl.html">SPL (Standard PHP Library)</a></strong></h3>
+    <p>Встроенная библиотека для работы с продвинутыми структурами данных:</p>
+    <ul>
+        <li><p><strong>Стек (LIFO)</strong> через <code>SplStack</code>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$stack</span> <span class="token operator">=</span> <span
+                        class="token keyword">new</span> <span class="token class-name">SplStack</span><span
+                        class="token punctuation">(</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span>
+<span class="token variable">$stack</span><span class="token operator">-&gt;</span><span
+                            class="token function">push</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'Элемент 1'</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token variable">$stack</span><span class="token operator">-&gt;</span><span
+                            class="token function">push</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'Элемент 2'</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$stack</span><span
+                            class="token operator">-&gt;</span><span class="token function">pop</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span> <span class="token comment">// Элемент 2</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Очередь (FIFO)</strong> через <code>SplQueue</code>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$queue</span> <span class="token operator">=</span> <span
+                        class="token keyword">new</span> <span class="token class-name">SplQueue</span><span
+                        class="token punctuation">(</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span>
+<span class="token variable">$queue</span><span class="token operator">-&gt;</span><span
+                            class="token function">enqueue</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'Задача 1'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$queue</span><span class="token operator">-&gt;</span><span
+                            class="token function">enqueue</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'Задача 2'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$queue</span><span
+                            class="token operator">-&gt;</span><span class="token function">dequeue</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span> <span class="token comment">// Задача 1</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Кучи (Heaps)</strong> через <code>SplHeap</code>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$heap</span> <span class="token operator">=</span> <span
+                        class="token keyword">new</span> <span class="token class-name">SplMaxHeap</span><span
+                        class="token punctuation">(</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span> <span class="token comment">// Максимальная куча</span>
+<span class="token variable">$heap</span><span class="token operator">-&gt;</span><span
+                            class="token function">insert</span><span class="token punctuation">(</span><span
+                            class="token number">30</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token variable">$heap</span><span class="token operator">-&gt;</span><span
+                            class="token function">insert</span><span class="token punctuation">(</span><span
+                            class="token number">10</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$heap</span><span
+                            class="token operator">-&gt;</span><span class="token function">extract</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span> <span class="token comment">// 30</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>3. <strong>Объекты и Классы</strong></h3>
+    <p>Создание собственных структур данных через ООП:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">Node</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token variable">$value</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token variable">$next</span><span
+                    class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span class="token variable">$value</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">value</span> <span
+                    class="token operator">=</span> <span class="token variable">$value</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">next</span> <span
+                    class="token operator">=</span> <span class="token constant">null</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Пример связного списка</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">LinkedList</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$head</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">add</span><span class="token punctuation">(</span><span
+                    class="token variable">$value</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$node</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">Node</span><span
+                    class="token punctuation">(</span><span class="token variable">$value</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">head</span> <span class="token operator">===</span> <span
+                    class="token constant">null</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+            <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">head</span> <span class="token operator">=</span> <span
+                    class="token variable">$node</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span
+                    class="token punctuation">{</span>
+            <span class="token variable">$current</span> <span class="token operator">=</span> <span
+                    class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">head</span><span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span><span
+                    class="token variable">$current</span><span class="token operator">-&gt;</span><span
+                    class="token property">next</span> <span class="token operator">!==</span> <span
+                    class="token constant">null</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+                <span class="token variable">$current</span> <span class="token operator">=</span> <span
+                    class="token variable">$current</span><span class="token operator">-&gt;</span><span
+                    class="token property">next</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token variable">$current</span><span class="token operator">-&gt;</span><span
+                    class="token property">next</span> <span class="token operator">=</span> <span
+                    class="token variable">$node</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>4. <strong>Множества (Sets)</strong></h3>
+    <p>PHP не имеет встроенного <code>Set</code>, но его можно эмулировать через ассоциативные массивы:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$set</span> <span class="token operator">=</span> <span
+                class="token punctuation">[</span><span class="token punctuation">]</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$set</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'элемент1'</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token constant boolean">true</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$set</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'элемент2'</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token constant boolean">true</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token keyword">isset</span><span class="token punctuation">(</span><span
+                    class="token variable">$set</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'элемент1'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string single-quoted-string">'Элемент1 есть!'</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>5. <strong>Строки (Strings)</strong></h3>
+    <p>Строки в PHP могут обрабатываться как массивы символов:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$text</span> <span class="token operator">=</span> <span
+                class="token string double-quoted-string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$text</span><span
+                    class="token punctuation">[</span><span class="token number">1</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span> <span
+                    class="token comment">// e</span></pre>
+    </div>
+    <hr>
+    <h3>6. <strong>Структуры данных PHP 7.4+</strong></h3>
+    <p>С версии 7.4 доступны <strong>типизированные свойства</strong>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">TreeNode</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword type-declaration">int</span> <span
+                    class="token variable">$value</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token operator">?</span><span
+                    class="token class-name type-declaration">TreeNode</span> <span class="token variable">$left</span> <span
+                    class="token operator">=</span> <span class="token constant">null</span><span
+                    class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token operator">?</span><span
+                    class="token class-name type-declaration">TreeNode</span> <span class="token variable">$right</span> <span
+                    class="token operator">=</span> <span class="token constant">null</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">int</span> <span
+                    class="token variable">$value</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">value</span> <span
+                    class="token operator">=</span> <span class="token variable">$value</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <hr>
+    <h3>Рекомендации:</h3>
+    <ul>
+        <li><p>Используйте <strong>массивы</strong> для простых коллекций.</p></li>
+        <li><p>Для сложных операций (очереди, стеки) применяйте <strong>SPL</strong>.</p></li>
+        <li><p>Для полного контроля создавайте <strong>классы</strong> (например, деревья, графы).</p></li>
+        <li><p>Учитывайте производительность: вставка в начало массива (<code>array_unshift</code>) медленнее, чем в
+            конец (<code>array_push</code>).</p></li>
+    </ul>
+    <hr>
+    <h3>Примеры задач и структур:</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Задача</th>
+            <th>Рекомендуемая структура</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Быстрый поиск по ключу</td>
+            <td>Ассоциативный массив</td>
+        </tr>
+        <tr>
+            <td>Обработка в порядке LIFO</td>
+            <td><code>SplStack</code></td>
+        </tr>
+        <tr>
+            <td>Работа с приоритетами</td>
+            <td><code>SplPriorityQueue</code></td>
+        </tr>
+        <tr>
+            <td>Связные данные</td>
+            <td>Классы (например, <code>LinkedList</code>)</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>SPL документация: <a href="https://www.php.net/manual/ru/book.spl.php" target="_blank" rel="noreferrer">https://www.php.net/manual/ru/book.spl.php</a>
+    </p></div>
+</body>
+</html>

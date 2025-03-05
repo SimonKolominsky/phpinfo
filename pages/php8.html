@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+    <link href="../2a6c828a2c61eee7.css" rel="stylesheet">
+
+</head>
+<body class="ds-markdown ds-markdown--block">
+<div class="font-claude-message  relative  leading-[1.65rem]  [&amp;>div>div>:is(p,ul,ol)]:pr-4  md:[&amp;>div>div>:is(p,ul,ol)]:pr-8  [&amp;_pre>div]:bg-bg-300  [&amp;_.ignore-pre-bg>div]:bg-transparent">
+    <div>
+        <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words">PHP 8.0
+            представил множество значительных изменений и улучшений. Вот ключевые нововведения:</p>
+            <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">JIT (Just-In-Time) компиляция - значительно повышает
+                    производительность для вычислительно сложных задач
+                </li>
+                <li class="whitespace-normal break-words" index="1">Типизация:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0">Union Types (объединение типов): <code
+                                class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">function
+                            foo(int|float $number)</code></li>
+                        <li class="whitespace-normal break-words" index="1">Типизированные свойства класса: <code
+                                class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">public
+                            string $name;</code></li>
+                        <li class="whitespace-normal break-words" index="2">Возвращаемый тип static</li>
+                        <li class="whitespace-normal break-words" index="3">Ковариантные возвращаемые типы и
+                            контравариантные параметры
+                        </li>
+                    </ul>
+                </li>
+                <li class="whitespace-normal break-words" index="2">Именованные аргументы - позволяют передавать
+                    аргументы в функции по имени:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token function">htmlspecialchars</span><span
+                            class="token punctuation">(</span><span class="token variable">$string</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token argument-name">double_encode</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token constant boolean">false</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="3">Атрибуты (заменяют PHPDoc аннотации):
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="">#</span><span class="token punctuation">[</span><span
+                            class="token function">Route</span><span class="token punctuation">(</span><span
+                            class="token string double-quoted-string">"/api/posts"</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token argument-name">methods</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token punctuation">[</span><span
+                            class="token string double-quoted-string">"GET"</span><span
+                            class="token punctuation">]</span><span class="token punctuation">)</span><span
+                            class="token punctuation">]</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="4">Конструктор объектов класса без указания <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">new</code>:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$datetime</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token scope">DateTime</span><span class="token scope punctuation">::</span><span
+                            class="token function">createFromFormat</span><span class="token punctuation">(</span><span
+                            class="token operator">...</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="5">Выражение match (улучшенная замена switch):
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$result</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token keyword">match</span><span class="token punctuation">(</span><span
+                            class="token variable">$value</span><span class="token punctuation">)</span><span
+                            class=""> </span><span class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token number">1</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token number">2</span><span
+                            class=""> </span><span class="token operator">=&gt;</span><span class=""> </span><span
+                            class="token string single-quoted-string">'низкий'</span><span
+                            class="token punctuation">,</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token number">3</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token number">4</span><span
+                            class=""> </span><span class="token operator">=&gt;</span><span class=""> </span><span
+                            class="token string single-quoted-string">'средний'</span><span
+                            class="token punctuation">,</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">default</span><span class=""> </span><span
+                            class="token operator">=&gt;</span><span class=""> </span><span
+                            class="token string single-quoted-string">'высокий'</span><span
+                            class="token punctuation">,</span><span class="">
+</span></span><span class=""><span class=""></span><span class="token punctuation">}</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="6">Оператор Nullsafe: <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">$user?-&gt;profile?-&gt;name</code>
+                </li>
+                <li class="whitespace-normal break-words" index="7">Строгое сравнение в функции <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">in_array()</code>
+                    и
+                    <code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">array_search()</code>
+                    по умолчанию
+                </li>
+                <li class="whitespace-normal break-words" index="8">Новые функции и интерфейсы:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0">Интерфейс Stringable</li>
+                        <li class="whitespace-normal break-words" index="1">str_contains(), str_starts_with(),
+                            str_ends_with()
+                        </li>
+                    </ul>
+                </li>
+                <li class="whitespace-normal break-words" index="9">Обработка исключений:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0">Throw как выражение</li>
+                        <li class="whitespace-normal break-words" index="1">Новые типы исключений (ValueError)</li>
+                        <li class="whitespace-normal break-words" index="2">Обнаружение предупреждений как ошибок</li>
+                    </ul>
+                </li>
+                <li class="whitespace-normal break-words" index="10">Улучшенные сообщения об ошибках с более понятной
+                    диагностикой
+                </li>
+                <li class="whitespace-normal break-words" index="11">Устаревание и удаление некоторых возможностей
+                    (например, параметра $mandatory функции get_class())
+                </li>
+            </ol>
+            <p class="whitespace-pre-wrap break-words">PHP 8.0 фокусируется на безопасности типов, производительности и
+                более чистом синтаксисе, что делает код более надежным и быстрым.</p></div>
+    </div>
+</div>
+<div class="font-claude-message  relative  leading-[1.65rem]  [&amp;>div>div>:is(p,ul,ol)]:pr-4  md:[&amp;>div>div>:is(p,ul,ol)]:pr-8  [&amp;_pre>div]:bg-bg-300  [&amp;_.ignore-pre-bg>div]:bg-transparent">
+    <div>
+        <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words">В PHP 8.1
+            добавлено множество полезных улучшений и новых возможностей. Вот основные изменения:</p>
+            <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Перечисления (Enumerations):
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">enum</span><span class=""> </span><span
+                            class="token class-name-definition class-name">Status</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">case</span><span
+                            class=""> </span><span class="token constant">Pending</span><span class="token punctuation">;</span><span
+                            class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">case</span><span
+                            class=""> </span><span class="token constant">Active</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">case</span><span
+                            class=""> </span><span class="token constant">Suspended</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="1">Тип-пересечение (Intersection Types):
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">function</span><span class=""> </span><span
+                            class="token function-definition function">foo</span><span
+                            class="token punctuation">(</span><span class="token constant">A</span><span
+                            class="token operator">&amp;</span><span
+                            class="token class-name type-declaration">B</span><span class=""> </span><span
+                            class="token variable">$param</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token keyword return-type">void</span><span class=""> </span><span
+                            class="token punctuation">{</span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="2">"Никогда" возвращаемый тип (never):
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">function</span><span class=""> </span><span
+                            class="token function-definition function">redirect</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token class-name return-type">never</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token function">header</span><span
+                            class="token punctuation">(</span><span class="token string single-quoted-string">'Location: /'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">exit</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="3">Readonly свойства:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">class</span><span class=""> </span><span
+                            class="token class-name-definition class-name">User</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">public</span><span
+                            class=""> readonly </span><span class="token keyword type-declaration">string</span><span
+                            class=""> </span><span class="token variable">$name</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="4">Первоклассная поддержка Callable:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$fn</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token function">strlen</span><span class="token punctuation">(</span><span
+                            class="token operator">...</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="5">Новые инициализаторы для массивов:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$array</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token punctuation">[</span><span class="token number">0</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token number">1</span><span
+                            class="token punctuation">,</span><span class=""> </span><span
+                            class="token operator">...</span><span class="token variable">$values</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token number">5</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token number">6</span><span
+                            class="token punctuation">]</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="6">Финальные константы класса:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">class</span><span class=""> </span><span
+                            class="token class-name-definition class-name">Foo</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">final</span><span
+                            class=""> </span><span class="token keyword">const</span><span class=""> </span><span
+                            class="token constant">X</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token string double-quoted-string">"foo"</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="7">Новый оператор Fibers для асинхронного
+                    программирования
+                </li>
+                <li class="whitespace-normal break-words" index="8">Поддержка чистых методов пересечения (pure
+                    intersection types)
+                </li>
+                <li class="whitespace-normal break-words" index="9">Новая функция array_is_list() для проверки, является
+                    ли массив списком
+                </li>
+                <li class="whitespace-normal break-words" index="10">Новые строковые функции:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0">str_contains()</li>
+                        <li class="whitespace-normal break-words" index="1">str_starts_with()</li>
+                        <li class="whitespace-normal break-words" index="2">str_ends_with()</li>
+                    </ul>
+                </li>
+                <li class="whitespace-normal break-words" index="11">Поддержка использования new в инициализаторах:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">class</span><span class=""> </span><span
+                            class="token class-name-definition class-name">Service</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">private</span><span class=""> </span><span
+                            class="token class-name type-declaration">Logger</span><span class=""> </span><span
+                            class="token variable">$logger</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span class="token keyword">new</span><span
+                            class=""> </span><span class="token class-name">Logger</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="12">Возможность определять octal числа с явным
+                    префиксом 0o
+                </li>
+                <li class="whitespace-normal break-words" index="13">Улучшения системы предупреждений и замечаний</li>
+                <li class="whitespace-normal break-words" index="14">Устаревание некоторых функций и возможностей,
+                    включая использование неявных вызовов конструкторов в наследуемых классах
+                </li>
+            </ol>
+            <p class="whitespace-pre-wrap break-words">PHP 8.1 продолжает линию усовершенствований, начатую в PHP 8.0, с
+                фокусом на улучшение типизации, синтаксического сахара и производительности.</p></div>
+    </div>
+</div>
+<div class="font-claude-message  relative  leading-[1.65rem]  [&amp;>div>div>:is(p,ul,ol)]:pr-4  md:[&amp;>div>div>:is(p,ul,ol)]:pr-8  [&amp;_pre>div]:bg-bg-300  [&amp;_.ignore-pre-bg>div]:bg-transparent">
+    <div>
+        <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words">PHP 8.2
+            вышел в декабре 2022 года и представил несколько важных нововведений и улучшений. Вот основные
+            изменения:</p>
+            <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Readonly классы - можно объявить весь класс как
+                    readonly:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="">readonly </span><span class="token keyword">class</span><span
+                            class=""> </span><span class="token class-name-definition class-name">User</span><span
+                            class=""> </span><span class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">public</span><span
+                            class=""> </span><span class="token keyword type-declaration">string</span><span
+                            class=""> </span><span class="token variable">$name</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">public</span><span
+                            class=""> </span><span class="token keyword type-declaration">string</span><span
+                            class=""> </span><span class="token variable">$email</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="1">Null, false и true как отдельные типы:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">function</span><span class=""> </span><span
+                            class="token function-definition function">foo</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token class-name return-type">null</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="token punctuation">}</span><span class="">
+</span></span><span class=""><span class=""></span><span class="token keyword">function</span><span
+                            class=""> </span><span class="token function-definition function">bar</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token class-name return-type">false</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="token punctuation">}</span><span class="">
+</span></span><span class=""><span class=""></span><span class="token keyword">function</span><span
+                            class=""> </span><span class="token function-definition function">baz</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token class-name return-type">true</span><span class=""> </span><span
+                            class="token punctuation">{</span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="2">Снятие ограничений с константных выражений:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">class</span><span class=""> </span><span
+                            class="token class-name-definition class-name">Math</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">const</span><span
+                            class=""> </span><span class="token constant">PI</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span class="token number">3.14</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">const</span><span
+                            class=""> </span><span class="token constant">TWO_PI</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token scope keyword">self</span><span class="token scope punctuation">::</span><span
+                            class="token constant">PI</span><span class=""> </span><span class="token operator">*</span><span
+                            class=""> </span><span class="token number">2</span><span class="token punctuation">;</span><span
+                            class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="3">Тип данных DNF (Disjunctive Normal Form) -
+                    комбинация union и intersection типов:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">function</span><span class=""> </span><span
+                            class="token function-definition function">process</span><span
+                            class="token punctuation">(</span><span class="token constant">A</span><span
+                            class="token operator">&amp;</span><span class="token class-name">B</span><span
+                            class="token operator">|</span><span class="token class-name">C</span><span
+                            class="token operator">&amp;</span><span
+                            class="token class-name type-declaration">D</span><span class=""> </span><span
+                            class="token variable">$value</span><span class="token punctuation">)</span><span
+                            class=""> </span><span class="token punctuation">{</span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="4">Динамические свойства объявлены устаревшими:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$user</span><span
+                            class="token operator">-&gt;</span><span
+                            class="token property">undeclaredProperty</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token string single-quoted-string">'value'</span><span
+                            class="token punctuation">;</span><span class=""> </span><span class="token comment">// Выдаст предупреждение</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="5">Улучшенный оператор random_int() и random_bytes()
+                    без исключений:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$int</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token function">mt_rand</span><span class="token punctuation">(</span><span class="">min</span><span
+                            class="token punctuation">:</span><span class=""> </span><span class="token number">1</span><span
+                            class="token punctuation">,</span><span class=""> </span><span class="token argument-name">max</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token number">10</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="6">Улучшения для Closure::callArgs() и array_pad() в
+                    сочетании с оператором распаковки
+                </li>
+                <li class="whitespace-normal break-words" index="7">Поддержка mysqli_execute_query() для одношаговых
+                    запросов
+                </li>
+                <li class="whitespace-normal break-words" index="8">Улучшения отладки и обработки ошибок</li>
+                <li class="whitespace-normal break-words" index="9">Новые директивы для систем подсказок типов и
+                    редакторов:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token doc-comment comment">/** </span><span
+                            class="token doc-comment comment keyword">@param</span><span
+                            class="token doc-comment comment"> </span><span
+                            class="token doc-comment comment class-name">callable</span><span
+                            class="token doc-comment comment">(string, int): bool $callback */</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="10">Удаление ряда устаревших функций и возможностей
+                </li>
+                <li class="whitespace-normal break-words" index="11">Улучшение производительности для часто используемых
+                    функций
+                </li>
+            </ol>
+            <p class="whitespace-pre-wrap break-words">PHP 8.2 сосредоточился на усовершенствовании системы типов,
+                улучшении производительности и завершении некоторых функций, начатых в предыдущих версиях.</p></div>
+    </div>
+</div>
+<div class="font-claude-message  relative  leading-[1.65rem]  [&amp;>div>div>:is(p,ul,ol)]:pr-4  md:[&amp;>div>div>:is(p,ul,ol)]:pr-8  [&amp;_pre>div]:bg-bg-300  [&amp;_.ignore-pre-bg>div]:bg-transparent">
+    <div>
+        <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words">PHP 8.3 был
+            выпущен в ноябре 2023 года и включает следующие ключевые улучшения:</p>
+            <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Типизированные константы класса:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">class</span><span class=""> </span><span
+                            class="token class-name-definition class-name">MathConstants</span><span
+                            class=""> </span><span class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">public</span><span
+                            class=""> </span><span class="token keyword">const</span><span class=""> </span><span
+                            class="token keyword type-declaration">float</span><span class=""> </span><span
+                            class="token constant">PI</span><span class=""> </span><span class="token operator">=</span><span
+                            class=""> </span><span class="token number">3.14159</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">protected</span><span
+                            class=""> </span><span class="token keyword">const</span><span class=""> </span><span
+                            class="token keyword type-declaration">string</span><span class=""> </span><span
+                            class="token constant">APP_NAME</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token string double-quoted-string">"MyApp"</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="1">Новый оператор "typenow" и алиас типа:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="">type UserID </span><span class="token operator">=</span><span
+                            class=""> </span><span class="token keyword type-declaration">int</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class="">type Point </span><span class="token operator">=</span><span
+                            class=""> </span><span class="token keyword type-declaration">array</span><span
+                            class="token punctuation">{</span><span class="">x</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token keyword type-declaration">int</span><span
+                            class="token punctuation">,</span><span class=""> </span><span
+                            class="token argument-name">y</span><span class="token punctuation">:</span><span
+                            class=""> </span><span class="token keyword type-declaration">int</span><span
+                            class="token punctuation">}</span><span class="token punctuation">;</span><span class="">
+</span></span><span class="">
+</span><span class=""><span class=""></span><span class="token keyword">function</span><span class=""> </span><span
+                            class="token function-definition function">getUser</span><span
+                            class="token punctuation">(</span><span
+                            class="token class-name type-declaration">UserID</span><span class=""> </span><span
+                            class="token variable">$id</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token class-name return-type">User</span><span class=""> </span><span
+                            class="token punctuation">{</span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="2">Улучшенный анализ динамических вызовов для повышения
+                    безопасности
+                </li>
+                <li class="whitespace-normal break-words" index="3">Новые JSON функции:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0"><code
+                                class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">json_validate()</code>
+                            для проверки валидности JSON
+                        </li>
+                        <li class="whitespace-normal break-words" index="1">Улучшенные флаги для json_encode() и
+                            json_decode()
+                        </li>
+                    </ul>
+                </li>
+                <li class="whitespace-normal break-words" index="4">Новый класс RandomGenerator для генерации случайных
+                    чисел:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$random</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span class="token keyword">new</span><span
+                            class=""> </span><span
+                            class="token class-name class-name-fully-qualified punctuation">\</span><span
+                            class="token class-name class-name-fully-qualified">Random</span><span
+                            class="token class-name class-name-fully-qualified punctuation">\</span><span
+                            class="token class-name class-name-fully-qualified">RandomGenerator</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span class="token variable">$bytes</span><span
+                            class=""> </span><span class="token operator">=</span><span class=""> </span><span
+                            class="token variable">$random</span><span class="token operator">-&gt;</span><span
+                            class="token function">getBytes</span><span class="token punctuation">(</span><span
+                            class="token number">32</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="5">Инлайн представление перечислений:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">function</span><span class=""> </span><span
+                            class="token function-definition function">handleStatus</span><span
+                            class="token punctuation">(</span><span
+                            class="token class-name type-declaration">Status</span><span class=""> </span><span
+                            class="token variable">$status</span><span class="token punctuation">)</span><span
+                            class=""> </span><span class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">return</span><span
+                            class=""> </span><span class="token keyword">match</span><span
+                            class="token punctuation">(</span><span class="token variable">$status</span><span
+                            class="token punctuation">)</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">        </span><span class="token scope">Status</span><span
+                            class="token scope punctuation">::</span><span class="token constant">Pending</span><span
+                            class=""> </span><span class="token operator">=&gt;</span><span class=""> </span><span
+                            class="token string double-quoted-string">"Waiting"</span><span
+                            class="token punctuation">,</span><span class="">
+</span></span><span class=""><span class="">        </span><span class="token scope">Status</span><span
+                            class="token scope punctuation">::</span><span class="token constant">Processing</span><span
+                            class=""> </span><span class="token operator">=&gt;</span><span class=""> </span><span
+                            class="token string double-quoted-string">"In progress"</span><span
+                            class="token punctuation">,</span><span class="">
+</span></span><span class=""><span class="">        </span><span class="token comment">/* ... */</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token punctuation">}</span><span
+                            class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="6">Оператор "readonly" для аргументов анонимных
+                    функций:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$fn</span><span class=""> </span><span
+                            class="token operator">=</span><span class=""> </span><span
+                            class="token keyword">function</span><span class=""> </span><span class="token punctuation">(</span><span
+                            class="">readonly </span><span class="token class-name type-declaration">Point</span><span
+                            class=""> </span><span class="token variable">$point</span><span
+                            class="token punctuation">)</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token comment">// нельзя изменить $point</span><span
+                            class="">
+</span></span><span class=""><span class=""></span><span class="token punctuation">}</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="7">Улучшения производительности:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0">Оптимизированные функции для строк</li>
+                        <li class="whitespace-normal break-words" index="1">Улучшенная обработка больших массивов</li>
+                    </ul>
+                </li>
+                <li class="whitespace-normal break-words" index="8">Улучшенные сообщения об ошибках и предупреждениях
+                </li>
+                <li class="whitespace-normal break-words" index="9">Новые математические функции:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0"><code
+                                class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">cos_tanh()</code>
+                        </li>
+                        <li class="whitespace-normal break-words" index="1"><code
+                                class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">sin_tanh()</code>
+                        </li>
+                        <li class="whitespace-normal break-words" index="2"><code
+                                class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">tan_tanh()</code>
+                        </li>
+                    </ul>
+                </li>
+                <li class="whitespace-normal break-words" index="10">Улучшения для стандартной библиотеки DateTime,
+                    включая новые методы для работы с временными зонами
+                </li>
+                <li class="whitespace-normal break-words" index="11">Устаревание некоторых функций:
+                    <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                        depth="1">
+                        <li class="whitespace-normal break-words" index="0">mb_ereg_replace() с модификатором "e"</li>
+                        <li class="whitespace-normal break-words" index="1">Implicit by-ref in array_multisort()</li>
+                    </ul>
+                </li>
+            </ol>
+            <p class="whitespace-pre-wrap break-words">PHP 8.3 продолжает фокусироваться на улучшении строгой типизации,
+                производительности и безопасности языка.</p></div>
+    </div>
+</div>
+<div class="font-claude-message  relative  leading-[1.65rem]  [&amp;>div>div>:is(p,ul,ol)]:pr-4  md:[&amp;>div>div>:is(p,ul,ol)]:pr-8  [&amp;_pre>div]:bg-bg-300  [&amp;_.ignore-pre-bg>div]:bg-transparent">
+    <div>
+        <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words">PHP 8.4
+            должен быть выпущен позже в 2024 году (ориентировочно в ноябре). Вот основные новые функции и улучшения,
+            анонсированные для PHP 8.4 на момент моего последнего обновления (октябрь 2024):</p>
+            <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7"
+                depth="0">
+                <li class="whitespace-normal break-words" index="0">Новый тип данных <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">class-string</code>:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">function</span><span class=""> </span><span
+                            class="token function-definition function">getClass</span><span
+                            class="token punctuation">(</span><span class="token keyword">class</span><span
+                            class="token operator">-</span><span
+                            class="token keyword type-declaration">string</span><span class=""> </span><span
+                            class="token variable">$className</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span><span class=""> </span><span
+                            class="token keyword return-type">object</span><span class=""> </span><span
+                            class="token punctuation">{</span><span class="">
+</span></span><span class=""><span class="">    </span><span class="token keyword">return</span><span
+                            class=""> </span><span class="token keyword">new</span><span class=""> </span><span
+                            class="token variable">$className</span><span class="token punctuation">(</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span><span class="">
+</span></span><span class=""><span class=""></span><span
+                            class="token punctuation">}</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="1">Поддержка оператора <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">?-&gt;</code>
+                    для статических вызовов:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token variable">$class</span><span
+                            class="token operator">?</span><span class="token operator">::</span><span
+                            class="token function">staticMethod</span><span class="token punctuation">(</span><span
+                            class="token punctuation">)</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="2"><code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">use
+                    enum</code> - поддержка импорта перечислений:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token keyword">use</span><span class=""> </span><span
+                            class="token package">enum</span><span class=""> App\Enums\Status</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="3">Изменения в работе HEREDOC и NOWDOC строк</li>
+                <li class="whitespace-normal break-words" index="4">Улучшение системы автоматической загрузки классов
+                </li>
+                <li class="whitespace-normal break-words" index="5">Добавление возможности получать автозаполнение в IDE
+                    для динамических вызовов через новые PHPDoc аннотации
+                </li>
+                <li class="whitespace-normal break-words" index="6">Функция <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">array_unzip()</code>
+                    - реверс для <code
+                            class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">array_zip()</code>:
+                    <pre><div class="relative flex flex-col rounded-lg"><div
+                            class="text-text-300 absolute pl-3 pt-2.5 text-xs">php</div><div
+                            class="pointer-events-none sticky my-0.5 ml-0.5 flex items-center justify-end px-1.5 py-1 mix-blend-luminosity top-0"><div
+                            class="from-bg-300/90 to-bg-300/70 pointer-events-auto rounded-md bg-gradient-to-b p-0.5 backdrop-blur-md"></div></div><div><div
+                            class="prismjs code-block__code !my-0 !rounded-lg !text-sm !leading-relaxed"><code
+                            class="language-php"
+                            style="background: rgb(40, 44, 52); color: rgb(171, 178, 191); text-shadow: rgba(0, 0, 0, 0.3) 0px 1px; font-family: &quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 2; hyphens: none;"><span
+                            class=""><span class="token punctuation">[</span><span
+                            class="token variable">$keys</span><span class="token punctuation">,</span><span
+                            class=""> </span><span class="token variable">$values</span><span class="token punctuation">]</span><span
+                            class=""> </span><span class="token operator">=</span><span class=""> </span><span
+                            class="token function">array_unzip</span><span class="token punctuation">(</span><span
+                            class="token variable">$array</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span></span></code></div></div></div></pre>
+                </li>
+                <li class="whitespace-normal break-words" index="7">Улучшения функции <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">mb_str_pad()</code>
+                    для мультибайтовых строк
+                </li>
+                <li class="whitespace-normal break-words" index="8">Улучшения в производительности работы со строками и
+                    массивами
+                </li>
+                <li class="whitespace-normal break-words" index="9">Добавление константы <code
+                        class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.3rem] px-1 py-px text-[0.9rem]">JSON_AUTH</code>
+                    для работы с JSON Web Token (JWT)
+                </li>
+                <li class="whitespace-normal break-words" index="10">Улучшения в работе с generics через PHPDoc
+                    аннотации
+                </li>
+                <li class="whitespace-normal break-words" index="11">Оптимизации работы garbage collector для более
+                    эффективного управления памятью
+                </li>
+                <li class="whitespace-normal break-words" index="12">Улучшенный контроль целостности типов во время
+                    исполнения
+                </li>
+                <li class="whitespace-normal break-words" index="13">Расширение функциональности атрибутов
+                    (attributes)
+                </li>
+            </ol>
+            <p class="whitespace-pre-wrap break-words">PHP 8.4 продолжает улучшать систему типов, производительность и
+                удобство использования языка, следуя общей тенденции PHP к большей строгости типизации и более
+                современному синтаксису.</p></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Symfony Cache — это мощный компонент
+    Symfony, предназначенный для кэширования данных, что позволяет значительно ускорить работу приложений. Он
+    предоставляет унифицированный API для работы с различными системами кэширования (например, файловое кэширование,
+    Redis, Memcached, APCu и другие). Компонент Cache гибкий, расширяемый и интегрируется с другими частями Symfony,
+    такими как HTTP-кэширование, кэширование аннотаций и шаблонов Twig.</p>
+    <h3>Основные возможности Symfony Cache:</h3>
+    <ol start="1">
+        <li><p><strong>Универсальный API</strong><br>Symfony Cache предоставляет единый интерфейс для работы с разными
+            системами кэширования. Это позволяет легко переключаться между разными хранилищами (например, с файлового
+            кэша на Redis) без изменения кода.</p></li>
+        <li><p><strong>Поддержка множества адаптеров</strong><br>Компонент поддерживает множество адаптеров для хранения
+            кэша:</p>
+            <ul>
+                <li><p><strong>Файловая система</strong> (<code>FilesystemAdapter</code>) — для хранения кэша в файлах.
+                </p></li>
+                <li><p><strong>Redis</strong> (<code>RedisAdapter</code>) — для использования Redis как хранилища.</p>
+                </li>
+                <li><p><strong>Memcached</strong> (<code>MemcachedAdapter</code>) — для работы с Memcached.</p></li>
+                <li><p><strong>APCu</strong> (<code>ApcuAdapter</code>) — для использования APCu (кэш в памяти).</p>
+                </li>
+                <li><p><strong>Array</strong> (<code>ArrayAdapter</code>) — для хранения кэша в памяти (удобно для
+                    тестирования).</p></li>
+                <li><p><strong>Pdo</strong> (<code>PdoAdapter</code>) — для хранения кэша в базе данных.</p></li>
+                <li><p>И другие.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Тэгирование кэша</strong><br>Symfony Cache поддерживает тэгирование, что позволяет группировать
+            элементы кэша и удалять их группами. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                        class="token function">get</span><span class="token punctuation">(</span><span
+                        class="token string single-quoted-string">'item_key'</span><span
+                        class="token punctuation">,</span> <span class="token keyword">function</span> <span
+                        class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string single-quoted-string">'cached_value'</span><span
+                            class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span
+                            class="token number">0</span><span class="token punctuation">,</span> <span
+                            class="token punctuation">[</span><span
+                            class="token string single-quoted-string">'tag1'</span><span
+                            class="token punctuation">,</span> <span
+                            class="token string single-quoted-string">'tag2'</span><span
+                            class="token punctuation">]</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span></pre>
+            </div>
+            <p>Удаление всех элементов с определённым тэгом:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                        class="token function">invalidateTags</span><span class="token punctuation">(</span><span
+                        class="token punctuation">[</span><span
+                        class="token string single-quoted-string">'tag1'</span><span
+                        class="token punctuation">]</span><span class="token punctuation">)</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Время жизни кэша (TTL)</strong><br>Для каждого элемента кэша можно указать время жизни
+            (Time-To-Live, TTL). По истечении этого времени элемент автоматически удаляется из кэша.</p></li>
+        <li><p><strong>Кэширование вычислений</strong><br>Symfony Cache позволяет кэшировать результаты дорогостоящих
+            вычислений. Например:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$value</span> <span class="token operator">=</span> <span
+                        class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                        class="token function">get</span><span class="token punctuation">(</span><span
+                        class="token string single-quoted-string">'expensive_operation_key'</span><span
+                        class="token punctuation">,</span> <span class="token keyword">function</span> <span
+                        class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">performExpensiveOperation</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+            <p>Если значение уже есть в кэше, оно будет возвращено. Если нет — выполнится функция, и результат будет
+                сохранён в кэше.</p></li>
+        <li><p><strong>Интеграция с другими компонентами Symfony</strong></p>
+            <ul>
+                <li><p><strong>HTTP-кэширование</strong> — для кэширования HTTP-ответов.</p></li>
+                <li><p><strong>Кэширование аннотаций</strong> — для ускорения работы с аннотациями.</p></li>
+                <li><p><strong>Кэширование шаблонов Twig</strong> — для компиляции и кэширования шаблонов.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Пример использования Symfony Cache</h3>
+    <ol start="1">
+        <li><p><strong>Установка компонента</strong><br>Установите компонент через Composer:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require symfony/cache</pre>
+            </div>
+        </li>
+        <li><p><strong>Использование кэша</strong><br>Пример работы с файловым кэшем:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">use</span> <span class="token package">Symfony<span
+                        class="token punctuation">\</span>Component<span class="token punctuation">\</span>Cache<span
+                        class="token punctuation">\</span>Adapter<span class="token punctuation">\</span>FilesystemAdapter</span><span
+                        class="token punctuation">;</span>
+
+<span class="token comment">// Создаём адаптер для файлового кэша</span>
+<span class="token variable">$cache</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                            class="token class-name">FilesystemAdapter</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+
+<span class="token comment">// Получаем или вычисляем значение</span>
+<span class="token variable">$value</span> <span class="token operator">=</span> <span
+                            class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                            class="token function">get</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'my_cache_key'</span><span
+                            class="token punctuation">,</span> <span class="token keyword">function</span> <span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+    <span class="token comment">// Дорогостоящая операция</span>
+    <span class="token keyword">return</span> <span class="token function">computeExpensiveValue</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">echo</span> <span class="token variable">$value</span><span
+                            class="token punctuation">;</span> <span class="token comment">// Выведет закэшированное значение</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Использование Redis</strong><br>Пример работы с Redis:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">use</span> <span class="token package">Symfony<span
+                        class="token punctuation">\</span>Component<span class="token punctuation">\</span>Cache<span
+                        class="token punctuation">\</span>Adapter<span
+                        class="token punctuation">\</span>RedisAdapter</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Cache<span class="token punctuation">\</span>Adapter<span
+                            class="token punctuation">\</span>RedisTagAwareAdapter</span><span
+                            class="token punctuation">;</span>
+
+<span class="token variable">$redis</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                            class="token class-name class-name-fully-qualified"><span class="token punctuation">\</span>Redis</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+<span class="token variable">$redis</span><span class="token operator">-&gt;</span><span
+                            class="token function">connect</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'127.0.0.1'</span><span class="token punctuation">,</span> <span
+                            class="token number">6379</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+
+<span class="token variable">$cache</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                            class="token class-name">RedisTagAwareAdapter</span><span class="token punctuation">(</span><span
+                            class="token variable">$redis</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+
+<span class="token comment">// Сохраняем значение в кэше</span>
+<span class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                            class="token function">get</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'redis_cache_key'</span><span
+                            class="token punctuation">,</span> <span class="token keyword">function</span> <span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span
+                            class="token string single-quoted-string">'cached_value_from_redis'</span><span
+                            class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Удаление кэша</strong><br>Удаление элемента по ключу:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                        class="token function">delete</span><span class="token punctuation">(</span><span
+                        class="token string single-quoted-string">'my_cache_key'</span><span
+                        class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ol>
+    <hr>
+    <h3>Преимущества Symfony Cache:</h3>
+    <ul>
+        <li><p><strong>Гибкость</strong> — поддержка множества адаптеров.</p></li>
+        <li><p><strong>Простота использования</strong> — единый API для всех адаптеров.</p></li>
+        <li><p><strong>Производительность</strong> — эффективное использование ресурсов.</p></li>
+        <li><p><strong>Интеграция</strong> — легко интегрируется с другими компонентами Symfony.</p></li>
+    </ul>
+    <hr>
+    <h3>Настройка кэша в Symfony приложении</h3>
+    <p>Symfony Cache можно настроить через конфигурационные файлы (<code>config/packages/cache.yaml</code>):</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">yaml</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token key atrule">framework</span><span class="token punctuation">:</span>
+    <span class="token key atrule">cache</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> cache.adapter.redis
+        <span class="token key atrule">default_redis_provider</span><span class="token punctuation">:</span> <span
+                    class="token string">'redis://localhost:6379'</span>
+        <span class="token key atrule">pools</span><span class="token punctuation">:</span>
+            <span class="token key atrule">my_custom_pool</span><span class="token punctuation">:</span>
+                <span class="token key atrule">adapter</span><span class="token punctuation">:</span> cache.adapter.filesystem
+                <span class="token key atrule">default_lifetime</span><span class="token punctuation">:</span> <span
+                    class="token number">3600</span></pre>
+    </div>
+    <hr>
+    <h3>Когда использовать Symfony Cache?</h3>
+    <ul>
+        <li><p>Для кэширования результатов дорогостоящих вычислений.</p></li>
+        <li><p>Для кэширования данных, которые редко меняются.</p></li>
+        <li><p>Для ускорения работы приложения, особенно при высокой нагрузке.</p></li>
+    </ul>
+    <p>Symfony Cache — это мощный инструмент, который помогает улучшить производительность приложений, уменьшая нагрузку
+        на серверы и базы данных.</p></div>
+</body>
+</html>

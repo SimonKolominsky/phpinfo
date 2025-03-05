@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Составные индексы (или составные ключи) в
+    базах данных — это индексы, которые создаются на основе двух или более столбцов таблицы. Они используются для
+    оптимизации запросов, которые фильтруют или сортируют данные по нескольким столбцам одновременно.</p>
+    <hr>
+    <h3><strong>Особенности составных индексов</strong></h3>
+    <ol start="1">
+        <li><p><strong>Порядок столбцов важен</strong>:</p>
+            <ul>
+                <li><p>Порядок столбцов в составном индексе имеет значение. Например, индекс на <code>(A, B)</code>
+                    будет полезен для запросов, которые фильтруют по <code>A</code> или по <code>A и B</code>, но не для
+                    запросов, которые фильтруют только по <code>B</code>.</p></li>
+                <li><p>Это связано с тем, что индексы в большинстве СУБД (например, MySQL, PostgreSQL) строятся в
+                    порядке, указанном при создании индекса.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Эффективность для сложных запросов</strong>:</p>
+            <ul>
+                <li><p>Составные индексы полезны для запросов, которые используют несколько условий в <code>WHERE</code>,
+                    <code>JOIN</code>, <code>ORDER BY</code> или <code>GROUP BY</code>.</p></li>
+                <li><p>Например, если у вас есть запрос с условием <code>WHERE A = 1 AND B = 2</code>, составной индекс
+                    на <code>(A, B)</code> будет эффективнее, чем два отдельных индекса на <code>A</code> и
+                    <code>B</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Ограничения на использование</strong>:</p>
+            <ul>
+                <li><p>Составные индексы не всегда могут быть использованы для запросов, которые фильтруют только по
+                    второму или последующим столбцам индекса. Например, индекс на <code>(A, B)</code> не поможет для
+                    запроса с условием <code>WHERE B = 2</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Размер индекса</strong>:</p>
+            <ul>
+                <li><p>Составные индексы занимают больше места на диске, чем одиночные индексы, так как они хранят
+                    данные по нескольким столбцам.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Обновление индекса</strong>:</p>
+            <ul>
+                <li><p>При изменении данных в таблице (вставка, обновление, удаление) составные индексы также
+                    обновляются, что может замедлить операции записи.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3><strong>Примеры использования</strong></h3><h4>Пример 1: Фильтрация по нескольким столбцам</h4>
+    <p>Предположим, у вас есть таблица <code>orders</code> с колонками <code>customer_id</code> и
+        <code>order_date</code>. Если вы часто выполняете запросы вида:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                class="token keyword">FROM</span> orders <span class="token keyword">WHERE</span> customer_id <span
+                class="token operator">=</span> <span class="token number">123</span> <span
+                class="token operator">AND</span> order_date <span class="token operator">&gt;</span> <span
+                class="token string">'2023-01-01'</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p>То составной индекс на <code>(customer_id, order_date)</code> значительно ускорит выполнение такого запроса.</p>
+    <h4>Пример 2: Сортировка</h4>
+    <p>Если вы выполняете запрос с сортировкой:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                class="token keyword">FROM</span> orders <span class="token keyword">WHERE</span> customer_id <span
+                class="token operator">=</span> <span class="token number">123</span> <span
+                class="token keyword">ORDER</span> <span class="token keyword">BY</span> order_date <span
+                class="token keyword">DESC</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p>Составной индекс на <code>(customer_id, order_date)</code> также будет полезен, так как он позволяет быстро
+        находить данные по <code>customer_id</code> и сортировать их по <code>order_date</code>.</p><h4>Пример 3:
+        Уникальность</h4>
+    <p>Составные индексы могут использоваться для обеспечения уникальности комбинации значений. Например:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">CREATE</span> <span class="token keyword">UNIQUE</span> <span
+                class="token keyword">INDEX</span> idx_unique_order <span class="token keyword">ON</span> orders <span
+                class="token punctuation">(</span>customer_id<span class="token punctuation">,</span> order_date<span
+                class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p>Этот индекс гарантирует, что для одного <code>customer_id</code> не будет двух записей с одинаковым <code>order_date</code>.
+    </p>
+    <hr>
+    <h3><strong>Когда использовать составные индексы?</strong></h3>
+    <ol start="1">
+        <li><p><strong>Частые запросы с несколькими условиями</strong>:</p>
+            <ul>
+                <li><p>Если ваши запросы часто фильтруют данные по нескольким столбцам, составной индекс может
+                    значительно ускорить их выполнение.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Сортировка и группировка</strong>:</p>
+            <ul>
+                <li><p>Если вы часто используете <code>ORDER BY</code> или <code>GROUP BY</code> по нескольким столбцам,
+                    составной индекс может улучшить производительность.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Обеспечение уникальности</strong>:</p>
+            <ul>
+                <li><p>Если вам нужно гарантировать уникальность комбинации значений в нескольких столбцах.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3><strong>Когда не стоит использовать составные индексы?</strong></h3>
+    <ol start="1">
+        <li><p><strong>Если запросы фильтруют только по одному столбцу</strong>:</p>
+            <ul>
+                <li><p>В этом случае лучше использовать одиночный индекс на этот столбец.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Если столбцы редко используются вместе</strong>:</p>
+            <ul>
+                <li><p>Если столбцы в индексе редко используются вместе в запросах, составной индекс будет излишним и
+                    займет лишнее место.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Если часто происходят операции записи</strong>:</p>
+            <ul>
+                <li><p>Составные индексы могут замедлять вставку, обновление и удаление данных, так как индекс нужно
+                    обновлять при каждом изменении.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3><strong>Пример создания составного индекса</strong></h3>
+    <p>В SQL составной индекс создается следующим образом:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">CREATE</span> <span class="token keyword">INDEX</span> idx_customer_order <span
+                class="token keyword">ON</span> orders <span class="token punctuation">(</span>customer_id<span
+                class="token punctuation">,</span> order_date<span class="token punctuation">)</span><span
+                class="token punctuation">;</span></pre>
+    </div>
+    <p>Для обеспечения уникальности:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">CREATE</span> <span class="token keyword">UNIQUE</span> <span
+                class="token keyword">INDEX</span> idx_unique_customer_order <span class="token keyword">ON</span> orders <span
+                class="token punctuation">(</span>customer_id<span class="token punctuation">,</span> order_date<span
+                class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <hr>
+    <h3><strong>Заключение</strong></h3>
+    <p>Составные индексы — мощный инструмент для оптимизации запросов, которые работают с несколькими столбцами. Однако
+        их нужно использовать с умом, учитывая порядок столбцов, частоту использования и <a href="indexes_costs.html">влияние на производительность</a>
+        операций записи. Правильное применение составных индексов может значительно ускорить выполнение сложных запросов
+        и улучшить общую производительность базы данных.</p></div>
+</body>
+</html>

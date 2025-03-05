@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Оператор <code>UNION</code> в SQL
+    используется для объединения результатов двух или более запросов в один набор данных. Он возвращает уникальные
+    строки из всех запросов, удаляя дубликаты. Если нужно сохранить дубликаты, используется оператор <code>UNION
+        ALL</code>.</p>
+    <h3>Основные особенности <code>UNION</code>:</h3>
+    <ol start="1">
+        <li><p><strong>Требования</strong>:</p>
+            <ul>
+                <li><p>Количество столбцов в каждом запросе должно быть одинаковым.</p></li>
+                <li><p>Типы данных соответствующих столбцов должны быть совместимыми.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Синтаксис</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> column1<span
+                        class="token punctuation">,</span> column2<span class="token punctuation">,</span> <span
+                        class="token punctuation">.</span><span class="token punctuation">.</span><span
+                        class="token punctuation">.</span>
+<span class="token keyword">FROM</span> table1
+<span class="token keyword">UNION</span>
+<span class="token keyword">SELECT</span> column1<span class="token punctuation">,</span> column2<span
+                            class="token punctuation">,</span> <span class="token punctuation">.</span><span
+                            class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">FROM</span> table2<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Пример</strong>:<br>Предположим, есть две таблицы: <code>employees</code> и
+            <code>contractors</code>. Мы хотим получить список всех уникальных имен из обеих таблиц.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> name <span class="token keyword">FROM</span> employees
+<span class="token keyword">UNION</span>
+<span class="token keyword">SELECT</span> name <span class="token keyword">FROM</span> contractors<span
+                            class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>UNION ALL</strong>:<br>Если нужно сохранить дубликаты, используйте <code>UNION ALL</code>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> name <span class="token keyword">FROM</span> employees
+<span class="token keyword">UNION</span> <span class="token keyword">ALL</span>
+<span class="token keyword">SELECT</span> name <span class="token keyword">FROM</span> contractors<span
+                            class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Сортировка результатов</strong>:<br>Для сортировки результатов можно добавить <code>ORDER
+            BY</code> в конце:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> name <span class="token keyword">FROM</span> employees
+<span class="token keyword">UNION</span>
+<span class="token keyword">SELECT</span> name <span class="token keyword">FROM</span> contractors
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> name<span
+                            class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Пример с разными столбцами</strong>:<br>Если столбцы имеют разные имена, но совместимые типы
+            данных, можно использовать псевдонимы:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> first_name <span
+                        class="token keyword">AS</span> name <span class="token keyword">FROM</span> employees
+<span class="token keyword">UNION</span>
+<span class="token keyword">SELECT</span> last_name <span class="token keyword">AS</span> name <span
+                            class="token keyword">FROM</span> contractors<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Ограничения</strong>:</p>
+            <ul>
+                <li><p><code>UNION</code> удаляет дубликаты, что может замедлить выполнение запроса.</p></li>
+                <li><p><code>UNION ALL</code> работает быстрее, так как не проверяет дубликаты.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Когда использовать <code>UNION</code>:</h3>
+    <ul>
+        <li><p>Когда нужно объединить данные из разных таблиц или запросов.</p></li>
+        <li><p>Когда требуется получить уникальные строки из нескольких источников.</p></li>
+    </ul>
+    <h3>Когда использовать <code>UNION ALL</code>:</h3>
+    <ul>
+        <li><p>Когда нужно объединить данные без удаления дубликатов.</p></li>
+        <li><p>Когда производительность важнее, чем уникальность строк.</p></li>
+    </ul></div>
+</body>
+</html>

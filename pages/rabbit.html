@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>RabbitMQ — это брокер сообщений, реализующий
+    протокол AMQP (Advanced Message Queuing Protocol). Он обеспечивает асинхронный обмен сообщениями между компонентами
+    системы. Вот основные сущности RabbitMQ и их роль в системе:</p>
+    <hr>
+    <h3>1. <strong>Producer (Отправитель)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Приложение или сервис, которое отправляет сообщения в RabbitMQ.</p></li>
+        <li><p><strong>Как работает</strong>: Producer публикует сообщения в <strong>exchange</strong>, указывая
+            <strong>routing key</strong> (ключ маршрутизации) и дополнительные параметры (например, заголовки).</p></li>
+        <li><p><strong>Пример</strong>: Веб-сервер, отправляющий задачу в очередь для обработки фоновым воркером.</p>
+        </li>
+    </ul>
+    <hr>
+    <h3>2. <strong>Consumer (Получатель)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Приложение или сервис, которое получает и обрабатывает сообщения из
+            очередей.</p></li>
+        <li><p><strong>Как работает</strong>: Consumer подписывается на очередь и "слушает" сообщения. Может отправлять
+            подтверждение (<strong>ack</strong>) после успешной обработки или отклонять сообщение (<strong>nack</strong>).
+        </p></li>
+        <li><p><strong>Пример</strong>: Фоновый воркер, обрабатывающий задачи из очереди.</p></li>
+    </ul>
+    <hr>
+    <h3>3. <strong>Message (Сообщение)</strong></h3>
+    <ul>
+        <li><p><strong>Структура</strong>:</p>
+            <ul>
+                <li><p><strong>Тело (Body)</strong>: Полезная нагрузка (например, JSON, XML, бинарные данные).</p></li>
+                <li><p><strong>Атрибуты (Properties)</strong>: Метаданные (например, <code>content-type</code>, <code>priority</code>,
+                    <code>headers</code>).</p></li>
+                <li><p><strong>Routing Key</strong>: Ключ, определяющий маршрутизацию сообщения (используется exchange).
+                </p></li>
+            </ul>
+        </li>
+        <li><p><strong>Типы</strong>:</p>
+            <ul>
+                <li><p><strong>Persistent</strong>: Сохраняется на диск для надежности (если очередь тоже durable).</p>
+                </li>
+                <li><p><strong>Transient</strong>: Хранится в памяти (высокая скорость, но риск потери при сбое).</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3>4. <strong>Exchange (Обменник)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Получает сообщения от Producer и решает, в какую очередь их направить. Это
+            "маршрутизатор" сообщений.</p></li>
+        <li><p><strong>Типы</strong>:</p>
+            <ul>
+                <li><p><strong>Direct</strong>: Отправляет сообщения в очереди с точным совпадением <strong>routing
+                    key</strong> (например, очередь <code>logs.error</code> для ключа <code>error</code>).</p></li>
+                <li><p><strong>Fanout</strong>: Рассылает сообщения во все привязанные очереди (игнорирует routing key).
+                    Полезно для широковещательных рассылок.</p></li>
+                <li><p><strong>Topic</strong>: Маршрутизация по шаблонам routing key с использованием символов
+                    <code>*</code> (одно слово) и <code>#</code> (ноль или более слов). Например,
+                    <code>logs.*.error</code>.</p></li>
+                <li><p><strong>Headers</strong>: Маршрутизация на основе заголовков сообщения (атрибутов в
+                    <code>headers</code>), а не routing key.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Default Exchange</strong>: Предустановленный обменник с именем <code>""</code> (пустая строка).
+            Каждая очередь автоматически привязывается к нему с routing key, равным имени очереди.</p></li>
+    </ul>
+    <hr>
+    <h3>5. <strong>Queue (Очередь)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Хранит сообщения до их обработки Consumer. Это конечная точка для сообщений.
+        </p></li>
+        <li><p><strong>Свойства</strong>:</p>
+            <ul>
+                <li><p><strong>Durable</strong>: Сохраняется после перезапуска брокера (требует, чтобы сообщения тоже
+                    были persistent).</p></li>
+                <li><p><strong>Exclusive</strong>: Используется только одним соединением и удаляется при его закрытии.
+                </p></li>
+                <li><p><strong>Auto-Delete</strong>: Удаляется, когда все Consumer отписываются.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Dead Letter Queue (DLQ)</strong>: Специальная очередь для сообщений, которые не были обработаны
+            (например, из-за ошибок или истечения TTL).</p></li>
+    </ul>
+    <hr>
+    <h3>6. <strong>Binding (Привязка)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Связывает exchange с очередью, определяя правила маршрутизации.</p></li>
+        <li><p><strong>Параметры</strong>:</p>
+            <ul>
+                <li><p><strong>Routing Key</strong>: Шаблон для фильтрации сообщений (для direct, topic).</p></li>
+                <li><p><strong>Headers</strong>: Условия на основе заголовков (для headers exchange).</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3>7. <strong>Virtual Host (Виртуальный хост)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Логическое разделение внутри RabbitMQ. Аналог "пространства имен".</p></li>
+        <li><p><strong>Особенности</strong>:</p>
+            <ul>
+                <li><p>Изолирует очереди, обменники и права доступа.</p></li>
+                <li><p>Пользователи имеют доступ только к определенным vhost.</p></li>
+                <li><p>По умолчанию используется <code>/</code>.</p></li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3>8. <strong>Connection (Соединение) и Channel (Канал)</strong></h3>
+    <ul>
+        <li><p><strong>Connection</strong>: Физическое TCP-соединение между клиентом и брокером. Создается через
+            аутентификацию (логин/пароль).</p></li>
+        <li><p><strong>Channel</strong>: Виртуальное соединение внутри одного TCP-соединения. Позволяет
+            мультиплексирование (несколько каналов на одно соединение). Каналы изолируют операции для безопасности и
+            эффективности.</p></li>
+    </ul>
+    <hr>
+    <h3>9. <strong>Dead Letter Exchange (DLX)</strong></h3>
+    <ul>
+        <li><p><strong>Назначение</strong>: Обменник, куда отправляются сообщения, которые не могут быть обработаны
+            (например, отклоненные Consumer, истекшие по TTL).</p></li>
+        <li><p><strong>Использование</strong>: Настраивается через аргументы очереди:
+            <code>x-dead-letter-exchange</code> и <code>x-dead-letter-routing-key</code>.</p></li>
+    </ul>
+    <hr>
+    <h3>10. <strong>Confirmations (Подтверждения) и Acknowledgements (Квитанции)</strong></h3>
+    <ul>
+        <li><p><strong>Publisher Confirms</strong>: Механизм, при котором брокер подтверждает Producer, что сообщение
+            получено (для надежности).</p></li>
+        <li><p><strong>Consumer Acknowledgements</strong>: Consumer отправляет <strong>ack</strong> после обработки
+            сообщения. Если <strong>ack</strong> не получен, сообщение возвращается в очередь (at-least-once delivery).
+        </p></li>
+    </ul>
+    <hr>
+    <h3>Пример рабочего процесса:</h3>
+    <ol start="1">
+        <li><p><strong>Producer</strong> отправляет сообщение в <strong>exchange</strong> <code>logs</code> с routing
+            key <code>app.error</code>.</p></li>
+        <li><p><strong>Exchange</strong> типа <strong>topic</strong> проверяет привязки (<strong>bindings</strong>) и
+            направляет сообщение в очередь <code>error_logs</code>, которая связана с шаблоном <code>app.*</code>.</p>
+        </li>
+        <li><p><strong>Consumer</strong>, подписанный на очередь <code>error_logs</code>, получает сообщение,
+            обрабатывает его и отправляет <strong>ack</strong>.</p></li>
+        <li><p>Если обработка не удалась, Consumer отправляет <strong>nack</strong>, и сообщение попадает в DLQ.</p>
+        </li>
+    </ol>
+    <hr>
+    <h3>Дополнительные возможности:</h3>
+    <ul>
+        <li><p><strong>TTL (Time-To-Live)</strong>: Время жизни сообщения или очереди.</p></li>
+        <li><p><strong>Priority Queues</strong>: Приоритетная обработка сообщений.</p></li>
+        <li><p><strong>Кластеризация</strong>: Объединение узлов RabbitMQ в кластер для отказоустойчивости.</p></li>
+        <li><p><strong>Плагины</strong>: Поддержка MQTT, STOMP, управление через веб-интерфейс и т.д.</p></li>
+    </ul>
+    <p>Эти сущности позволяют гибко настраивать маршрутизацию, обеспечить надежность и масштабируемость системы.
+        RabbitMQ подходит для микросервисных архитектур, распределенных задач и событийно-ориентированных систем.</p>
+</div>
+<br>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Брокер сообщений позволяет выполнять
+    операции асинхронно.
+    Также использование брокера сообщений позволяет вашим сервисам ничего не знать о том, кто их обрабатывает. За счёт
+    этого разные компоненты могут оставаться полностью изолированными и самостоятельными — достаточно только подписаться
+    на нужную очередь.
+    Брокеры сообщений — посредники между сервисами. Они находятся в центре архитектуры и управляют потоками информации.
+    Благодаря этому каждый сервис может послать сообщение другому сервису или целой группе сервисов. Такой подход стал
+    популярен с развитием микросервисов и заставил пересмотреть отношение к отказоустойчивости.
+</p>
+    <hr>
+    <h3>1. <strong>Основные сущности RabbitMQ</strong></h3>
+    <ul>
+        <li><p><strong>Connection</strong> — соединение с брокером сообщений (настраивается через DSN).</p></li>
+        <li><p><strong>Exchange</strong> — точка маршрутизации сообщений (типы: <code>direct</code>, <code>topic</code>,
+            <code>fanout</code>, <code>headers</code>).</p></li>
+        <li><p><strong><a href="rabbit_queues.html">Queue</a></strong> — очередь, где хранятся сообщения до обработки.
+        </p></li>
+        <li><p><strong>Binding</strong> — привязка очереди к обменнику с определенными правилами (роутинг-ключи).</p>
+        </li>
+        <li><p><strong>Message</strong> — объект данных, отправляемый через брокер.</p></li>
+    </ul>
+    <hr>
+    <h3>2. <strong>Интеграция в Symfony</strong></h3><h4>Установка</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">bash</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token function">composer</span> require symfony/messenger symfony/amqp-messenger</pre>
+    </div>
+    <h4>Конфигурация (<code>config/packages/messenger.yaml</code>)</h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">yaml</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token key atrule">framework</span><span class="token punctuation">:</span>
+  <span class="token key atrule">messenger</span><span class="token punctuation">:</span>
+    <span class="token key atrule">transports</span><span class="token punctuation">:</span>
+      <span class="token key atrule">async_priority_high</span><span class="token punctuation">:</span>
+        <span class="token key atrule">dsn</span><span class="token punctuation">:</span> <span class="token string">'%env(MESSENGER_TRANSPORT_DSN)%'</span>
+        <span class="token key atrule">options</span><span class="token punctuation">:</span>
+          <span class="token key atrule">exchange</span><span class="token punctuation">:</span>
+            <span class="token key atrule">name</span><span class="token punctuation">:</span> <span
+                    class="token string">'symfony_exchange'</span>
+            <span class="token key atrule">type</span><span class="token punctuation">:</span> <span
+                    class="token string">'direct'</span>
+          <span class="token key atrule">queues</span><span class="token punctuation">:</span>
+            <span class="token key atrule">high_priority_queue</span><span class="token punctuation">:</span>
+              <span class="token key atrule">binding_keys</span><span class="token punctuation">:</span> <span
+                    class="token punctuation">[</span><span class="token string">'high'</span><span
+                    class="token punctuation">]</span>
+    <span class="token key atrule">routing</span><span class="token punctuation">:</span>
+      <span class="token key atrule">'App\Message\HighPriorityMessage'</span><span class="token punctuation">:</span> async_priority_high</pre>
+    </div>
+    <hr>
+    <h3>3. <strong>Отправка сообщений</strong></h3>
+    <ul>
+        <li><p><strong>Message</strong> — DTO (Data Transfer Object):</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">namespace</span> <span class="token package">App<span
+                        class="token punctuation">\</span>Message</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">HighPriorityMessage</span> <span
+                            class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__construct</span><span
+                            class="token punctuation">(</span><span class="token keyword">private</span> <span
+                            class="token keyword type-declaration">string</span> <span
+                            class="token variable">$content</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">getContent</span><span class="token punctuation">(</span><span
+                            class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                            class="token keyword return-type">string</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                            class="token property">content</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Отправка через MessageBus</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">use</span> <span class="token package">Symfony<span
+                        class="token punctuation">\</span>Component<span
+                        class="token punctuation">\</span>Messenger<span class="token punctuation">\</span>MessageBusInterface</span><span
+                        class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SomeService</span> <span
+                            class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__construct</span><span
+                            class="token punctuation">(</span><span class="token keyword">private</span> <span
+                            class="token class-name type-declaration">MessageBusInterface</span> <span
+                            class="token variable">$bus</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">sendMessage</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token keyword return-type">void</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">bus</span><span
+                            class="token operator">-&gt;</span><span class="token function">dispatch</span><span
+                            class="token punctuation">(</span><span class="token keyword">new</span> <span
+                            class="token class-name">HighPriorityMessage</span><span
+                            class="token punctuation">(</span><span class="token string single-quoted-string">'Hello, RabbitMQ!'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>4. <strong>Обработка сообщений</strong></h3>
+    <ul>
+        <li><p><strong>Message Handler</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">namespace</span> <span class="token package">App<span
+                        class="token punctuation">\</span>MessageHandler</span><span class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                            class="token punctuation">\</span>Message<span class="token punctuation">\</span>HighPriorityMessage</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Messenger<span class="token punctuation">\</span>Attribute<span
+                            class="token punctuation">\</span>AsMessageHandler</span><span
+                            class="token punctuation">;</span>
+
+<span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+        class="token attribute-content"><span
+        class="token attribute-class-name class-name">AsMessageHandler</span></span><span
+        class="token delimiter punctuation">]</span></span>
+<span class="token keyword">class</span> <span
+                            class="token class-name-definition class-name">HighPriorityMessageHandler</span> <span
+                            class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">__invoke</span><span
+                            class="token punctuation">(</span><span class="token class-name type-declaration">HighPriorityMessage</span> <span
+                            class="token variable">$message</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token keyword return-type">void</span> <span
+                            class="token punctuation">{</span>
+        <span class="token comment">// Логика обработки</span>
+        <span class="token keyword">echo</span> <span class="token variable">$message</span><span
+                            class="token operator">-&gt;</span><span class="token function">getContent</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <hr>
+    <h3>5. <strong>Запуск Consumer</strong></h3>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">bash</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre>php bin/console messenger:consume async_priority_high</pre>
+    </div>
+    <hr>
+    <h3>6. <strong>Дополнительные настройки</strong></h3>
+    <ul>
+        <li><p><strong>Retries (Повторные попытки)</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">yaml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key atrule">transports</span><span class="token punctuation">:</span>
+  <span class="token key atrule">async_priority_high</span><span class="token punctuation">:</span>
+    <span class="token key atrule">retry_strategy</span><span class="token punctuation">:</span>
+      <span class="token key atrule">max_retries</span><span class="token punctuation">:</span> <span
+                            class="token number">3</span>
+      <span class="token key atrule">multiplier</span><span class="token punctuation">:</span> <span
+                            class="token number">2</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Dead Letter Queue (DLX)</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">yaml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key atrule">options</span><span class="token punctuation">:</span>
+  <span class="token key atrule">queues</span><span class="token punctuation">:</span>
+    <span class="token key atrule">high_priority_queue</span><span class="token punctuation">:</span>
+      <span class="token key atrule">arguments</span><span class="token punctuation">:</span>
+        <span class="token key atrule">'x-dead-letter-exchange'</span><span class="token punctuation">:</span> <span
+                            class="token string">'dead_letter_exchange'</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Работа с разными типами Exchange</strong>:</p>
+            <ul>
+                <li><p><strong>Fanout</strong>: Рассылка всем подписанным очередям.</p></li>
+                <li><p><strong>Topic</strong>: Роутинг по шаблонам (<code>news.*</code>, <code>*.critical</code>).</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <h3>7. <strong>Взаимодействие компонентов</strong></h3>
+    <ol start="1">
+        <li><p>Приложение отправляет сообщение через <code>MessageBus</code>.</p></li>
+        <li><p>Messenger маршрутизирует его в указанный транспорт (RabbitMQ).</p></li>
+        <li><p>RabbitMQ доставляет сообщение в очередь на основе правил exchange/binding.</p></li>
+        <li><p>Consumer (запущенный через консоль) обрабатывает сообщение, вызывая соответствующий хендлер.</p></li>
+    </ol>
+    <hr>
+    <h3>8. <strong>Особенности Symfony 7.1</strong></h3>
+    <ul>
+        <li><p>Поддержка последних версий <code>php-amqplib/rabbitmq-bundle</code>.</p></li>
+        <li><p>Упрощенная конфигурация через атрибуты (например, <code>#[AsMessageHandler]</code>).</p></li>
+        <li><p>Интеграция с Symfony's Lock Component для конкурентного доступа.</p></li>
+    </ul>
+    <p>Для деталей всегда проверяйте <a href="https://symfony.com/doc/7.1/messenger.html#amqp-transport" target="_blank"
+                                        rel="noreferrer">официальную документацию</a>.</p></div>
+</body>
+</html>

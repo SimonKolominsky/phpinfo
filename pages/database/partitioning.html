@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Партиционирование (partitioning) — это метод
+    разделения данных в таблице или индексе на отдельные части (партиции) для улучшения производительности и
+    управляемости. Каждая партиция хранится отдельно, но логически представляет собой часть одной таблицы.
+    Партиционирование часто используется в больших базах данных для оптимизации запросов, упрощения управления данными и
+    повышения производительности.</p>
+    <hr>
+    <h3>Основные цели партиционирования:</h3>
+    <ol start="1">
+        <li><p><strong>Улучшение производительности</strong>:</p>
+            <ul>
+                <li><p>Запросы могут выполняться быстрее, так как СУБД обрабатывает только нужные партиции, а не всю
+                    таблицу.</p></li>
+                <li><p>Уменьшается объем данных, сканируемых при выполнении запросов.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Упрощение управления данными</strong>:</p>
+            <ul>
+                <li><p>Данные можно архивировать, удалять или перемещать на уровне партиций, что упрощает
+                    администрирование.</p></li>
+                <li><p>Например, старые данные можно переместить в отдельную партицию и затем архивировать.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Повышение доступности</strong>:</p>
+            <ul>
+                <li><p>Если одна партиция недоступна, остальные продолжают работать.</p></li>
+                <li><p>Это особенно полезно в распределенных системах.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Эффективное использование ресурсов</strong>:</p>
+            <ul>
+                <li><p>Партиции можно хранить на разных физических дисках или серверах, что улучшает распределение
+                    нагрузки.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Типы партиционирования:</h3>
+    <ol start="1">
+        <li><p><strong>Горизонтальное партиционирование</strong>:</p>
+            <ul>
+                <li><p>Данные разделяются по строкам. Например, строки с определенным диапазоном значений попадают в
+                    одну партицию.</p></li>
+                <li><p>Пример: данные за каждый месяц хранятся в отдельной партиции.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Вертикальное партиционирование</strong>:</p>
+            <ul>
+                <li><p>Данные разделяются по столбцам. Например, часто используемые столбцы хранятся в одной таблице, а
+                    редко используемые — в другой.</p></li>
+                <li><p>Пример: основная информация о пользователях в одной таблице, а дополнительные данные — в
+                    другой.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Основные стратегии партиционирования:</h3>
+    <ol start="1">
+        <li><p><strong>Партиционирование по диапазону (Range Partitioning)</strong>:</p>
+            <ul>
+                <li><p>Данные разделяются на основе диапазона значений определенного столбца.</p></li>
+                <li><p>Пример: партиционирование по дате (например, данные за каждый месяц).</p></li>
+            </ul>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> Sales <span
+                        class="token punctuation">(</span>
+    SaleID <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    SaleDate <span class="token keyword">DATE</span><span class="token punctuation">,</span>
+    Amount <span class="token keyword">DECIMAL</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> RANGE <span
+                            class="token punctuation">(</span>SaleDate<span class="token punctuation">)</span> <span
+                            class="token punctuation">(</span>
+    <span class="token keyword">PARTITION</span> p0 <span class="token keyword">VALUES</span> LESS THAN <span
+                            class="token punctuation">(</span><span class="token string">'2023-01-01'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">PARTITION</span> p1 <span class="token keyword">VALUES</span> LESS THAN <span
+                            class="token punctuation">(</span><span class="token string">'2023-02-01'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">PARTITION</span> p2 <span class="token keyword">VALUES</span> LESS THAN <span
+                            class="token punctuation">(</span><span class="token string">'2023-03-01'</span><span
+                            class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Партиционирование по списку (List Partitioning)</strong>:</p>
+            <ul>
+                <li><p>Данные разделяются на основе конкретных значений столбца.</p></li>
+                <li><p>Пример: партиционирование по региону (например, "Север", "Юг", "Запад").</p></li>
+            </ul>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> Customers <span
+                        class="token punctuation">(</span>
+    CustomerID <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    Region <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">50</span><span
+                            class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> LIST <span class="token punctuation">(</span>Region<span
+                            class="token punctuation">)</span> <span class="token punctuation">(</span>
+    <span class="token keyword">PARTITION</span> p_north <span class="token keyword">VALUES</span> <span
+                            class="token operator">IN</span> <span class="token punctuation">(</span><span
+                            class="token string">'Север'</span><span class="token punctuation">)</span><span
+                            class="token punctuation">,</span>
+    <span class="token keyword">PARTITION</span> p_south <span class="token keyword">VALUES</span> <span
+                            class="token operator">IN</span> <span class="token punctuation">(</span><span
+                            class="token string">'Юг'</span><span class="token punctuation">)</span><span
+                            class="token punctuation">,</span>
+    <span class="token keyword">PARTITION</span> p_west <span class="token keyword">VALUES</span> <span
+                            class="token operator">IN</span> <span class="token punctuation">(</span><span
+                            class="token string">'Запад'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Партиционирование по хэшу (Hash Partitioning)</strong>:</p>
+            <ul>
+                <li><p>Данные распределяются по партициям на основе хэш-функции от значения столбца.</p></li>
+                <li><p>Пример: равномерное распределение данных для балансировки нагрузки.</p></li>
+            </ul>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> Employees <span
+                        class="token punctuation">(</span>
+    EmployeeID <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    Name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span
+                            class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> <span
+                            class="token keyword">HASH</span> <span class="token punctuation">(</span>EmployeeID<span
+                            class="token punctuation">)</span>
+PARTITIONS <span class="token number">4</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Композитное партиционирование (Composite Partitioning)</strong>:</p>
+            <ul>
+                <li><p>Комбинация нескольких методов партиционирования.</p></li>
+                <li><p>Пример: сначала партиционирование по диапазону, затем по хэшу.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Преимущества партиционирования:</h3>
+    <ul>
+        <li><p>Ускорение выполнения запросов за счет сокращения объема обрабатываемых данных.</p></li>
+        <li><p>Упрощение управления большими объемами данных (архивирование, удаление, резервное копирование).</p></li>
+        <li><p>Повышение доступности данных.</p></li>
+        <li><p>Возможность распределения данных по разным физическим носителям.</p></li>
+    </ul>
+    <hr>
+    <h3>Недостатки партиционирования:</h3>
+    <ul>
+        <li><p>Усложнение проектирования и администрирования базы данных.</p></li>
+        <li><p>Возможное увеличение накладных расходов на управление партициями.</p></li>
+        <li><p>Неправильное партиционирование может привести к ухудшению производительности.</p></li>
+    </ul>
+    <hr>
+    <h3>Пример использования:</h3>
+    <p>Предположим, у вас есть таблица с данными о продажах за несколько лет. Вы можете разделить данные по годам или
+        месяцам, чтобы ускорить выполнение запросов и упростить управление данными.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">sql</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> Sales <span
+                class="token punctuation">(</span>
+    SaleID <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    SaleDate <span class="token keyword">DATE</span><span class="token punctuation">,</span>
+    Amount <span class="token keyword">DECIMAL</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> RANGE <span
+                    class="token punctuation">(</span><span class="token keyword">YEAR</span><span
+                    class="token punctuation">(</span>SaleDate<span class="token punctuation">)</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">(</span>
+    <span class="token keyword">PARTITION</span> p2020 <span class="token keyword">VALUES</span> LESS THAN <span
+                    class="token punctuation">(</span><span class="token number">2021</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">PARTITION</span> p2021 <span class="token keyword">VALUES</span> LESS THAN <span
+                    class="token punctuation">(</span><span class="token number">2022</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">PARTITION</span> p2022 <span class="token keyword">VALUES</span> LESS THAN <span
+                    class="token punctuation">(</span><span class="token number">2023</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">PARTITION</span> p2023 <span class="token keyword">VALUES</span> LESS THAN <span
+                    class="token punctuation">(</span><span class="token number">2024</span><span
+                    class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <hr>
+    <h3>Когда использовать партиционирование:</h3>
+    <ul>
+        <li><p>Таблица содержит очень большой объем данных (миллионы или миллиарды строк).</p></li>
+        <li><p>Данные имеют естественное разделение (например, по дате, региону).</p></li>
+        <li><p>Необходимо ускорить выполнение запросов, которые работают с подмножеством данных.</p></li>
+        <li><p>Требуется упростить управление данными (архивирование, удаление).</p></li>
+    </ul>
+    <hr>
+    <p>Партиционирование — это мощный инструмент для работы с большими объемами данных, но его использование требует
+        тщательного планирования и тестирования.</p></div>
+</body>
+</html>

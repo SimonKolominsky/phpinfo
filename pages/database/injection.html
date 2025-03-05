@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p><strong>SQL-инъекция</strong> — это вид
+    атаки на веб-приложения, при которой злоумышленник внедряет вредоносный SQL-код в запросы к базе данных. Это
+    позволяет нарушителю получить несанкционированный доступ к данным, изменить или удалить их, а в некоторых случаях
+    даже получить контроль над сервером.</p>
+    <h3>Как работает SQL-инъекция?</h3>
+    <ol start="1">
+        <li><p><strong>Уязвимость в коде</strong>: Если приложение некорректно обрабатывает пользовательский ввод
+            (например, данные из форм, параметры URL), злоумышленник может вставить SQL-код в запрос.</p></li>
+        <li><p><strong>Пример уязвимого кода</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">WHERE</span> username <span
+                        class="token operator">=</span> <span class="token string">'user_input'</span> <span
+                        class="token operator">AND</span> password <span class="token operator">=</span> <span
+                        class="token string">'password_input'</span><span class="token punctuation">;</span></pre>
+            </div>
+            <p>Если пользователь введет <code>' OR '1'='1</code> в поле <code>username</code>, запрос станет:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">WHERE</span> username <span
+                        class="token operator">=</span> <span class="token string">''</span> <span
+                        class="token operator">OR</span> <span class="token string">'1'</span><span
+                        class="token operator">=</span><span class="token string">'1'</span> <span
+                        class="token operator">AND</span> password <span class="token operator">=</span> <span
+                        class="token string">'password_input'</span><span class="token punctuation">;</span></pre>
+            </div>
+            <p>Это позволит злоумышленнику обойти проверку пароля, так как условие <code>'1'='1'</code> всегда истинно.
+            </p></li>
+        <li><p><strong>Возможные последствия</strong>:</p>
+            <ul>
+                <li><p>Кража данных (логины, пароли, платежные данные).</p></li>
+                <li><p>Изменение или удаление данных.</p></li>
+                <li><p>Получение контроля над сервером.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Защита от SQL-инъекций</h3>
+    <ol start="1">
+        <li><p><strong>Использование параметризованных запросов (Prepared Statements)</strong>:</p>
+            <ul>
+                <li><p>Параметризованные запросы отделяют код от данных, предотвращая внедрение SQL-кода.</p></li>
+                <li><p>Пример на Python с использованием <code>sqlite3</code>:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">python</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre>cursor<span class="token punctuation">.</span>execute<span
+                                class="token punctuation">(</span><span class="token string">"SELECT * FROM users WHERE username = ? AND password = ?"</span><span
+                                class="token punctuation">,</span> <span class="token punctuation">(</span>username<span
+                                class="token punctuation">,</span> password<span class="token punctuation">)</span><span
+                                class="token punctuation">)</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>Использование ORM (Object-Relational Mapping)</strong>:</p>
+            <ul>
+                <li><p>ORM-библиотеки (например, SQLAlchemy, Django ORM) автоматически экранируют пользовательский
+                    ввод.</p></li>
+                <li><p>Пример на Django:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">python</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre>User<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span
+                                class="token builtin">filter</span><span class="token punctuation">(</span>username<span
+                                class="token operator">=</span>username<span class="token punctuation">,</span> password<span
+                                class="token operator">=</span>password<span class="token punctuation">)</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>Экранирование пользовательского ввода</strong>:</p>
+            <ul>
+                <li><p>Используйте функции экранирования, предоставляемые вашей СУБД (например, <code>mysqli_real_escape_string</code>
+                    в PHP).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Валидация и санация данных</strong>:</p>
+            <ul>
+                <li><p>Проверяйте и очищайте пользовательский ввод, чтобы убедиться, что он соответствует ожидаемому
+                    формату (например, только буквы и цифры).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Ограничение прав доступа к базе данных</strong>:</p>
+            <ul>
+                <li><p>Используйте учетные записи с минимальными привилегиями для доступа к базе данных. Например, если
+                    приложению не нужно удалять данные, не давайте ему права на <code>DELETE</code>.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Использование Web Application Firewall (WAF)</strong>:</p>
+            <ul>
+                <li><p>WAF может автоматически блокировать попытки SQL-инъекций, анализируя входящие запросы.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Регулярное тестирование и аудит кода</strong>:</p>
+            <ul>
+                <li><p>Проводите тестирование на уязвимости (например, с помощью инструментов вроде SQLmap).</p></li>
+                <li><p>Регулярно обновляйте зависимости и библиотеки.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Логирование и мониторинг</strong>:</p>
+            <ul>
+                <li><p>Ведите логи всех запросов к базе данных и отслеживайте подозрительную активность.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Пример защиты на практике</h3>
+    <p><strong>Уязвимый код (PHP):</strong></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$username</span> <span class="token operator">=</span> <span
+                class="token variable">$_POST</span><span class="token punctuation">[</span><span
+                class="token string single-quoted-string">'username'</span><span class="token punctuation">]</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$password</span> <span class="token operator">=</span> <span
+                    class="token variable">$_POST</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'password'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$query</span> <span class="token operator">=</span> <span
+                    class="token string double-quoted-string">"SELECT * FROM users WHERE username = '<span
+                    class="token interpolation"><span
+                    class="token variable">$username</span></span>' AND password = '<span
+                    class="token interpolation"><span class="token variable">$password</span></span>'"</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">mysqli_query</span><span
+                    class="token punctuation">(</span><span class="token variable">$conn</span><span
+                    class="token punctuation">,</span> <span class="token variable">$query</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <p><strong>Защищенный код (PHP с использованием подготовленных выражений):</strong></p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$username</span> <span class="token operator">=</span> <span
+                class="token variable">$_POST</span><span class="token punctuation">[</span><span
+                class="token string single-quoted-string">'username'</span><span class="token punctuation">]</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$password</span> <span class="token operator">=</span> <span
+                    class="token variable">$_POST</span><span class="token punctuation">[</span><span
+                    class="token string single-quoted-string">'password'</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span> <span class="token operator">=</span> <span
+                    class="token variable">$conn</span><span class="token operator">-&gt;</span><span
+                    class="token function">prepare</span><span class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"SELECT * FROM users WHERE username = ? AND password = ?"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span><span class="token operator">-&gt;</span><span class="token function">bind_param</span><span
+                    class="token punctuation">(</span><span class="token string double-quoted-string">"ss"</span><span
+                    class="token punctuation">,</span> <span class="token variable">$username</span><span
+                    class="token punctuation">,</span> <span class="token variable">$password</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span><span class="token operator">-&gt;</span><span
+                    class="token function">execute</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span
+                    class="token variable">$stmt</span><span class="token operator">-&gt;</span><span
+                    class="token function">get_result</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <hr>
+    <h3>Заключение</h3>
+    <p>SQL-инъекции — это серьезная угроза, но их можно предотвратить, следуя лучшим практикам разработки. Использование
+        параметризованных запросов, ORM, валидации данных и регулярное тестирование помогут защитить ваше приложение от
+        таких атак.</p></div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В PHP Standard PHP Library (SPL)
+    предоставляет несколько классов для работы с структурами данных. Вот подробное описание <code>SplStack</code>,
+    <code>SplQueue</code>, <code>SplHeap</code> и <code>SplFixedArray</code>:</p>
+    <hr>
+    <h3>1. <strong>SplStack</strong></h3>
+    <p><strong>Структура</strong>: Стек (LIFO — Last In, First Out).<br><strong>Наследование</strong>: Наследуется от
+        <code>SplDoublyLinkedList</code>.<br><strong>Особенности</strong>:</p>
+    <ul>
+        <li><p>Элементы добавляются и извлекаются с одного конца.</p></li>
+        <li><p>Итерация происходит в порядке LIFO.</p></li>
+    </ul>
+    <p><strong>Основные методы</strong>:</p>
+    <ul>
+        <li><p><code>push(mixed $value)</code>: Добавляет элемент в стек.</p></li>
+        <li><p><code>pop()</code>: Извлекает последний добавленный элемент.</p></li>
+        <li><p><code>isEmpty()</code>: Проверяет, пуст ли стек.</p></li>
+    </ul>
+    <p><strong>Пример</strong>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$stack</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplStack</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$stack</span><span class="token operator">-&gt;</span><span
+                    class="token function">push</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'A'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$stack</span><span class="token operator">-&gt;</span><span
+                    class="token function">push</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'B'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$stack</span><span
+                    class="token operator">-&gt;</span><span class="token function">pop</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// B</span>
+<span class="token keyword">echo</span> <span class="token variable">$stack</span><span
+                    class="token operator">-&gt;</span><span class="token function">pop</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// A</span></pre>
+    </div>
+    <hr>
+    <h3>2. <strong>SplQueue</strong></h3>
+    <p><strong>Структура</strong>: Очередь (FIFO — First In, First Out).<br><strong>Наследование</strong>: Наследуется
+        от <code>SplDoublyLinkedList</code>.<br><strong>Особенности</strong>:</p>
+    <ul>
+        <li><p>Элементы добавляются в конец, извлекаются из начала.</p></li>
+        <li><p>Поддерживает режим итерации FIFO.</p></li>
+    </ul>
+    <p><strong>Основные методы</strong>:</p>
+    <ul>
+        <li><p><code>enqueue(mixed $value)</code>: Добавляет элемент в очередь.</p></li>
+        <li><p><code>dequeue()</code>: Извлекает первый элемент.</p></li>
+        <li><p><code>isEmpty()</code>: Проверяет, пуста ли очередь.</p></li>
+    </ul>
+    <p><strong>Пример</strong>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$queue</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplQueue</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$queue</span><span class="token operator">-&gt;</span><span
+                    class="token function">enqueue</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'A'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$queue</span><span class="token operator">-&gt;</span><span
+                    class="token function">enqueue</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'B'</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$queue</span><span
+                    class="token operator">-&gt;</span><span class="token function">dequeue</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// A</span>
+<span class="token keyword">echo</span> <span class="token variable">$queue</span><span
+                    class="token operator">-&gt;</span><span class="token function">dequeue</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// B</span></pre>
+    </div>
+    <hr>
+    <h3>3. <strong>SplHeap</strong></h3>
+    <p><strong>Структура</strong>: Абстрактный класс для реализации кучи (приоритетная
+        очередь).<br><strong>Наследование</strong>:</p>
+    <ul>
+        <li><p><code>SplMaxHeap</code>: Сортирует элементы по убыванию.</p></li>
+        <li><p><code>SplMinHeap</code>: Сортирует элементы по возрастанию.</p></li>
+    </ul>
+    <p><strong>Особенности</strong>:</p>
+    <ul>
+        <li><p>Автоматическая сортировка элементов при добавлении.</p></li>
+        <li><p>Извлечение всегда возвращает элемент с наивысшим приоритетом.</p></li>
+    </ul>
+    <p><strong>Основные методы</strong>:</p>
+    <ul>
+        <li><p><code>insert(mixed $value)</code>: Добавляет элемент.</p></li>
+        <li><p><code>extract()</code>: Извлекает элемент с наивысшим приоритетом.</p></li>
+        <li><p><code>top()</code>: Возвращает верхний элемент без удаления.</p></li>
+        <li><p><code>compare(mixed $a, $b)</code>: Абстрактный метод для определения порядка (реализуется в
+            наследниках).</p></li>
+    </ul>
+    <p><strong>Пример</strong>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$maxHeap</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplMaxHeap</span><span
+                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                class="token punctuation">;</span>
+<span class="token variable">$maxHeap</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token number">3</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$maxHeap</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token number">1</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$maxHeap</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token number">5</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$maxHeap</span><span
+                    class="token operator">-&gt;</span><span class="token function">extract</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// 5</span>
+<span class="token keyword">echo</span> <span class="token variable">$maxHeap</span><span
+                    class="token operator">-&gt;</span><span class="token function">extract</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// 3</span>
+
+<span class="token variable">$minHeap</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">SplMinHeap</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$minHeap</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token number">3</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$minHeap</span><span class="token operator">-&gt;</span><span
+                    class="token function">insert</span><span class="token punctuation">(</span><span
+                    class="token number">1</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$minHeap</span><span
+                    class="token operator">-&gt;</span><span class="token function">extract</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// 1</span></pre>
+    </div>
+    <hr>
+    <h3>4. <strong>SplFixedArray</strong></h3>
+    <p><strong>Структура</strong>: Массив фиксированной длины.<br><strong>Особенности</strong>:</p>
+    <ul>
+        <li><p>Эффективен по памяти и скорости для больших данных.</p></li>
+        <li><p>Ключи — только целые числа (от <code>0</code> до <code>N-1</code>).</p></li>
+        <li><p>Размер можно изменить методом <code>setSize()</code>.</p></li>
+    </ul>
+    <p><strong>Основные методы</strong>:</p>
+    <ul>
+        <li><p><code>__construct(int $size)</code>: Создает массив заданной длины.</p></li>
+        <li><p><code>offsetSet(int $index, mixed $value)</code>: Устанавливает значение по индексу.</p></li>
+        <li><p><code>offsetGet(int $index)</code>: Возвращает значение по индексу.</p></li>
+        <li><p><code>toArray()</code>: Преобразует в обычный массив.</p></li>
+    </ul>
+    <p><strong>Пример</strong>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$fixedArray</span> <span class="token operator">=</span> <span
+                class="token keyword">new</span> <span class="token class-name">SplFixedArray</span><span
+                class="token punctuation">(</span><span class="token number">3</span><span
+                class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$fixedArray</span><span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token string single-quoted-string">'A'</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$fixedArray</span><span class="token punctuation">[</span><span
+                    class="token number">1</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token string single-quoted-string">'B'</span><span
+                    class="token punctuation">;</span>
+<span class="token variable">$fixedArray</span><span class="token punctuation">[</span><span
+                    class="token number">2</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token string single-quoted-string">'C'</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$fixedArray</span><span
+                    class="token punctuation">[</span><span class="token number">0</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span> <span
+                    class="token comment">// A</span>
+<span class="token variable">$fixedArray</span><span class="token operator">-&gt;</span><span class="token function">setSize</span><span
+                    class="token punctuation">(</span><span class="token number">4</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Теперь длина 4</span></pre>
+    </div>
+    <hr>
+    <h3><strong>Преимущества SPL-классов</strong></h3>
+    <ul>
+        <li><p><strong>Эффективность</strong>: Оптимизированы для работы с большими данными.</p></li>
+        <li><p><strong>Семантика</strong>: Четко выражают намерения (стек, очередь и т.д.).</p></li>
+        <li><p><strong>Безопасность</strong>: Исключают ошибки при работе с индексами (например, в
+            <code>SplFixedArray</code>).</p></li>
+    </ul>
+    <h3><strong>Ограничения</strong></h3>
+    <ul>
+        <li><p><code>SplFixedArray</code> не поддерживает ассоциативные ключи.</p></li>
+        <li><p><code>SplHeap</code> требует использования конкретных классов
+            (<code>SplMaxHeap</code>/<code>SplMinHeap</code>).</p></li>
+    </ul>
+    <p>Эти классы входят в стандартную библиотеку PHP, начиная с версии 5.3.</p></div>
+</body>
+</html>

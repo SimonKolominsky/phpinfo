@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>SOAP (Simple Object Access Protocol) — это
+    протокол для обмена структурированными сообщениями в распределённых системах. Он использует XML для кодирования
+    данных и обычно работает поверх HTTP, SMTP или других протоколов. SOAP широко используется в веб-сервисах, особенно
+    в корпоративных приложениях, где важны строгая типизация и безопасность.</p>
+    <h3>Основные характеристики SOAP:</h3>
+    <ol start="1">
+        <li><p><strong>Формат сообщений</strong>:</p>
+            <ul>
+                <li><p>Сообщения SOAP представляют собой XML-документы, которые содержат:</p>
+                    <ul>
+                        <li><p><strong>Envelope</strong> (конверт): Корневой элемент, который определяет начало и конец
+                            сообщения.</p></li>
+                        <li><p><strong>Header</strong> (заголовок): Необязательный элемент, который может содержать
+                            метаданные, такие как информация об аутентификации.</p></li>
+                        <li><p><strong>Body</strong> (тело): Основная часть сообщения, содержащая данные запроса или
+                            ответа.</p></li>
+                        <li><p><strong>Fault</strong> (ошибка): Необязательный элемент для передачи информации об
+                            ошибках.</p></li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Пример SOAP-запроса:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">xml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+                        class="token namespace">soap:</span>Envelope</span> <span class="token attr-name"><span
+                        class="token namespace">xmlns:</span>soap</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2003/05/soap-envelope<span
+                        class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+          class="token namespace">soap:</span>Header</span><span class="token punctuation">&gt;</span></span>
+    <span class="token comment">&lt;!-- Опциональные метаданные --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+          class="token namespace">soap:</span>Header</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+          class="token namespace">soap:</span>Body</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+            class="token namespace">m:</span>GetUserInfo</span> <span class="token attr-name"><span
+            class="token namespace">xmlns:</span>m</span><span class="token attr-value"><span
+            class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://example.com/webservice<span
+            class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+              class="token namespace">m:</span>UserId</span><span class="token punctuation">&gt;</span></span>123<span
+                            class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+                            class="token namespace">m:</span>UserId</span><span
+                            class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+            class="token namespace">m:</span>GetUserInfo</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+          class="token namespace">soap:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+        class="token namespace">soap:</span>Envelope</span><span class="token punctuation">&gt;</span></span></pre>
+                <div class="md-code-block-footer"><span
+                        style="display: flex; align-items: center; cursor: pointer; color: rgb(255, 255, 255); opacity: 1; gap: 6px;"><div
+                        class="ds-icon"
+                        style="font-size: 14px; width: 14px; height: 14px; margin-bottom: -1px; margin-top: -1px;"><svg
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 16 16"><g fill="none"><path
+                        d="M6.235 2.192A1.5 1.5 0 0 0 4 3.499v9a1.5 1.5 0 0 0 2.235 1.308l8-4.5a1.5 1.5 0 0 0 0-2.615l-8-4.5z"
+                        fill="currentColor"></path></g></svg></div>Run HTML</span></div>
+            </div>
+        </li>
+        <li><p><strong>Протоколы передачи</strong>:</p>
+            <ul>
+                <li><p>SOAP может работать поверх различных протоколов, таких как HTTP, HTTPS, SMTP, TCP и других. Чаще
+                    всего используется HTTP/HTTPS.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Типизация</strong>:</p>
+            <ul>
+                <li><p>SOAP поддерживает строгую типизацию данных, что делает его подходящим для сложных корпоративных
+                    систем.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Безопасность</strong>:</p>
+            <ul>
+                <li><p>SOAP поддерживает WS-Security, что позволяет обеспечивать шифрование, цифровые подписи и другие
+                    механизмы безопасности.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Языковая независимость</strong>:</p>
+            <ul>
+                <li><p>SOAP может использоваться в различных языках программирования, таких как Java, C#, Python, PHP и
+                    других.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Преимущества SOAP:</h3>
+    <ol start="1">
+        <li><p><strong>Стандартизация</strong>:</p>
+            <ul>
+                <li><p>SOAP является стандартом, поддерживаемым W3C, что обеспечивает совместимость между различными
+                    системами.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Поддержка сложных операций</strong>:</p>
+            <ul>
+                <li><p>SOAP подходит для сложных сценариев, таких как транзакции, безопасность и маршрутизация.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Кроссплатформенность</strong>:</p>
+            <ul>
+                <li><p>SOAP может использоваться в различных операционных системах и языках программирования.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Недостатки SOAP:</h3>
+    <ol start="1">
+        <li><p><strong>Сложность</strong>:</p>
+            <ul>
+                <li><p>SOAP сложнее в реализации и использовании по сравнению с более легковесными протоколами, такими
+                    как REST.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Производительность</strong>:</p>
+            <ul>
+                <li><p>Из-за использования XML сообщения SOAP могут быть большими и медленными в обработке.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Читаемость</strong>:</p>
+            <ul>
+                <li><p>XML-документы сложнее читать и отлаживать по сравнению с JSON.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Пример использования SOAP:</h3>
+    <ol start="1">
+        <li><p><strong>Запрос</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">xml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+                        class="token namespace">soap:</span>Envelope</span> <span class="token attr-name"><span
+                        class="token namespace">xmlns:</span>soap</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2003/05/soap-envelope<span
+                        class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+          class="token namespace">soap:</span>Body</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+            class="token namespace">m:</span>GetPrice</span> <span class="token attr-name"><span
+            class="token namespace">xmlns:</span>m</span><span class="token attr-value"><span
+            class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://example.com/webservice<span
+            class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+              class="token namespace">m:</span>Item</span><span class="token punctuation">&gt;</span></span>Apple<span
+                            class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+                            class="token namespace">m:</span>Item</span><span
+                            class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+            class="token namespace">m:</span>GetPrice</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+          class="token namespace">soap:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+        class="token namespace">soap:</span>Envelope</span><span class="token punctuation">&gt;</span></span></pre>
+                <div class="md-code-block-footer"><span
+                        style="display: flex; align-items: center; cursor: pointer; color: rgb(255, 255, 255); opacity: 1; gap: 6px;"><div
+                        class="ds-icon"
+                        style="font-size: 14px; width: 14px; height: 14px; margin-bottom: -1px; margin-top: -1px;"><svg
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 16 16"><g fill="none"><path
+                        d="M6.235 2.192A1.5 1.5 0 0 0 4 3.499v9a1.5 1.5 0 0 0 2.235 1.308l8-4.5a1.5 1.5 0 0 0 0-2.615l-8-4.5z"
+                        fill="currentColor"></path></g></svg></div>Run HTML</span></div>
+            </div>
+        </li>
+        <li><p><strong>Ответ</strong>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">xml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+                        class="token namespace">soap:</span>Envelope</span> <span class="token attr-name"><span
+                        class="token namespace">xmlns:</span>soap</span><span class="token attr-value"><span
+                        class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2003/05/soap-envelope<span
+                        class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+          class="token namespace">soap:</span>Body</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+            class="token namespace">m:</span>GetPriceResponse</span> <span class="token attr-name"><span
+            class="token namespace">xmlns:</span>m</span><span class="token attr-value"><span
+            class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://example.com/webservice<span
+            class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span
+              class="token namespace">m:</span>Price</span><span class="token punctuation">&gt;</span></span>1.20<span
+                            class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+                            class="token namespace">m:</span>Price</span><span
+                            class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+            class="token namespace">m:</span>GetPriceResponse</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+          class="token namespace">soap:</span>Body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span
+        class="token namespace">soap:</span>Envelope</span><span class="token punctuation">&gt;</span></span></pre>
+                <div class="md-code-block-footer"><span
+                        style="display: flex; align-items: center; cursor: pointer; color: rgb(255, 255, 255); opacity: 1; gap: 6px;"><div
+                        class="ds-icon"
+                        style="font-size: 14px; width: 14px; height: 14px; margin-bottom: -1px; margin-top: -1px;"><svg
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 16 16"><g fill="none"><path
+                        d="M6.235 2.192A1.5 1.5 0 0 0 4 3.499v9a1.5 1.5 0 0 0 2.235 1.308l8-4.5a1.5 1.5 0 0 0 0-2.615l-8-4.5z"
+                        fill="currentColor"></path></g></svg></div>Run HTML</span></div>
+            </div>
+        </li>
+    </ol>
+    <h3>Сравнение SOAP и REST:</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Характеристика</th>
+            <th>SOAP</th>
+            <th>REST</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><strong>Формат данных</strong></td>
+            <td>XML</td>
+            <td>JSON, XML, текст и другие</td>
+        </tr>
+        <tr>
+            <td><strong>Протокол</strong></td>
+            <td>HTTP, SMTP, TCP и другие</td>
+            <td>Только HTTP/HTTPS</td>
+        </tr>
+        <tr>
+            <td><strong>Сложность</strong></td>
+            <td>Высокая</td>
+            <td>Низкая</td>
+        </tr>
+        <tr>
+            <td><strong>Безопасность</strong></td>
+            <td>WS-Security</td>
+            <td>HTTPS, OAuth, JWT</td>
+        </tr>
+        <tr>
+            <td><strong>Использование</strong></td>
+            <td>Корпоративные приложения</td>
+            <td>Веб-API, мобильные приложения</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Когда использовать SOAP:</h3>
+    <ul>
+        <li><p>Когда требуется строгая типизация и поддержка сложных операций.</p></li>
+        <li><p>В корпоративных системах с высокими требованиями к безопасности.</p></li>
+        <li><p>Когда необходима поддержка транзакций и маршрутизации.</p></li>
+    </ul></div>
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>SQL (Structured Query Language) — это язык
+    программирования, используемый для работы с реляционными базами данных. Он позволяет создавать, изменять, управлять
+    и извлекать данные из баз данных. Вот базовая информация о SQL:</p>
+    <h3>Основные понятия</h3>
+    <ol start="1">
+        <li><p><strong>База данных (Database)</strong> — организованная коллекция данных, хранящихся в структурированном
+            виде.</p></li>
+        <li><p><strong>Таблица (Table)</strong> — структура внутри базы данных, которая хранит данные в виде строк
+            (записей) и столбцов (полей).</p></li>
+        <li><p><strong>Строка (Row)</strong> — запись в таблице, представляющая собой набор данных.</p></li>
+        <li><p><strong>Столбец (Column)</strong> — поле в таблице, которое хранит определённый тип данных (например,
+            имя, возраст, дата).</p></li>
+        <li><p><strong>Первичный ключ (Primary Key)</strong> — уникальный идентификатор для каждой строки в таблице.</p>
+        </li>
+        <li><p><strong>Внешний ключ (Foreign Key)</strong> — поле, которое ссылается на первичный ключ другой таблицы
+            для обеспечения связей между таблицами.</p></li>
+    </ol>
+    <h3>Основные команды SQL</h3>
+    <ol start="1">
+        <li><p><strong>SELECT</strong> — извлечение данных из таблицы.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> column1<span
+                        class="token punctuation">,</span> column2 <span
+                        class="token keyword">FROM</span> table_name<span class="token punctuation">;</span></pre>
+            </div>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> name<span class="token punctuation">,</span> age <span
+                        class="token keyword">FROM</span> users<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>INSERT INTO</strong> — добавление новых строк в таблицу.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> table_name <span
+                        class="token punctuation">(</span>column1<span class="token punctuation">,</span> column2<span
+                        class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span
+                        class="token punctuation">(</span>value1<span class="token punctuation">,</span> value2<span
+                        class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> users <span
+                        class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span
+                        class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span
+                        class="token punctuation">(</span><span class="token string">'Alice'</span><span
+                        class="token punctuation">,</span> <span class="token number">25</span><span
+                        class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>UPDATE</strong> — обновление существующих данных в таблице.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">UPDATE</span> table_name <span class="token keyword">SET</span> column1 <span
+                        class="token operator">=</span> value1 <span class="token keyword">WHERE</span> condition<span
+                        class="token punctuation">;</span></pre>
+            </div>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">UPDATE</span> users <span class="token keyword">SET</span> age <span
+                        class="token operator">=</span> <span class="token number">26</span> <span
+                        class="token keyword">WHERE</span> name <span class="token operator">=</span> <span
+                        class="token string">'Alice'</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>DELETE</strong> — удаление строк из таблицы.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> table_name <span
+                        class="token keyword">WHERE</span> condition<span class="token punctuation">;</span></pre>
+            </div>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> users <span
+                        class="token keyword">WHERE</span> name <span class="token operator">=</span> <span
+                        class="token string">'Alice'</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>CREATE TABLE</strong> — создание новой таблицы.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> table_name <span
+                        class="token punctuation">(</span>
+    column1 datatype<span class="token punctuation">,</span>
+    column2 datatype<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span
+                            class="token punctuation">.</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> users <span
+                        class="token punctuation">(</span>
+    id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span
+                            class="token keyword">KEY</span><span class="token punctuation">,</span>
+    name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span
+                            class="token number">50</span><span class="token punctuation">)</span><span
+                            class="token punctuation">,</span>
+    age <span class="token keyword">INT</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>ALTER TABLE</strong> — изменение структуры существующей таблицы (добавление, удаление или
+            изменение столбцов).</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table_name <span
+                        class="token keyword">ADD</span> column_name datatype<span
+                        class="token punctuation">;</span></pre>
+            </div>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> users <span
+                        class="token keyword">ADD</span> email <span class="token keyword">VARCHAR</span><span
+                        class="token punctuation">(</span><span class="token number">100</span><span
+                        class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>DROP TABLE</strong> — удаление таблицы.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> table_name<span
+                        class="token punctuation">;</span></pre>
+            </div>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> users<span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>JOIN</strong> — объединение данных из двух или более таблиц на основе связанных столбцов.</p>
+            <ul>
+                <li><p><strong>INNER JOIN</strong>: Возвращает строки, которые имеют совпадения в обеих таблицах.</p>
+                </li>
+                <li><p><strong>LEFT JOIN</strong>: Возвращает все строки из левой таблицы и совпадающие строки из правой
+                    таблицы.</p></li>
+                <li><p><strong>RIGHT JOIN</strong>: Возвращает все строки из правой таблицы и совпадающие строки из
+                    левой таблицы.</p></li>
+                <li><p><strong>FULL JOIN</strong>: Возвращает строки, если есть совпадение в одной из таблиц.</p></li>
+            </ul>
+            <p>Пример:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> users<span class="token punctuation">.</span>name<span
+                        class="token punctuation">,</span> orders<span class="token punctuation">.</span>order_id
+<span class="token keyword">FROM</span> users
+<span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> orders <span
+                            class="token keyword">ON</span> users<span class="token punctuation">.</span>id <span
+                            class="token operator">=</span> orders<span class="token punctuation">.</span>user_id<span
+                            class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ol>
+    <h3>Фильтрация и сортировка</h3>
+    <ol start="1">
+        <li><p><strong>WHERE</strong> — фильтрация строк по условию.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">WHERE</span> age <span
+                        class="token operator">&gt;</span> <span class="token number">20</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>ORDER BY</strong> — сортировка результатов по одному или нескольким столбцам.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">ORDER</span> <span
+                        class="token keyword">BY</span> age <span class="token keyword">DESC</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>LIMIT</strong> — ограничение количества возвращаемых строк.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">LIMIT</span> <span
+                        class="token number">10</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ol>
+    <h3>Агрегатные функции</h3>
+    <ol start="1">
+        <li><p><strong>COUNT()</strong> — подсчёт количества строк.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span
+                        class="token punctuation">(</span><span class="token operator">*</span><span
+                        class="token punctuation">)</span> <span class="token keyword">FROM</span> users<span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>SUM()</strong> — сумма значений в столбце.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token function">SUM</span><span
+                        class="token punctuation">(</span>age<span class="token punctuation">)</span> <span
+                        class="token keyword">FROM</span> users<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>AVG()</strong> — среднее значение в столбце.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token function">AVG</span><span
+                        class="token punctuation">(</span>age<span class="token punctuation">)</span> <span
+                        class="token keyword">FROM</span> users<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>MIN()</strong> и <strong>MAX()</strong> — минимальное и максимальное значение в столбце.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token function">MIN</span><span
+                        class="token punctuation">(</span>age<span class="token punctuation">)</span><span
+                        class="token punctuation">,</span> <span class="token function">MAX</span><span
+                        class="token punctuation">(</span>age<span class="token punctuation">)</span> <span
+                        class="token keyword">FROM</span> users<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ol>
+    <h3>Группировка данных</h3>
+    <ol start="1">
+        <li><p><strong>GROUP BY</strong> — группировка строк по значениям столбцов.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> age<span class="token punctuation">,</span> <span
+                        class="token function">COUNT</span><span class="token punctuation">(</span><span
+                        class="token operator">*</span><span class="token punctuation">)</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">GROUP</span> <span
+                        class="token keyword">BY</span> age<span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p><strong>HAVING</strong> — фильтрация результатов группировки.</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> age<span class="token punctuation">,</span> <span
+                        class="token function">COUNT</span><span class="token punctuation">(</span><span
+                        class="token operator">*</span><span class="token punctuation">)</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">GROUP</span> <span
+                        class="token keyword">BY</span> age <span class="token keyword">HAVING</span> <span
+                        class="token function">COUNT</span><span class="token punctuation">(</span><span
+                        class="token operator">*</span><span class="token punctuation">)</span> <span
+                        class="token operator">&gt;</span> <span class="token number">1</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ol>
+    <h3>Примеры запросов</h3>
+    <ol start="1">
+        <li><p>Выбор всех пользователей старше 30 лет:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span
+                        class="token keyword">FROM</span> users <span class="token keyword">WHERE</span> age <span
+                        class="token operator">&gt;</span> <span class="token number">30</span><span
+                        class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p>Добавление нового пользователя:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> users <span
+                        class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span
+                        class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span
+                        class="token punctuation">(</span><span class="token string">'Bob'</span><span
+                        class="token punctuation">,</span> <span class="token number">35</span><span
+                        class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p>Обновление возраста пользователя:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">UPDATE</span> users <span class="token keyword">SET</span> age <span
+                        class="token operator">=</span> <span class="token number">40</span> <span
+                        class="token keyword">WHERE</span> name <span class="token operator">=</span> <span
+                        class="token string">'Bob'</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+        <li><p>Удаление пользователя:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">sql</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> users <span
+                        class="token keyword">WHERE</span> name <span class="token operator">=</span> <span
+                        class="token string">'Bob'</span><span class="token punctuation">;</span></pre>
+            </div>
+        </li>
+    </ol>
+    <h3>Типы операторов</h3>
+    <p>SQL (Structured Query Language) состоит из
+    нескольких подмножеств, каждое из которых отвечает за определенные аспекты работы с базами данных. Основные
+    подмножества SQL включают:</p>
+    <ol start="1">
+        <li><p><strong>DDL (Data Definition Language) — язык определения данных</strong>:</p>
+            <ul>
+                <li><p>Используется для создания, изменения и удаления структуры базы данных и её объектов (таблиц,
+                    индексов, представлений и т.д.).</p></li>
+                <li><p>Основные команды:</p>
+                    <ul>
+                        <li><p><code>CREATE</code> — создание объектов (например, таблиц).</p></li>
+                        <li><p><code>ALTER</code> — изменение структуры объектов.</p></li>
+                        <li><p><code>DROP</code> — удаление объектов.</p></li>
+                        <li><p><code>TRUNCATE</code> — очистка таблицы (удаление всех данных без удаления самой
+                            таблицы).</p></li>
+                        <li><p><code>RENAME</code> — переименование объектов.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>DML (Data Manipulation Language) — язык управления данными</strong>:</p>
+            <ul>
+                <li><p>Используется для работы с данными в таблицах (добавление, изменение, удаление и выборка
+                    данных).</p></li>
+                <li><p>Основные команды:</p>
+                    <ul>
+                        <li><p><code>SELECT</code> — выборка данных.</p></li>
+                        <li><p><code>INSERT</code> — добавление новых данных.</p></li>
+                        <li><p><code>UPDATE</code> — изменение существующих данных.</p></li>
+                        <li><p><code>DELETE</code> — удаление данных.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>DCL (Data Control Language) — язык управления доступом</strong>:</p>
+            <ul>
+                <li><p>Используется для управления правами доступа к данным и объектам базы данных.</p></li>
+                <li><p>Основные команды:</p>
+                    <ul>
+                        <li><p><code>GRANT</code> — предоставление прав доступа.</p></li>
+                        <li><p><code>REVOKE</code> — отзыв прав доступа.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>TCL (Transaction Control Language) — язык управления транзакциями</strong>:</p>
+            <ul>
+                <li><p>Используется для управления транзакциями в базе данных.</p></li>
+                <li><p>Основные команды:</p>
+                    <ul>
+                        <li><p><code>COMMIT</code> — подтверждение транзакции.</p></li>
+                        <li><p><code>ROLLBACK</code> — откат транзакции.</p></li>
+                        <li><p><a href="savepoint.html"><code>SAVEPOINT</code></a> — создание точки сохранения внутри
+                            транзакции.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>DQL (Data Query Language) — язык запросов данных</strong>:</p>
+            <ul>
+                <li><p>Хотя формально DQL не всегда выделяется как отдельное подмножество, его можно рассматривать как
+                    часть DML, отвечающую исключительно за выборку данных.</p></li>
+                <li><p>Основная команда:</p>
+                    <ul>
+                        <li><p><code>SELECT</code> — выборка данных.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <p>Эти подмножества охватывают все основные аспекты работы с базами данных, начиная от создания структуры и
+        заканчивая управлением доступом и транзакциями.</p></div>
+</body>
+</html>

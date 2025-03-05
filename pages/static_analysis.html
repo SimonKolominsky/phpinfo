@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Статический анализ в PHP — это процесс
+    анализа исходного кода без его выполнения с целью выявления потенциальных ошибок, уязвимостей, неоптимальных
+    конструкций и других проблем. Статический анализ помогает улучшить качество кода, повысить его безопасность и
+    производительность.</p>
+    <h3>Основные инструменты для статического анализа в PHP</h3>
+    <ol start="1">
+        <li><p><strong>PHPStan</strong><br>PHPStan — это популярный инструмент для статического анализа PHP-кода. Он
+            проверяет типы, выявляет ошибки, связанные с несоответствием типов, и помогает находить потенциальные
+            проблемы в коде.</p>
+            <ul>
+                <li><p>Поддерживает постепенное увеличение строгости анализа (уровни от 0 до 9).</p></li>
+                <li><p>Интегрируется с популярными фреймворками, такими как Laravel, Symfony и другими.</p></li>
+                <li><p>Может быть расширен с помощью плагинов.</p></li>
+            </ul>
+            <p>Установка:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require <span
+                        class="token parameter variable">--dev</span> phpstan/phpstan</pre>
+            </div>
+            <p>Запуск:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>vendor/bin/phpstan analyse src</pre>
+            </div>
+        </li>
+        <li><p><strong>Psalm</strong><br>Psalm — это ещё один мощный инструмент для статического анализа, который
+            фокусируется на проверке типов и выявлении ошибок.</p>
+            <ul>
+                <li><p>Поддерживает аннотации для типов.</p></li>
+                <li><p>Может автоматически исправлять некоторые ошибки.</p></li>
+                <li><p>Интегрируется с IDE и CI/CD.</p></li>
+            </ul>
+            <p>Установка:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require <span
+                        class="token parameter variable">--dev</span> vimeo/psalm</pre>
+            </div>
+            <p>Запуск:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>vendor/bin/psalm</pre>
+            </div>
+        </li>
+        <li><p><strong>PHP_CodeSniffer</strong><br>PHP_CodeSniffer — это инструмент для проверки соответствия кода
+            определённым стандартам кодирования (например, PSR-12).</p>
+            <ul>
+                <li><p>Проверяет стиль кода и форматирование.</p></li>
+                <li><p>Может автоматически исправлять некоторые нарушения.</p></li>
+            </ul>
+            <p>Установка:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require <span
+                        class="token parameter variable">--dev</span> squizlabs/php_codesniffer</pre>
+            </div>
+            <p>Запуск:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>vendor/bin/phpcs <span class="token parameter variable">--standard</span><span
+                        class="token operator">=</span>PSR12 src</pre>
+            </div>
+        </li>
+        <li><p><strong>PHPMD (PHP Mess Detector)</strong><br>PHPMD — это инструмент для поиска "запахов кода" (code
+            smells), таких как избыточный код, сложные методы, неиспользуемые переменные и т.д.</p>
+            <ul>
+                <li><p>Анализирует код на наличие потенциальных проблем.</p></li>
+                <li><p>Поддерживает настройку правил анализа.</p></li>
+            </ul>
+            <p>Установка:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require <span
+                        class="token parameter variable">--dev</span> phpmd/phpmd</pre>
+            </div>
+            <p>Запуск:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>vendor/bin/phpmd src text cleancode,codesize,design</pre>
+            </div>
+        </li>
+        <li><p><strong>Exakat</strong><br>Exakat — это инструмент для глубокого анализа PHP-кода. Он предоставляет
+            множество отчётов, включая анализ производительности, безопасности и качества кода.</p>
+            <ul>
+                <li><p>Поддерживает интеграцию с CI/CD.</p></li>
+                <li><p>Предоставляет подробные отчёты.</p></li>
+            </ul>
+            <p>Установка:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require <span
+                        class="token parameter variable">--dev</span> exakat/php-static-analysis-tools</pre>
+            </div>
+            <p>Запуск:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>vendor/bin/exakat analyze <span class="token parameter variable">-p</span> myproject <span
+                        class="token parameter variable">-R</span> All</pre>
+            </div>
+        </li>
+    </ol>
+    <h3>Преимущества статического анализа</h3>
+    <ul>
+        <li><p><strong>Раннее обнаружение ошибок</strong>: Позволяет находить ошибки до запуска кода.</p></li>
+        <li><p><strong>Улучшение качества кода</strong>: Помогает соблюдать стандарты кодирования и избегать "запахов
+            кода".</p></li>
+        <li><p><strong>Повышение безопасности</strong>: Выявляет потенциальные уязвимости.</p></li>
+        <li><p><strong>Экономия времени</strong>: Автоматизирует проверку кода, уменьшая необходимость ручного
+            тестирования.</p></li>
+    </ul>
+    <h3>Интеграция статического анализа в CI/CD</h3>
+    <p>Статический анализ часто интегрируется в процессы непрерывной интеграции и доставки (CI/CD). Например, можно
+        настроить запуск PHPStan или Psalm в GitHub Actions, GitLab CI или других системах CI/CD. Это позволяет
+        автоматически проверять код при каждом коммите или пул-реквесте.</p>
+    <p>Пример настройки GitHub Actions для PHPStan:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">yaml</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token key atrule">name</span><span class="token punctuation">:</span> PHPStan
+
+<span class="token key atrule">on</span><span class="token punctuation">:</span> <span
+                    class="token punctuation">[</span>push<span class="token punctuation">,</span> pull_request<span
+                    class="token punctuation">]</span>
+
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">phpstan</span><span class="token punctuation">:</span>
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span
+                    class="token punctuation">-</span>latest
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span
+                    class="token punctuation">:</span> actions/checkout@v2
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span
+                    class="token punctuation">:</span> Set up PHP
+        <span class="token key atrule">uses</span><span class="token punctuation">:</span> shivammathur/setup<span
+                    class="token punctuation">-</span>php@v2
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token key atrule">php-version</span><span class="token punctuation">:</span> <span
+                    class="token string">'8.0'</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span
+                    class="token punctuation">:</span> Install dependencies
+        <span class="token key atrule">run</span><span class="token punctuation">:</span> composer install <span
+                    class="token punctuation">-</span><span class="token punctuation">-</span>prefer<span
+                    class="token punctuation">-</span>dist <span class="token punctuation">-</span><span
+                    class="token punctuation">-</span>no<span class="token punctuation">-</span>progress <span
+                    class="token punctuation">-</span><span class="token punctuation">-</span>no<span
+                    class="token punctuation">-</span>suggest
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span
+                    class="token punctuation">:</span> Run PHPStan
+        <span class="token key atrule">run</span><span class="token punctuation">:</span> vendor/bin/phpstan analyse src <span
+                    class="token punctuation">-</span><span class="token punctuation">-</span>level=8</pre>
+    </div>
+    <h3>Заключение</h3>
+    <p>Статический анализ — это мощный инструмент для улучшения качества и безопасности PHP-кода. Использование таких
+        инструментов, как PHPStan, Psalm, PHP_CodeSniffer и других, помогает разработчикам писать более чистый, надёжный
+        и поддерживаемый код.</p></div>
+</body>
+</html>

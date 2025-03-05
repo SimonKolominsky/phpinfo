@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В PHPUnit, как и в любом фреймворке для
+    тестирования, есть несколько ключевых объектов и концепций, которые используются для создания и выполнения тестов.
+    Вот основные из них:</p>
+    <h3>1. <strong>Тестовый класс (<code>TestCase</code>)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Базовый класс для всех тестовых классов. Каждый тестовый класс должен
+            наследоваться от <code>PHPUnit\Framework\TestCase</code>.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">use</span> <span class="token package">PHPUnit<span
+                        class="token punctuation">\</span>Framework<span
+                        class="token punctuation">\</span>TestCase</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                            class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                            class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testSomething</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                            class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>2. <strong>Тестовые методы</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Методы, которые начинаются с префикса <code>test</code>, автоматически
+            распознаются PHPUnit как тестовые методы. Также можно использовать аннотацию <code>@test</code> для указания
+            тестовых методов.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testAddition</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                            class="token punctuation">(</span><span class="token number">4</span><span
+                            class="token punctuation">,</span> <span class="token number">2</span> <span
+                            class="token operator">+</span> <span class="token number">2</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * @test
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">addition</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                            class="token punctuation">(</span><span class="token number">4</span><span
+                            class="token punctuation">,</span> <span class="token number">2</span> <span
+                            class="token operator">+</span> <span class="token number">2</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>3. <strong>Утверждения (Assertions)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Утверждения используются для проверки того, что результат выполнения кода
+            соответствует ожидаемому. PHPUnit предоставляет множество методов для утверждений, таких как <code>assertEquals</code>,
+            <code>assertTrue</code>, <code>assertFalse</code>, <code>assertNull</code>, и т.д.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testAssertions</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                            class="token punctuation">(</span><span class="token number">4</span><span
+                            class="token punctuation">,</span> <span class="token number">2</span> <span
+                            class="token operator">+</span> <span class="token number">2</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                            class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertFalse</span><span
+                            class="token punctuation">(</span><span class="token constant boolean">false</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertNull</span><span
+                            class="token punctuation">(</span><span class="token constant">null</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>4. <strong>Фикстуры (Fixtures)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Фикстуры используются для настройки среды тестирования перед выполнением
+            тестов и её очистки после выполнения. Методы <code>setUp</code> и <code>tearDown</code> вызываются перед и
+            после каждого тестового метода соответственно.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token variable">$value</span><span
+                            class="token punctuation">;</span>
+
+    <span class="token keyword">protected</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">setUp</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token keyword return-type">void</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">value</span> <span
+                            class="token operator">=</span> <span class="token number">2</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">protected</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">tearDown</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token keyword return-type">void</span> <span
+                            class="token punctuation">{</span>
+        <span class="token keyword">unset</span><span class="token punctuation">(</span><span class="token variable">$this</span><span
+                            class="token operator">-&gt;</span><span class="token property">value</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testValue</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                            class="token punctuation">(</span><span class="token number">2</span><span
+                            class="token punctuation">,</span> <span class="token variable">$this</span><span
+                            class="token operator">-&gt;</span><span class="token property">value</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>5. <strong>Провайдеры данных (Data Providers)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Провайдеры данных позволяют передавать различные наборы данных в тестовые
+            методы. Метод-провайдер должен возвращать массив массивов или итератор.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token comment">/**
+     * @dataProvider additionProvider
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testAddition</span><span
+                            class="token punctuation">(</span><span class="token variable">$a</span><span
+                            class="token punctuation">,</span> <span class="token variable">$b</span><span
+                            class="token punctuation">,</span> <span class="token variable">$expected</span><span
+                            class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                            class="token punctuation">(</span><span class="token variable">$expected</span><span
+                            class="token punctuation">,</span> <span class="token variable">$a</span> <span
+                            class="token operator">+</span> <span class="token variable">$b</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">additionProvider</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">[</span><span class="token number">1</span><span
+                            class="token punctuation">,</span> <span class="token number">1</span><span
+                            class="token punctuation">,</span> <span class="token number">2</span><span
+                            class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token number">2</span><span
+                            class="token punctuation">,</span> <span class="token number">2</span><span
+                            class="token punctuation">,</span> <span class="token number">4</span><span
+                            class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token number">3</span><span
+                            class="token punctuation">,</span> <span class="token number">3</span><span
+                            class="token punctuation">,</span> <span class="token number">6</span><span
+                            class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>6. <strong>Моки и стабы (Mocks and Stubs)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Моки и стабы используются для создания объектов-заглушек, которые имитируют
+            поведение реальных объектов. Это полезно для тестирования взаимодействия между объектами.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testMock</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$mock</span> <span class="token operator">=</span> <span class="token variable">$this</span><span
+                            class="token operator">-&gt;</span><span class="token function">createMock</span><span
+                            class="token punctuation">(</span><span
+                            class="token class-name static-context">SomeClass</span><span
+                            class="token operator">::</span><span class="token keyword">class</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$mock</span><span class="token operator">-&gt;</span><span class="token function">method</span><span
+                            class="token punctuation">(</span><span class="token string single-quoted-string">'doSomething'</span><span
+                            class="token punctuation">)</span><span class="token operator">-&gt;</span><span
+                            class="token function">willReturn</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'foo'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                            class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'foo'</span><span
+                            class="token punctuation">,</span> <span class="token variable">$mock</span><span
+                            class="token operator">-&gt;</span><span class="token function">doSomething</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>7. <strong>Группы тестов (Test Groups)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Группы тестов позволяют группировать тестовые методы и выполнять их выборочно.
+            Группы задаются с помощью аннотации <code>@group</code>.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token comment">/**
+     * @group fast
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testFast</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                            class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * @group slow
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testSlow</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                            class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>8. <strong>Исключения (Exceptions)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> PHPUnit позволяет тестировать код, который должен выбрасывать исключения. Для
+            этого используется метод <code>expectException</code>.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testException</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">expectException</span><span
+                            class="token punctuation">(</span><span
+                            class="token class-name class-name-fully-qualified static-context"><span
+                            class="token punctuation">\</span>InvalidArgumentException</span><span
+                            class="token operator">::</span><span class="token keyword">class</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span
+                            class="token class-name class-name-fully-qualified"><span class="token punctuation">\</span>InvalidArgumentException</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>9. <strong>Тестовые наборы (Test Suites)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Тестовые наборы позволяют объединять несколько тестовых классов в один набор
+            для выполнения.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">xml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>phpunit</span><span
+                        class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>testsuites</span><span
+            class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span
+                class="token punctuation">&lt;</span>testsuite</span> <span class="token attr-name">name</span><span
+                class="token attr-value"><span class="token punctuation attr-equals">=</span><span
+                class="token punctuation">"</span>My Test Suite<span class="token punctuation">"</span></span><span
+                class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>file</span><span
+                    class="token punctuation">&gt;</span></span>MyTest.php<span class="token tag"><span
+                            class="token tag"><span class="token punctuation">&lt;/</span>file</span><span
+                            class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>file</span><span
+                    class="token punctuation">&gt;</span></span>AnotherTest.php<span class="token tag"><span
+                            class="token tag"><span class="token punctuation">&lt;/</span>file</span><span
+                            class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span
+                class="token punctuation">&lt;/</span>testsuite</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>testsuites</span><span
+            class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>phpunit</span><span
+        class="token punctuation">&gt;</span></span></pre>
+                <div class="md-code-block-footer"><span
+                        style="display: flex; align-items: center; cursor: pointer; color: rgb(255, 255, 255); opacity: 1; gap: 6px;"><div
+                        class="ds-icon"
+                        style="font-size: 14px; width: 14px; height: 14px; margin-bottom: -1px; margin-top: -1px;"><svg
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 16 16"><g fill="none"><path
+                        d="M6.235 2.192A1.5 1.5 0 0 0 4 3.499v9a1.5 1.5 0 0 0 2.235 1.308l8-4.5a1.5 1.5 0 0 0 0-2.615l-8-4.5z"
+                        fill="currentColor"></path></g></svg></div>Run HTML</span></div>
+            </div>
+        </li>
+    </ul>
+    <h3>10. <strong>Аннотации (Annotations)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Аннотации используются для настройки тестов и тестовых методов. Например,
+            <code>@depends</code>, <code>@dataProvider</code>, <code>@group</code>, и т.д.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token comment">/**
+     * @depends testOne
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testTwo</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                            class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testOne</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertTrue</span><span
+                            class="token punctuation">(</span><span class="token constant boolean">true</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>11. <strong>Тестовые двойники (Test Doubles)</strong></h3>
+    <ul>
+        <li><p><strong>Описание:</strong> Тестовые двойники — это объекты, которые заменяют реальные объекты в тестах. К
+            ним относятся моки, стабы, фейки и шпионы.</p></li>
+        <li><p><strong>Пример:</strong></p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">MyTest</span> <span
+                        class="token keyword">extends</span> <span class="token class-name">TestCase</span> <span
+                        class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">testStub</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span>
+        <span class="token variable">$stub</span> <span class="token operator">=</span> <span class="token variable">$this</span><span
+                            class="token operator">-&gt;</span><span class="token function">createStub</span><span
+                            class="token punctuation">(</span><span
+                            class="token class-name static-context">SomeClass</span><span
+                            class="token operator">::</span><span class="token keyword">class</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stub</span><span class="token operator">-&gt;</span><span class="token function">method</span><span
+                            class="token punctuation">(</span><span class="token string single-quoted-string">'doSomething'</span><span
+                            class="token punctuation">)</span><span class="token operator">-&gt;</span><span
+                            class="token function">willReturn</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'foo'</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token function">assertEquals</span><span
+                            class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'foo'</span><span
+                            class="token punctuation">,</span> <span class="token variable">$stub</span><span
+                            class="token operator">-&gt;</span><span class="token function">doSomething</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+    </ul>
+    <h3>Заключение</h3>
+    <p>PHPUnit предоставляет богатый набор инструментов для написания и выполнения тестов. Понимание этих объектов и
+        концепций позволяет эффективно тестировать PHP-код, обеспечивая его качество и надежность.</p></div>
+</body>
+</html>

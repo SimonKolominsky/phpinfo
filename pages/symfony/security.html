@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Symfony Security — это мощный и гибкий
+    компонент Symfony, предназначенный для обеспечения безопасности веб-приложений. Он предоставляет инструменты для
+    аутентификации (проверки подлинности пользователей), авторизации (проверки прав доступа), защиты от атак (например,
+    CSRF, XSS) и управления пользователями. Компонент Security интегрируется с другими частями Symfony, такими как
+    формы, Twig и Doctrine, что делает его удобным для использования в современных приложениях.</p>
+    <hr>
+    <h3>Основные возможности Symfony Security</h3>
+    <ol start="1">
+        <li><p><strong>Аутентификация (Authentication)</strong><br>Аутентификация — это процесс проверки подлинности
+            пользователя. Symfony Security поддерживает множество способов аутентификации:</p>
+            <ul>
+                <li><p><strong>Форма входа</strong> — стандартная форма для ввода логина и пароля.</p></li>
+                <li><p><strong>HTTP Basic</strong> — аутентификация через заголовки HTTP.</p></li>
+                <li><p><strong>JSON Web Tokens (JWT)</strong> — для REST API.</p></li>
+                <li><p><strong>OAuth</strong> — для интеграции с внешними сервисами (например, Google, Facebook).</p>
+                </li>
+                <li><p><strong>LDAP</strong> — для корпоративных систем.</p></li>
+                <li><p><strong>Кастомные провайдеры</strong> — возможность реализовать собственный способ
+                    аутентификации.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Авторизация (Authorization)</strong><br>Авторизация — это процесс проверки прав доступа
+            пользователя к определённым ресурсам. Symfony Security предоставляет:</p>
+            <ul>
+                <li><p><strong>Роли (Roles)</strong> — простой способ управления доступом (например,
+                    <code>ROLE_ADMIN</code>, <code>ROLE_USER</code>).</p></li>
+                <li><p><strong>Разрешения (Voters)</strong> — гибкий механизм для реализации сложной логики доступа.</p>
+                </li>
+                <li><p><strong>Выражения (Expressions)</strong> — возможность использовать выражения для проверки прав
+                    (например, <code>is_granted('ROLE_ADMIN')</code>).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Защита от атак</strong><br>Symfony Security включает встроенные механизмы защиты от
+            распространённых атак:</p>
+            <ul>
+                <li><p><strong>CSRF (Cross-Site Request Forgery)</strong> — защита форм от подделки запросов.</p></li>
+                <li><p><strong>XSS (Cross-Site Scripting)</strong> — предотвращение внедрения вредоносных скриптов.</p>
+                </li>
+                <li><p><strong>Brute Force</strong> — защита от перебора паролей.</p></li>
+                <li><p><strong>Session Fixation</strong> — защита от фиксации сессии.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Управление пользователями</strong><br>Symfony Security интегрируется с Doctrine для хранения
+            пользователей в базе данных. Вы можете легко создать сущность пользователя и настроить её:</p>
+            <ul>
+                <li><p>Реализация интерфейса <code>UserInterface</code>.</p></li>
+                <li><p>Использование хеширования паролей (например, через <code>password_hash</code>).</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Интеграция с другими компонентами</strong></p>
+            <ul>
+                <li><p><strong>Twig</strong> — функции для проверки прав в шаблонах (<code>is_granted</code>).</p></li>
+                <li><p><strong>Forms</strong> — автоматическая защита от CSRF.</p></li>
+                <li><p><strong>Doctrine</strong> — хранение пользователей и ролей в базе данных.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <hr>
+    <h3>Пример настройки Symfony Security</h3>
+    <ol start="1">
+        <li><p><strong>Установка компонента</strong><br>Установите компонент через Composer:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> require symfony/security-bundle</pre>
+            </div>
+        </li>
+        <li><p><strong>Создание сущности пользователя</strong><br>Создайте сущность пользователя, реализующую <code>UserInterface</code>:
+        </p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">// src/Entity/User.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Entity</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">Doctrine<span
+                            class="token punctuation">\</span>ORM<span class="token punctuation">\</span>Mapping</span> <span
+                            class="token keyword">as</span> <span class="token constant">ORM</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Security<span class="token punctuation">\</span>Core<span
+                            class="token punctuation">\</span>User<span class="token punctuation">\</span>UserInterface</span><span
+                            class="token punctuation">;</span>
+
+<span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+        class="token attribute-content"><span class="token attribute-class-name class-name class-name-fully-qualified">ORM<span
+        class="token punctuation">\</span>Entity</span></span><span class="token delimiter punctuation">]</span></span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">User</span> <span
+                            class="token keyword">implements</span> <span class="token class-name">UserInterface</span>
+<span class="token punctuation">{</span>
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span
+            class="token attribute-class-name class-name class-name-fully-qualified">ORM<span class="token punctuation">\</span>Id</span></span><span
+            class="token delimiter punctuation">]</span></span>
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span
+            class="token attribute-class-name class-name class-name-fully-qualified">ORM<span class="token punctuation">\</span>GeneratedValue</span></span><span
+            class="token delimiter punctuation">]</span></span>
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span
+            class="token attribute-class-name class-name class-name-fully-qualified">ORM<span class="token punctuation">\</span>Column</span></span><span
+            class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">private</span> <span class="token operator">?</span><span
+                            class="token keyword type-hint">int</span> <span class="token variable">$id</span> <span
+                            class="token operator">=</span> <span class="token constant">null</span><span
+                            class="token punctuation">;</span>
+
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span
+            class="token attribute-class-name class-name class-name-fully-qualified">ORM<span class="token punctuation">\</span>Column</span></span><span
+            class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$username</span><span class="token punctuation">;</span>
+
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span
+            class="token attribute-class-name class-name class-name-fully-qualified">ORM<span class="token punctuation">\</span>Column</span></span><span
+            class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">string</span> <span
+                            class="token variable">$password</span><span class="token punctuation">;</span>
+
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span
+            class="token attribute-class-name class-name class-name-fully-qualified">ORM<span class="token punctuation">\</span>Column</span><span
+            class="token punctuation">(</span><span class="token attribute-class-name class-name">type</span><span
+            class="token punctuation">:</span> <span class="token string single-quoted-string">'json'</span><span
+            class="token punctuation">)</span></span><span class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">private</span> <span class="token keyword type-declaration">array</span> <span
+                            class="token variable">$roles</span> <span class="token operator">=</span> <span
+                            class="token punctuation">[</span><span class="token punctuation">]</span><span
+                            class="token punctuation">;</span>
+
+    <span class="token comment">// Реализация методов UserInterface</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">getRoles</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token keyword return-type">array</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                            class="token property">roles</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">getPassword</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token keyword return-type">string</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                            class="token property">password</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">getSalt</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token operator">?</span><span
+                            class="token keyword return-type">string</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token constant">null</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">getUsername</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">:</span> <span class="token keyword return-type">string</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                            class="token property">username</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">eraseCredentials</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Настройка Security в <code>config/packages/security.yaml</code></strong><br>Пример конфигурации:
+        </p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">yaml</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token key atrule">security</span><span class="token punctuation">:</span>
+    <span class="token key atrule">encoders</span><span class="token punctuation">:</span>
+        <span class="token key atrule">App\Entity\User</span><span class="token punctuation">:</span>
+            <span class="token key atrule">algorithm</span><span class="token punctuation">:</span> auto
+
+    <span class="token key atrule">providers</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app_user_provider</span><span class="token punctuation">:</span>
+            <span class="token key atrule">entity</span><span class="token punctuation">:</span>
+                <span class="token key atrule">class</span><span class="token punctuation">:</span> App\Entity\User
+                <span class="token key atrule">property</span><span class="token punctuation">:</span> username
+
+    <span class="token key atrule">firewalls</span><span class="token punctuation">:</span>
+        <span class="token key atrule">main</span><span class="token punctuation">:</span>
+            <span class="token key atrule">anonymous</span><span class="token punctuation">:</span> <span
+                            class="token boolean important">true</span>
+            <span class="token key atrule">form_login</span><span class="token punctuation">:</span>
+                <span class="token key atrule">login_path</span><span class="token punctuation">:</span> login
+                <span class="token key atrule">check_path</span><span class="token punctuation">:</span> login
+            <span class="token key atrule">logout</span><span class="token punctuation">:</span>
+                <span class="token key atrule">path</span><span class="token punctuation">:</span> logout
+                <span class="token key atrule">target</span><span class="token punctuation">:</span> home
+
+    <span class="token key atrule">access_control</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token punctuation">{</span> <span
+                            class="token key atrule">path</span><span class="token punctuation">:</span> ^/admin<span
+                            class="token punctuation">,</span> <span class="token key atrule">roles</span><span
+                            class="token punctuation">:</span> ROLE_ADMIN <span class="token punctuation">}</span>
+        <span class="token punctuation">-</span> <span class="token punctuation">{</span> <span
+                            class="token key atrule">path</span><span class="token punctuation">:</span> ^/profile<span
+                            class="token punctuation">,</span> <span class="token key atrule">roles</span><span
+                            class="token punctuation">:</span> ROLE_USER <span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Создание контроллера для входа</strong><br>Пример контроллера для обработки формы входа:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token comment">// src/Controller/SecurityController.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Controller</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Bundle<span
+                            class="token punctuation">\</span>FrameworkBundle<span class="token punctuation">\</span>Controller<span
+                            class="token punctuation">\</span>AbstractController</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>HttpFoundation<span class="token punctuation">\</span>Response</span><span
+                            class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Routing<span
+                            class="token punctuation">\</span>Annotation<span
+                            class="token punctuation">\</span>Route</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                            class="token punctuation">\</span>Security<span class="token punctuation">\</span>Http<span
+                            class="token punctuation">\</span>Authentication<span class="token punctuation">\</span>AuthenticationUtils</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">SecurityController</span> <span
+                            class="token keyword">extends</span> <span
+                            class="token class-name">AbstractController</span>
+<span class="token punctuation">{</span>
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span class="token attribute-class-name class-name">Route</span><span
+            class="token punctuation">(</span><span class="token string single-quoted-string">'/login'</span><span
+            class="token punctuation">,</span> <span class="token attribute-class-name class-name">name</span><span
+            class="token punctuation">:</span> <span class="token string single-quoted-string">'login'</span><span
+            class="token punctuation">)</span></span><span class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">login</span><span
+                            class="token punctuation">(</span><span class="token class-name type-declaration">AuthenticationUtils</span> <span
+                            class="token variable">$authenticationUtils</span><span
+                            class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                            class="token class-name return-type">Response</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$error</span> <span class="token operator">=</span> <span class="token variable">$authenticationUtils</span><span
+                            class="token operator">-&gt;</span><span
+                            class="token function">getLastAuthenticationError</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+        <span class="token variable">$lastUsername</span> <span class="token operator">=</span> <span
+                            class="token variable">$authenticationUtils</span><span
+                            class="token operator">-&gt;</span><span class="token function">getLastUsername</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span><span
+                            class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                            class="token function">render</span><span class="token punctuation">(</span><span
+                            class="token string single-quoted-string">'security/login.html.twig'</span><span
+                            class="token punctuation">,</span> <span class="token punctuation">[</span>
+            <span class="token string single-quoted-string">'last_username'</span> <span
+                            class="token operator">=&gt;</span> <span class="token variable">$lastUsername</span><span
+                            class="token punctuation">,</span>
+            <span class="token string single-quoted-string">'error'</span> <span
+                            class="token operator">=&gt;</span> <span class="token variable">$error</span><span
+                            class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token attribute"><span class="token delimiter punctuation">#[</span><span
+            class="token attribute-content"><span class="token attribute-class-name class-name">Route</span><span
+            class="token punctuation">(</span><span class="token string single-quoted-string">'/logout'</span><span
+            class="token punctuation">,</span> <span class="token attribute-class-name class-name">name</span><span
+            class="token punctuation">:</span> <span class="token string single-quoted-string">'logout'</span><span
+            class="token punctuation">)</span></span><span class="token delimiter punctuation">]</span></span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">logout</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span> <span
+                            class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p><strong>Шаблон для формы входа</strong><br>Пример шаблона Twig:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">twig</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token twig language-twig"><span class="token comment">{# templates/security/login.html.twig #}</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span
+        class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span
+        class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span
+        class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span
+            class="token attr-name">type</span><span class="token attr-value"><span
+            class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text<span
+            class="token punctuation">"</span></span> <span class="token attr-name">name</span><span
+            class="token attr-value"><span class="token punctuation attr-equals">=</span><span
+            class="token punctuation">"</span>_username<span class="token punctuation">"</span></span> <span
+            class="token attr-name">value</span><span class="token attr-value"><span
+            class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span
+            class="token twig language-twig"><span class="token delimiter punctuation">{{</span> last_username <span
+            class="token delimiter punctuation">}}</span></span><span class="token punctuation">"</span></span><span
+            class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span
+            class="token attr-name">type</span><span class="token attr-value"><span
+            class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>password<span
+            class="token punctuation">"</span></span> <span class="token attr-name">name</span><span
+            class="token attr-value"><span class="token punctuation attr-equals">=</span><span
+            class="token punctuation">"</span>_password<span class="token punctuation">"</span></span><span
+            class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span
+            class="token attr-name">type</span><span class="token attr-value"><span
+            class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>submit<span
+            class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Login<span
+                            class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span
+                            class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span
+        class="token punctuation">&gt;</span></span>
+<span class="token twig language-twig"><span class="token delimiter punctuation">{%</span> <span
+        class="token tag-name keyword">if</span> error <span class="token delimiter punctuation">%}</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span
+            class="token punctuation">&gt;</span></span><span class="token twig language-twig"><span
+                            class="token delimiter punctuation">{{</span> error<span class="token punctuation">.</span>messageKey<span
+                            class="token operator">|</span>trans<span class="token punctuation">(</span>error<span
+                            class="token punctuation">.</span>messageData<span class="token punctuation">,</span> <span
+                            class="token string"><span class="token punctuation">'</span>security<span
+                            class="token punctuation">'</span></span><span class="token punctuation">)</span> <span
+                            class="token delimiter punctuation">}}</span></span><span class="token tag"><span
+                            class="token tag"><span class="token punctuation">&lt;/</span>div</span><span
+                            class="token punctuation">&gt;</span></span>
+<span class="token twig language-twig"><span class="token delimiter punctuation">{%</span> <span
+        class="token tag-name keyword">endif</span> <span class="token delimiter punctuation">%}</span></span></pre>
+            </div>
+        </li>
+    </ol>
+    <hr>
+    <h3>Преимущества Symfony Security</h3>
+    <ul>
+        <li><p><strong>Гибкость</strong> — поддержка множества способов аутентификации и авторизации.</p></li>
+        <li><p><strong>Безопасность</strong> — встроенные механизмы защиты от атак.</p></li>
+        <li><p><strong>Интеграция</strong> — легко интегрируется с другими компонентами Symfony.</p></li>
+        <li><p><strong>Расширяемость</strong> — возможность создавать кастомные провайдеры и voters.</p></li>
+    </ul>
+    <hr>
+    <h3>Когда использовать Symfony Security?</h3>
+    <ul>
+        <li><p>Для защиты административных панелей.</p></li>
+        <li><p>Для реализации регистрации и входа пользователей.</p></li>
+        <li><p>Для управления правами доступа в сложных приложениях.</p></li>
+        <li><p>Для защиты REST API (например, через JWT).</p></li>
+    </ul>
+    <p>Symfony Security — это мощный инструмент, который помогает создавать безопасные и надёжные приложения,
+        минимизируя риски утечек данных и несанкционированного доступа.</p></div>
+</body>
+</html>

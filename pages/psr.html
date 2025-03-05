@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>PSR (PHP Standards Recommendations) — это
+    набор стандартов и рекомендаций для языка программирования PHP, разработанных группой <a
+            href="https://www.php-fig.org/" target="_blank" rel="noreferrer">PHP-FIG (Framework Interop Group)</a>. Эти
+    стандарты созданы для улучшения взаимодействия между различными PHP-проектами и фреймворками, а также для повышения
+    качества кода.</p>
+    <h3>Основные PSR:</h3>
+    <ol start="1">
+        <li><p><strong>PSR-1: Basic Coding Standard</strong>:</p>
+            <ul>
+                <li><p>Основные стандарты написания кода на PHP.</p></li>
+                <li><p>Примеры:</p>
+                    <ul>
+                        <li><p>Файлы должны использовать только теги <code>&lt;?php</code> и <code>&lt;?=</code>.</p>
+                        </li>
+                        <li><p>Имена классов должны быть в стиле <code>StudlyCaps</code>.</p></li>
+                        <li><p>Константы должны быть в верхнем регистре с подчёркиваниями.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-2: Coding Style Guide</strong>:</p>
+            <ul>
+                <li><p>Расширение PSR-1, которое определяет стиль написания кода.</p></li>
+                <li><p>Примеры:</p>
+                    <ul>
+                        <li><p>Использование 4 пробелов для отступов.</p></li>
+                        <li><p>Открывающая фигурная скобка <code>{</code> должна быть на той же строке, что и объявление
+                            класса или метода.</p></li>
+                        <li><p>Ключевые слова должны быть в нижнем регистре.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-3: Logger Interface</strong>:</p>
+            <ul>
+                <li><p>Стандартизирует интерфейс для логгеров.</p></li>
+                <li><p>Пример использования:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">php</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token variable">$logger</span><span class="token operator">-&gt;</span><span
+                                class="token function">info</span><span class="token punctuation">(</span><span
+                                class="token string single-quoted-string">'User logged in'</span><span
+                                class="token punctuation">,</span> <span class="token punctuation">[</span><span
+                                class="token string single-quoted-string">'username'</span> <span
+                                class="token operator">=&gt;</span> <span class="token string single-quoted-string">'john_doe'</span><span
+                                class="token punctuation">]</span><span class="token punctuation">)</span><span
+                                class="token punctuation">;</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-4: Autoloading Standard</strong>:</p>
+            <ul>
+                <li><p>Стандарт для автозагрузки классов на основе пространств имён (namespaces).</p></li>
+                <li><p>Пример:</p>
+                    <ul>
+                        <li><p>Пространство имён <code>App\Core</code> должно соответствовать директории
+                            <code>src/Core</code>.</p></li>
+                        <li><p>Файл <code>App\Core\Controller</code> должен находиться в
+                            <code>src/Core/Controller.php</code>.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-6: Caching Interface</strong>:</p>
+            <ul>
+                <li><p>Стандартизирует интерфейс для работы с кэшированием.</p></li>
+                <li><p>Пример:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">php</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token variable">$cacheItem</span> <span class="token operator">=</span> <span
+                                class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                                class="token function">getItem</span><span class="token punctuation">(</span><span
+                                class="token string single-quoted-string">'cache_key'</span><span
+                                class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$cacheItem</span><span class="token operator">-&gt;</span><span
+                                    class="token function">set</span><span class="token punctuation">(</span><span
+                                    class="token string single-quoted-string">'value'</span><span
+                                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$cache</span><span class="token operator">-&gt;</span><span
+                                    class="token function">save</span><span class="token punctuation">(</span><span
+                                    class="token variable">$cacheItem</span><span
+                                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-7: HTTP Message Interface</strong>:</p>
+            <ul>
+                <li><p>Определяет интерфейсы для работы с HTTP-сообщениями (запросы и ответы).</p></li>
+                <li><p>Пример:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">php</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token variable">$response</span> <span class="token operator">=</span> <span
+                                class="token keyword">new</span> <span class="token class-name">Response</span><span
+                                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                                class="token punctuation">;</span>
+<span class="token variable">$response</span><span class="token operator">-&gt;</span><span class="token function">getBody</span><span
+                                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                                    class="token operator">-&gt;</span><span class="token function">write</span><span
+                                    class="token punctuation">(</span><span class="token string single-quoted-string">'Hello, World!'</span><span
+                                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-11: Container Interface</strong>:</p>
+            <ul>
+                <li><p>Стандартизирует интерфейс для контейнеров внедрения зависимостей (Dependency Injection).</p></li>
+                <li><p>Пример:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">php</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token variable">$container</span><span
+                                class="token operator">-&gt;</span><span class="token function">get</span><span
+                                class="token punctuation">(</span><span class="token string single-quoted-string">'service_name'</span><span
+                                class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-12: Extended Coding Style Guide</strong>:</p>
+            <ul>
+                <li><p>Обновлённая версия PSR-2 с дополнительными правилами.</p></li>
+                <li><p>Пример:</p>
+                    <ul>
+                        <li><p>Использование strict-типизации (<code>declare(strict_types=1)</code>).</p></li>
+                        <li><p>Пустые строки вокруг тел методов и функций.</p></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-15: HTTP Server Request Handlers</strong>:</p>
+            <ul>
+                <li><p>Стандартизирует обработку HTTP-запросов с использованием middleware.</p></li>
+                <li><p>Пример:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">php</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token variable">$handler</span> <span class="token operator">=</span> <span
+                                class="token keyword">new</span> <span
+                                class="token class-name">RequestHandler</span><span
+                                class="token punctuation">(</span><span class="token punctuation">)</span><span
+                                class="token punctuation">;</span>
+<span class="token variable">$response</span> <span class="token operator">=</span> <span class="token variable">$handler</span><span
+                                    class="token operator">-&gt;</span><span class="token function">handle</span><span
+                                    class="token punctuation">(</span><span class="token variable">$request</span><span
+                                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li><p><strong>PSR-18: HTTP Client</strong>:</p>
+            <ul>
+                <li><p>Стандартизирует интерфейс для HTTP-клиентов.</p></li>
+                <li><p>Пример:</p>
+                    <div class="md-code-block">
+                        <div class="md-code-block-banner-wrap">
+                            <div class="md-code-block-banner">
+                                <div class="md-code-block-infostring">php</div>
+                                <div class="md-code-block-action">
+                                    <div class="ds-markdown-code-copy-button">Copy</div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre><span class="token variable">$response</span> <span class="token operator">=</span> <span
+                                class="token variable">$client</span><span class="token operator">-&gt;</span><span
+                                class="token function">sendRequest</span><span class="token punctuation">(</span><span
+                                class="token variable">$request</span><span class="token punctuation">)</span><span
+                                class="token punctuation">;</span></pre>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Зачем нужны PSR?</h3>
+    <ol start="1">
+        <li><p><strong>Совместимость</strong>:</p>
+            <ul>
+                <li><p>PSR позволяют разным библиотекам и фреймворкам работать вместе.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Единый стиль кода</strong>:</p>
+            <ul>
+                <li><p>Упрощает чтение и поддержку кода.</p></li>
+            </ul>
+        </li>
+        <li><p><strong>Стандартизация</strong>:</p>
+            <ul>
+                <li><p>Уменьшает количество споров о том, как писать код.</p></li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Как использовать PSR?</h3>
+    <ol start="1">
+        <li><p>Установите инструменты для проверки стиля кода, такие как:</p>
+            <ul>
+                <li><p><a href="https://github.com/squizlabs/PHP_CodeSniffer" target="_blank" rel="noreferrer">PHP_CodeSniffer</a>
+                    для проверки PSR-1, PSR-2, PSR-12.</p></li>
+                <li><p><a href="https://getcomposer.org/" target="_blank" rel="noreferrer">Composer</a> для автозагрузки
+                    классов по PSR-4.</p></li>
+            </ul>
+        </li>
+        <li><p>Следуйте рекомендациям PSR при написании кода.</p></li>
+    </ol>
+    <h3>Пример использования PSR-4:</h3>
+    <ol start="1">
+        <li><p>Структура проекта:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring"></div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre>src/
+    Core/
+        Controller.php
+composer.json</pre>
+            </div>
+        </li>
+        <li><p><code>composer.json</code>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">json</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token punctuation">{</span>
+    <span class="token property">"autoload"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"psr-4"</span><span class="token operator">:</span> <span
+                            class="token punctuation">{</span>
+            <span class="token property">"App\\"</span><span class="token operator">:</span> <span class="token string">"src/"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+            </div>
+        </li>
+        <li><p>Класс <code>Controller.php</code>:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">php</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Core</span><span
+                            class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Controller</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                            class="token function-definition function">index</span><span
+                            class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span
+                            class="token string double-quoted-string">"Hello, World!"</span><span
+                            class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></span></pre>
+            </div>
+        </li>
+        <li><p>Автозагрузка:</p>
+            <div class="md-code-block">
+                <div class="md-code-block-banner-wrap">
+                    <div class="md-code-block-banner">
+                        <div class="md-code-block-infostring">bash</div>
+                        <div class="md-code-block-action">
+                            <div class="ds-markdown-code-copy-button">Copy</div>
+                        </div>
+                    </div>
+                </div>
+                <pre><span class="token function">composer</span> dump-autoload</pre>
+            </div>
+        </li>
+    </ol></div>
+</body>
+</html>

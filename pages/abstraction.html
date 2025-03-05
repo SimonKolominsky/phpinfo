@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p><strong>Абстракция в ООП</strong> — это
+    принцип, позволяющий выделять ключевые характеристики объектов, игнорируя несущественные детали. Она упрощает
+    сложные системы, фокусируясь на том, <em>что делает объект</em>, а не на том, <em>как он это делает</em>.</p>
+    <h3>Основные идеи:</h3>
+    <ol start="1">
+        <li><p><strong>Сокрытие сложности</strong><br>Пользователь взаимодействует с объектом через его публичные методы
+            и свойства, не зная внутренней реализации.<br><strong>Пример</strong>: Вождение автомобиля — вы используете
+            руль и педали, не разбираясь в устройстве двигателя.</p></li>
+        <li><p><strong>Создание моделей</strong><br>Абстракция позволяет проектировать классы, отражающие только важные
+            аспекты для конкретной задачи.<br><strong>Пример</strong>: Класс <code>User</code> может содержать поля
+            <code>login</code> и <code>password</code>, но опускать детали вроде «цвета глаз».</p></li>
+        <li><p><strong>Использование абстрактных классов и интерфейсов</strong></p>
+            <ul>
+                <li><p><strong>Абстрактные классы</strong> определяют общие методы (в том числе без реализации), которые
+                    должны быть реализованы в наследниках.</p></li>
+                <li><p><strong>Интерфейсы</strong> задают контракт (набор методов), который класс обязан выполнить.</p>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <h3>Отличие от инкапсуляции:</h3>
+    <ul>
+        <li><p><strong>Инкапсуляция</strong> скрывает данные и объединяет их с методами для работы с ними.</p></li>
+        <li><p><strong>Абстракция</strong> упрощает объекты, выделяя их суть и игнорируя детали.</p></li>
+    </ul>
+    <h3>Зачем нужна абстракция?</h3>
+    <ul>
+        <li><p><strong>Уменьшение сложности</strong>: Программист работает с высокоуровневыми концепциями.</p></li>
+        <li><p><strong>Повторное использование кода</strong>: Общие интерфейсы позволяют создавать универсальные
+            компоненты.</p></li>
+        <li><p><strong>Гибкость</strong>: Легко менять реализацию, не затрагивая код, который использует абстракции.</p>
+        </li>
+    </ul>
+    <p><strong>Итог</strong>: Абстракция — это фундаментальный инструмент для проектирования понятных, масштабируемых и
+        поддерживаемых программных систем.</p></div>
+<hr>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><h3>1. <strong>Абстрактный класс:
+    Животные</strong></h3>
+    <p>Абстрактный класс определяет общие методы, которые должны быть реализованы в наследниках.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">Animal</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Абстрактный метод (без реализации)</span>
+    <span class="token keyword">abstract</span> <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">makeSound</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">string</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token comment">// Общий метод (реализация в абстрактном классе)</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sleep</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">string</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string double-quoted-string">"Zzz..."</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Dog</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">Animal</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">makeSound</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string double-quoted-string">"Гав!"</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Cat</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">Animal</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">makeSound</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string double-quoted-string">"Мяу!"</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$dog</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">Dog</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$dog</span><span
+                    class="token operator">-&gt;</span><span class="token function">makeSound</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// "Гав!"</span>
+<span class="token keyword">echo</span> <span class="token variable">$dog</span><span
+                    class="token operator">-&gt;</span><span class="token function">sleep</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>     <span class="token comment">// "Zzz..."</span></pre>
+    </div>
+    <p><strong>Как это абстракция:</strong><br>Мы работаем с общим типом <code>Animal</code>, не заботясь о деталях
+        реализации <code>makeSound()</code> для каждого животного.</p>
+    <hr>
+    <h3>2. <strong>Интерфейс: Логирование</strong></h3>
+    <p>Интерфейс задает контракт, который должны выполнять классы.</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">interface</span> <span class="token class-name-definition class-name">LoggerInterface</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">log</span><span class="token punctuation">(</span><span
+                    class="token keyword type-hint">string</span> <span class="token variable">$message</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">void</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">FileLogger</span> <span
+                    class="token keyword">implements</span> <span class="token class-name">LoggerInterface</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">log</span><span class="token punctuation">(</span><span
+                    class="token keyword type-hint">string</span> <span class="token variable">$message</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">void</span> <span class="token punctuation">{</span>
+        <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'log.txt'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$message</span> <span
+                    class="token operator">.</span> <span class="token constant">PHP_EOL</span><span
+                    class="token punctuation">,</span> <span class="token constant">FILE_APPEND</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">DatabaseLogger</span> <span class="token keyword">implements</span> <span
+                    class="token class-name">LoggerInterface</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">log</span><span class="token punctuation">(</span><span
+                    class="token keyword type-hint">string</span> <span class="token variable">$message</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">void</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Код для сохранения в базу данных</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Logged to DB: <span
+                    class="token interpolation"><span class="token variable">$message</span></span>"</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token keyword">function</span> <span class="token function-definition function">logError</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">LoggerInterface</span> <span class="token variable">$logger</span><span
+                    class="token punctuation">,</span> <span class="token keyword type-hint">string</span> <span
+                    class="token variable">$error</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">void</span> <span
+                    class="token punctuation">{</span>
+    <span class="token variable">$logger</span><span class="token operator">-&gt;</span><span
+                    class="token function">log</span><span class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"ERROR: "</span> <span
+                    class="token operator">.</span> <span class="token variable">$error</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$fileLogger</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">FileLogger</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token function">logError</span><span class="token punctuation">(</span><span class="token variable">$fileLogger</span><span
+                    class="token punctuation">,</span> <span
+                    class="token string double-quoted-string">"404 Not Found"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Пишет в файл</span>
+
+<span class="token variable">$dbLogger</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">DatabaseLogger</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token function">logError</span><span class="token punctuation">(</span><span class="token variable">$dbLogger</span><span
+                    class="token punctuation">,</span> <span
+                    class="token string double-quoted-string">"Invalid input"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>    <span
+                    class="token comment">// Пишет в базу</span></pre>
+    </div>
+    <p><strong>Как это абстракция:</strong><br>Функция <code>logError()</code> работает с любым объектом, реализующим
+        <code>LoggerInterface</code>, не зная деталей логгирования.</p>
+    <hr>
+    <h3>3. <strong>Абстракция в пользовательской системе</strong></h3>
+    <p>Пример с абстрактным классом для пользователей:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span
+                class="token class-name-definition class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token keyword type-declaration">string</span> <span
+                    class="token variable">$email</span><span class="token punctuation">;</span>
+    <span class="token keyword">protected</span> <span class="token keyword type-declaration">string</span> <span
+                    class="token variable">$password</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">string</span> <span
+                    class="token variable">$email</span><span class="token punctuation">,</span> <span
+                    class="token keyword type-hint">string</span> <span class="token variable">$password</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">email</span> <span
+                    class="token operator">=</span> <span class="token variable">$email</span><span
+                    class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">password</span> <span
+                    class="token operator">=</span> <span class="token function">password_hash</span><span
+                    class="token punctuation">(</span><span class="token variable">$password</span><span
+                    class="token punctuation">,</span> <span class="token constant">PASSWORD_DEFAULT</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Абстрактный метод: каждая роль имеет свои права</span>
+    <span class="token keyword">abstract</span> <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getRole</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">string</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token comment">// Общий метод для всех пользователей</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getEmail</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">email</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Admin</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">User</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getRole</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string double-quoted-string">"admin"</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Guest</span> <span
+                    class="token keyword">extends</span> <span class="token class-name">User</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getRole</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">string</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string double-quoted-string">"guest"</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token variable">$admin</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name">Admin</span><span class="token punctuation">(</span><span
+                    class="token string double-quoted-string">"admin@example.com"</span><span class="token punctuation">,</span> <span
+                    class="token string double-quoted-string">"qwerty"</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$admin</span><span
+                    class="token operator">-&gt;</span><span class="token function">getRole</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// "admin"</span></pre>
+    </div>
+    <p><strong>Как это абстракция:</strong><br>Класс <code>User</code> выделяет общую логику (email, пароль), но
+        оставляет реализацию <code>getRole()</code> для наследников.</p>
+    <hr>
+    <h3>4. <strong>Практический пример: Система оплаты</strong></h3>
+    <p>Интерфейс для разных способов оплаты:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">interface</span> <span class="token class-name-definition class-name">PaymentMethod</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">processPayment</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">float</span> <span
+                    class="token variable">$amount</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">bool</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">CreditCardPayment</span> <span class="token keyword">implements</span> <span
+                    class="token class-name">PaymentMethod</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">processPayment</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">float</span> <span
+                    class="token variable">$amount</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">bool</span> <span
+                    class="token punctuation">{</span>
+        <span class="token comment">// Логика оплаты картой</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Оплачено <span
+                    class="token interpolation"><span class="token variable">$amount</span></span> через кредитную карту"</span><span
+                    class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token constant boolean">true</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">PayPalPayment</span> <span
+                    class="token keyword">implements</span> <span class="token class-name">PaymentMethod</span> <span
+                    class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">processPayment</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">float</span> <span
+                    class="token variable">$amount</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">bool</span> <span
+                    class="token punctuation">{</span>
+        <span class="token comment">// Логика PayPal</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"Оплачено <span
+                    class="token interpolation"><span
+                    class="token variable">$amount</span></span> через PayPal"</span><span
+                    class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token constant boolean">true</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Использование</span>
+<span class="token keyword">function</span> <span class="token function-definition function">checkout</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">PaymentMethod</span> <span class="token variable">$paymentMethod</span><span
+                    class="token punctuation">,</span> <span class="token keyword type-hint">float</span> <span
+                    class="token variable">$total</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">void</span> <span
+                    class="token punctuation">{</span>
+    <span class="token variable">$paymentMethod</span><span class="token operator">-&gt;</span><span
+                    class="token function">processPayment</span><span class="token punctuation">(</span><span
+                    class="token variable">$total</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$card</span> <span class="token operator">=</span> <span
+                    class="token keyword">new</span> <span class="token class-name">CreditCardPayment</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token function">checkout</span><span class="token punctuation">(</span><span
+                    class="token variable">$card</span><span class="token punctuation">,</span> <span
+                    class="token number">100.50</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span> <span class="token comment">// "Оплачено 100.5 через кредитную карту"</span></pre>
+    </div>
+    <p><strong>Как это абстракция:</strong><br>Система оплаты не зависит от конкретного способа — она работает с любым
+        классом, реализующим <code>PaymentMethod</code>.</p>
+    <hr>
+    <h3><strong>Итог:</strong></h3>
+    <p>Абстракция в PHP достигается через:</p>
+    <ul>
+        <li><p><strong>Абстрактные классы</strong>: Определяют общую логику и требуют реализации специфичных методов.
+        </p></li>
+        <li><p><strong>Интерфейсы</strong>: Задают контракт, который классы обязаны выполнить.</p></li>
+        <li><p><strong>Сокрытие деталей</strong>: Пользователь кода видит только публичные методы, а не внутреннюю
+            реализацию.</p></li>
+    </ul>
+    <p><strong>Зачем это нужно?</strong></p>
+    <ul>
+        <li><p>Можно менять реализацию классов, не ломая существующий код (например, добавить новый способ оплаты).</p>
+        </li>
+        <li><p>Упрощается тестирование (можно создать "заглушки" для интерфейсов).</p></li>
+        <li><p>Код становится чище и понятнее.</p></li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В Symfony репозитории (Repository)
+    используются для взаимодействия с базой данных через Doctrine ORM. Репозитории предоставляют методы для выполнения
+    запросов к базе данных, таких как поиск, фильтрация и сортировка данных. Вот как правильно использовать репозитории
+    в Symfony:</p>
+    <h3>1. Создание репозитория</h3>
+    <p>По умолчанию, когда вы создаете сущность (Entity) с помощью команды <code>make:entity</code>, Symfony
+        автоматически создает репозиторий для этой сущности. Репозиторий находится в директории
+        <code>src/Repository</code>.</p>
+    <p>Пример сущности <code>Product</code>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// src/Entity/Product.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Entity</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">Doctrine<span
+                    class="token punctuation">\</span>ORM<span class="token punctuation">\</span>Mapping</span> <span
+                    class="token keyword">as</span> <span class="token constant">ORM</span><span
+                    class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">Product</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Поля и методы сущности</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>Соответствующий репозиторий:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// src/Repository/ProductRepository.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Repository</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                    class="token punctuation">\</span>Entity<span class="token punctuation">\</span>Product</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Doctrine<span class="token punctuation">\</span>Bundle<span
+                    class="token punctuation">\</span>DoctrineBundle<span
+                    class="token punctuation">\</span>Repository<span class="token punctuation">\</span>ServiceEntityRepository</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Doctrine<span class="token punctuation">\</span>Persistence<span
+                    class="token punctuation">\</span>ManagerRegistry</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * @method Product|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Product|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Product[]    findAll()
+ * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */</span>
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">ProductRepository</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">ServiceEntityRepository</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">ManagerRegistry</span> <span class="token variable">$registry</span><span
+                    class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword static-context">parent</span><span class="token operator">::</span><span
+                    class="token function">__construct</span><span class="token punctuation">(</span><span
+                    class="token variable">$registry</span><span class="token punctuation">,</span> <span
+                    class="token class-name static-context">Product</span><span class="token operator">::</span><span
+                    class="token keyword">class</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Добавьте свои методы для работы с базой данных</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>2. Использование репозитория в контроллере</h3>
+    <p>Чтобы использовать репозиторий в контроллере, вы можете внедрить его через конструктор или метод действия.</p>
+    <p>Пример использования в контроллере:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// src/Controller/ProductController.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Controller</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                    class="token punctuation">\</span>Entity<span class="token punctuation">\</span>Product</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">App<span class="token punctuation">\</span>Repository<span
+                    class="token punctuation">\</span>ProductRepository</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Bundle<span
+                    class="token punctuation">\</span>FrameworkBundle<span
+                    class="token punctuation">\</span>Controller<span class="token punctuation">\</span>AbstractController</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                    class="token punctuation">\</span>HttpFoundation<span
+                    class="token punctuation">\</span>Response</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Symfony<span class="token punctuation">\</span>Component<span
+                    class="token punctuation">\</span>Routing<span class="token punctuation">\</span>Annotation<span
+                    class="token punctuation">\</span>Route</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">ProductController</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">AbstractController</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$productRepository</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">ProductRepository</span> <span class="token variable">$productRepository</span><span
+                    class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">productRepository</span> <span
+                    class="token operator">=</span> <span class="token variable">$productRepository</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * @Route("/products", name="product_list")
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">list</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token class-name return-type">Response</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Получение всех продуктов</span>
+        <span class="token variable">$products</span> <span class="token operator">=</span> <span
+                    class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">productRepository</span><span class="token operator">-&gt;</span><span
+                    class="token function">findAll</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Или использование кастомного метода, если он есть</span>
+        <span class="token comment">// $products = $this-&gt;productRepository-&gt;findByPriceGreaterThan(100);</span>
+
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token function">render</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'product/list.html.twig'</span><span
+                    class="token punctuation">,</span> <span class="token punctuation">[</span>
+            <span class="token string single-quoted-string">'products'</span> <span class="token operator">=&gt;</span> <span
+                    class="token variable">$products</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>3. Создание кастомных методов в репозитории</h3>
+    <p>Вы можете добавлять свои методы в репозиторий для выполнения специфических запросов к базе данных.</p>
+    <p>Пример кастомного метода для поиска продуктов с ценой выше определенного значения:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// src/Repository/ProductRepository.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Repository</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span
+                    class="token punctuation">\</span>Entity<span class="token punctuation">\</span>Product</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Doctrine<span class="token punctuation">\</span>Bundle<span
+                    class="token punctuation">\</span>DoctrineBundle<span
+                    class="token punctuation">\</span>Repository<span class="token punctuation">\</span>ServiceEntityRepository</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Doctrine<span class="token punctuation">\</span>Persistence<span
+                    class="token punctuation">\</span>ManagerRegistry</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">ProductRepository</span> <span class="token keyword">extends</span> <span
+                    class="token class-name">ServiceEntityRepository</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">ManagerRegistry</span> <span class="token variable">$registry</span><span
+                    class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword static-context">parent</span><span class="token operator">::</span><span
+                    class="token function">__construct</span><span class="token punctuation">(</span><span
+                    class="token variable">$registry</span><span class="token punctuation">,</span> <span
+                    class="token class-name static-context">Product</span><span class="token operator">::</span><span
+                    class="token keyword">class</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * @return Product[]
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">findByPriceGreaterThan</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">float</span> <span
+                    class="token variable">$price</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">array</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token function">createQueryBuilder</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'p'</span><span class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">andWhere</span><span
+                    class="token punctuation">(</span><span class="token string single-quoted-string">'p.price &gt; :price'</span><span
+                    class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">setParameter</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'price'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$price</span><span
+                    class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">orderBy</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'p.price'</span><span
+                    class="token punctuation">,</span> <span class="token string single-quoted-string">'ASC'</span><span
+                    class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">getQuery</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token operator">-&gt;</span><span class="token function">getResult</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>4. Использование DQL (Doctrine Query Language)</h3>
+    <p>Если вам нужно выполнить более сложные запросы, вы можете использовать DQL:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                class="token function-definition function">findByPriceGreaterThan</span><span class="token punctuation">(</span><span
+                class="token keyword type-hint">float</span> <span class="token variable">$price</span><span
+                class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                class="token keyword return-type">array</span>
+<span class="token punctuation">{</span>
+    <span class="token variable">$entityManager</span> <span class="token operator">=</span> <span
+                    class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token function">getEntityManager</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token variable">$query</span> <span class="token operator">=</span> <span class="token variable">$entityManager</span><span
+                    class="token operator">-&gt;</span><span class="token function">createQuery</span><span
+                    class="token punctuation">(</span>
+        <span class="token string single-quoted-string">'SELECT p
+        FROM App\Entity\Product p
+        WHERE p.price &gt; :price
+        ORDER BY p.price ASC'</span>
+    <span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">setParameter</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'price'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$price</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token variable">$query</span><span class="token operator">-&gt;</span><span
+                    class="token function">getResult</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>5. Использование QueryBuilder</h3>
+    <p><code>QueryBuilder</code> — это удобный способ построения запросов:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                class="token function-definition function">findByPriceGreaterThan</span><span class="token punctuation">(</span><span
+                class="token keyword type-hint">float</span> <span class="token variable">$price</span><span
+                class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                class="token keyword return-type">array</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token function">createQueryBuilder</span><span class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'p'</span><span class="token punctuation">)</span>
+        <span class="token operator">-&gt;</span><span class="token function">andWhere</span><span
+                    class="token punctuation">(</span><span class="token string single-quoted-string">'p.price &gt; :price'</span><span
+                    class="token punctuation">)</span>
+        <span class="token operator">-&gt;</span><span class="token function">setParameter</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'price'</span><span
+                    class="token punctuation">,</span> <span class="token variable">$price</span><span
+                    class="token punctuation">)</span>
+        <span class="token operator">-&gt;</span><span class="token function">orderBy</span><span
+                    class="token punctuation">(</span><span
+                    class="token string single-quoted-string">'p.price'</span><span
+                    class="token punctuation">,</span> <span class="token string single-quoted-string">'ASC'</span><span
+                    class="token punctuation">)</span>
+        <span class="token operator">-&gt;</span><span class="token function">getQuery</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token operator">-&gt;</span><span class="token function">getResult</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>6. Использование репозитория в сервисах</h3>
+    <p>Вы также можете использовать репозитории в сервисах. Для этого нужно внедрить репозиторий через конструктор
+        сервиса:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment">// src/Service/ProductService.php</span>
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Service</span><span
+                    class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span class="token punctuation">\</span>Repository<span
+                    class="token punctuation">\</span>ProductRepository</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">ProductService</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$productRepository</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">ProductRepository</span> <span class="token variable">$productRepository</span><span
+                    class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">productRepository</span> <span
+                    class="token operator">=</span> <span class="token variable">$productRepository</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">getExpensiveProducts</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">float</span> <span
+                    class="token variable">$price</span><span class="token punctuation">)</span><span
+                    class="token punctuation">:</span> <span class="token keyword return-type">array</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">productRepository</span><span class="token operator">-&gt;</span><span
+                    class="token function">findByPriceGreaterThan</span><span class="token punctuation">(</span><span
+                    class="token variable">$price</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <h3>7. Регистрация сервиса</h3>
+    <p>Убедитесь, что ваш сервис зарегистрирован в <code>services.yaml</code>:</p>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">yaml</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token comment"># config/services.yaml</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+    <span class="token key atrule">App\Service\ProductService</span><span class="token punctuation">:</span>
+        <span class="token key atrule">arguments</span><span class="token punctuation">:</span>
+            <span class="token key atrule">$productRepository</span><span class="token punctuation">:</span> <span
+                    class="token string">'@App\Repository\ProductRepository'</span></pre>
+    </div>
+    <h3>Заключение</h3>
+    <p>Репозитории в Symfony — это мощный инструмент для работы с базой данных. Они позволяют инкапсулировать логику
+        запросов и упрощают взаимодействие с данными. Используйте их для создания чистого и поддерживаемого кода.</p>
+</div>
+</body>
+</html>

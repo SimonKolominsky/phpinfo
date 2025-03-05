@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>Сложность алгоритма — это мера того, сколько
+    времени или ресурсов потребуется алгоритму для выполнения задачи в зависимости от размера входных данных. Она
+    выражается с помощью "нотации Big O" (O-нотация), которая описывает верхнюю границу времени выполнения или
+    использования памяти алгоритма.</p>
+    <h3>Основные виды сложности:</h3>
+    <ol start="1">
+        <li><p><strong>O(1)</strong> — Константная сложность. Время выполнения не зависит от размера входных данных.</p>
+        </li>
+        <li><p><strong>O(log n)</strong> — Логарифмическая сложность. Время выполнения растет логарифмически от размера
+            входных данных.</p></li>
+        <li><p><strong>O(n)</strong> — Линейная сложность. Время выполнения растет линейно с увеличением размера входных
+            данных.</p></li>
+        <li><p><strong>O(n log n)</strong> — Линейно-логарифмическая сложность. Время выполнения растет пропорционально
+            произведению размера данных на логарифм размера.</p></li>
+        <li><p><strong>O(n²)</strong> — Квадратичная сложность. Время выполнения растет пропорционально квадрату размера
+            входных данных.</p></li>
+        <li><p><strong>O(2^n)</strong> — Экспоненциальная сложность. Время выполнения удваивается с каждым увеличением
+            размера входных данных.</p></li>
+        <li><p><strong>O(n!)</strong> — Факториальная сложность. Время выполнения растет пропорционально факториалу
+            размера входных данных.</p></li>
+    </ol>
+    <hr>
+    <h3>Примеры сложности алгоритмов в PHP:</h3><h4>1. <strong>O(1) — Константная сложность</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span class="token function-definition function">getFirstElement</span><span
+                class="token punctuation">(</span><span class="token keyword type-hint">array</span> <span
+                class="token variable">$arr</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token variable">$arr</span><span
+                    class="token punctuation">[</span><span class="token number">0</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span> <span
+                    class="token comment">// Всегда берет первый элемент, независимо от размера массива</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>Время выполнения не зависит от размера массива.</p>
+    <hr>
+    <h4>2. <strong>O(n) — Линейная сложность</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">findElement</span><span
+                class="token punctuation">(</span><span class="token keyword type-hint">array</span> <span
+                class="token variable">$arr</span><span class="token punctuation">,</span> <span class="token variable">$target</span><span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span
+                    class="token variable">$arr</span> <span class="token keyword">as</span> <span
+                    class="token variable">$element</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$element</span> <span
+                    class="token operator">===</span> <span class="token variable">$target</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token constant boolean">true</span><span
+                    class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token constant boolean">false</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>В худшем случае алгоритм пройдет по всем элементам массива.</p>
+    <hr>
+    <h4>3. <strong>O(n²) — Квадратичная сложность</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">bubbleSort</span><span
+                class="token punctuation">(</span><span class="token keyword type-hint">array</span> <span
+                class="token variable">$arr</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+    <span class="token variable">$n</span> <span class="token operator">=</span> <span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token variable">$i</span> <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span> <span class="token variable">$i</span> <span
+                    class="token operator">&lt;</span> <span class="token variable">$n</span><span
+                    class="token punctuation">;</span> <span class="token variable">$i</span><span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token variable">$j</span> <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span> <span class="token variable">$j</span> <span
+                    class="token operator">&lt;</span> <span class="token variable">$n</span> <span
+                    class="token operator">-</span> <span class="token variable">$i</span> <span class="token operator">-</span> <span
+                    class="token number">1</span><span class="token punctuation">;</span> <span class="token variable">$j</span><span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$arr</span><span
+                    class="token punctuation">[</span><span class="token variable">$j</span><span
+                    class="token punctuation">]</span> <span class="token operator">&gt;</span> <span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span> <span class="token operator">+</span> <span
+                    class="token number">1</span><span class="token punctuation">]</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// Меняем элементы местами</span>
+                <span class="token variable">$temp</span> <span class="token operator">=</span> <span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+                <span class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token variable">$arr</span><span
+                    class="token punctuation">[</span><span class="token variable">$j</span> <span
+                    class="token operator">+</span> <span class="token number">1</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span> <span class="token operator">+</span> <span
+                    class="token number">1</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token variable">$temp</span><span
+                    class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token variable">$arr</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>Два вложенных цикла приводят к квадратичной сложности.</p>
+    <hr>
+    <h4>4. <strong>O(log n) — Логарифмическая сложность</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">binarySearch</span><span
+                class="token punctuation">(</span><span class="token keyword type-hint">array</span> <span
+                class="token variable">$arr</span><span class="token punctuation">,</span> <span class="token variable">$target</span><span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$low</span> <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token variable">$high</span> <span class="token operator">=</span> <span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">)</span> <span
+                    class="token operator">-</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span
+                    class="token variable">$low</span> <span class="token operator">&lt;=</span> <span
+                    class="token variable">$high</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$mid</span> <span class="token operator">=</span> <span
+                    class="token punctuation">(</span><span class="token keyword type-casting">int</span><span
+                    class="token punctuation">)</span><span class="token punctuation">(</span><span
+                    class="token punctuation">(</span><span class="token variable">$low</span> <span
+                    class="token operator">+</span> <span class="token variable">$high</span><span
+                    class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$mid</span><span class="token punctuation">]</span> <span
+                    class="token operator">===</span> <span class="token variable">$target</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token variable">$mid</span><span
+                    class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$mid</span><span class="token punctuation">]</span> <span
+                    class="token operator">&lt;</span> <span class="token variable">$target</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$low</span> <span class="token operator">=</span> <span class="token variable">$mid</span> <span
+                    class="token operator">+</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span
+                    class="token punctuation">{</span>
+            <span class="token variable">$high</span> <span class="token operator">=</span> <span
+                    class="token variable">$mid</span> <span class="token operator">-</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span
+                    class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>На каждом шаге алгоритм уменьшает диапазон поиска вдвое.</p>
+    <hr>
+    <h4>5. <strong>O(n log n) — Линейно-логарифмическая сложность</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">mergeSort</span><span class="token punctuation">(</span><span
+                class="token keyword type-hint">array</span> <span class="token variable">$arr</span><span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">)</span> <span
+                    class="token operator">&lt;=</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$arr</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token variable">$mid</span> <span class="token operator">=</span> <span
+                    class="token punctuation">(</span><span class="token keyword type-casting">int</span><span
+                    class="token punctuation">)</span><span class="token punctuation">(</span><span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">)</span> <span
+                    class="token operator">/</span> <span class="token number">2</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$left</span> <span class="token operator">=</span> <span class="token function">mergeSort</span><span
+                    class="token punctuation">(</span><span class="token function">array_slice</span><span
+                    class="token punctuation">(</span><span class="token variable">$arr</span><span
+                    class="token punctuation">,</span> <span class="token number">0</span><span
+                    class="token punctuation">,</span> <span class="token variable">$mid</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token variable">$right</span> <span class="token operator">=</span> <span class="token function">mergeSort</span><span
+                    class="token punctuation">(</span><span class="token function">array_slice</span><span
+                    class="token punctuation">(</span><span class="token variable">$arr</span><span
+                    class="token punctuation">,</span> <span class="token variable">$mid</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token function">merge</span><span
+                    class="token punctuation">(</span><span class="token variable">$left</span><span
+                    class="token punctuation">,</span> <span class="token variable">$right</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function-definition function">merge</span><span
+                    class="token punctuation">(</span><span class="token keyword type-hint">array</span> <span
+                    class="token variable">$left</span><span class="token punctuation">,</span> <span
+                    class="token keyword type-hint">array</span> <span class="token variable">$right</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$result</span> <span class="token operator">=</span> <span
+                    class="token punctuation">[</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$left</span><span class="token punctuation">)</span> <span
+                    class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$right</span><span class="token punctuation">)</span> <span
+                    class="token operator">&gt;</span> <span class="token number">0</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token variable">$left</span><span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span
+                    class="token variable">$right</span><span class="token punctuation">[</span><span
+                    class="token number">0</span><span class="token punctuation">]</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$result</span><span class="token punctuation">[</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token function">array_shift</span><span class="token punctuation">(</span><span
+                    class="token variable">$left</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span
+                    class="token punctuation">{</span>
+            <span class="token variable">$result</span><span class="token punctuation">[</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token function">array_shift</span><span class="token punctuation">(</span><span
+                    class="token variable">$right</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">array_merge</span><span
+                    class="token punctuation">(</span><span class="token variable">$result</span><span
+                    class="token punctuation">,</span> <span class="token variable">$left</span><span
+                    class="token punctuation">,</span> <span class="token variable">$right</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>Сортировка слиянием делит массив на части и затем объединяет их.</p>
+    <hr>
+    <h4>6. <strong>O(2^n) — Экспоненциальная сложность</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span
+                class="token function-definition function">fibonacci</span><span class="token punctuation">(</span><span
+                class="token variable">$n</span><span class="token punctuation">)</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$n</span> <span
+                    class="token operator">&lt;=</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$n</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">fibonacci</span><span
+                    class="token punctuation">(</span><span class="token variable">$n</span> <span
+                    class="token operator">-</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span> <span class="token operator">+</span> <span
+                    class="token function">fibonacci</span><span class="token punctuation">(</span><span
+                    class="token variable">$n</span> <span class="token operator">-</span> <span
+                    class="token number">2</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>Каждый вызов функции вызывает два дополнительных вызова, что приводит к экспоненциальному росту.</p>
+    <hr>
+    <h4>7. <strong>O(n!) — Факториальная сложность</strong></h4>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">function</span> <span class="token function-definition function">permute</span><span
+                class="token punctuation">(</span><span class="token variable">$arr</span><span
+                class="token punctuation">,</span> <span class="token variable">$start</span> <span
+                class="token operator">=</span> <span class="token number">0</span><span
+                class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token variable">$start</span> <span class="token operator">===</span> <span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">)</span> <span
+                    class="token operator">-</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token function">implode</span><span
+                    class="token punctuation">(</span><span class="token string double-quoted-string">", "</span><span
+                    class="token punctuation">,</span> <span class="token variable">$arr</span><span
+                    class="token punctuation">)</span> <span class="token operator">.</span> <span
+                    class="token string double-quoted-string">"\n"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token variable">$i</span> <span class="token operator">=</span> <span class="token variable">$start</span><span
+                    class="token punctuation">;</span> <span class="token variable">$i</span> <span
+                    class="token operator">&lt;</span> <span class="token function">count</span><span
+                    class="token punctuation">(</span><span class="token variable">$arr</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token variable">$i</span><span class="token operator">++</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Меняем местами элементы</span>
+        <span class="token keyword">list</span><span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$start</span><span class="token punctuation">]</span><span
+                    class="token punctuation">,</span> <span class="token variable">$arr</span><span
+                    class="token punctuation">[</span><span class="token variable">$i</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span> <span
+                    class="token operator">=</span> <span class="token keyword">array</span><span
+                    class="token punctuation">(</span><span class="token variable">$arr</span><span
+                    class="token punctuation">[</span><span class="token variable">$i</span><span
+                    class="token punctuation">]</span><span class="token punctuation">,</span> <span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$start</span><span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// Рекурсивно генерируем перестановки</span>
+        <span class="token function">permute</span><span class="token punctuation">(</span><span class="token variable">$arr</span><span
+                    class="token punctuation">,</span> <span class="token variable">$start</span> <span
+                    class="token operator">+</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// Возвращаем элементы на место</span>
+        <span class="token keyword">list</span><span class="token punctuation">(</span><span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$start</span><span class="token punctuation">]</span><span
+                    class="token punctuation">,</span> <span class="token variable">$arr</span><span
+                    class="token punctuation">[</span><span class="token variable">$i</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span> <span
+                    class="token operator">=</span> <span class="token keyword">array</span><span
+                    class="token punctuation">(</span><span class="token variable">$arr</span><span
+                    class="token punctuation">[</span><span class="token variable">$i</span><span
+                    class="token punctuation">]</span><span class="token punctuation">,</span> <span
+                    class="token variable">$arr</span><span class="token punctuation">[</span><span
+                    class="token variable">$start</span><span class="token punctuation">]</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <p>Генерация всех перестановок массива имеет факториальную сложность.</p>
+    <hr>
+    <h3>Заключение</h3>
+    <p>Понимание сложности алгоритмов помогает выбирать оптимальные решения для задач. Например, для больших данных
+        лучше избегать алгоритмов с квадратичной или экспоненциальной сложностью, отдавая предпочтение линейным или
+        логарифмическим алгоритмам.</p></div>
+</body>
+</html>
