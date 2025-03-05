@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="/../deepseek.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="ds-markdown ds-markdown--block" style="--ds-md-zoom: 1.143;"><p>В PHP под "стратегией" (Strategy) обычно
+    понимается шаблон проектирования (design pattern), который позволяет выбирать алгоритм или поведение во время
+    выполнения программы. Этот шаблон полезен, когда у вас есть несколько способов выполнения задачи, и вы хотите, чтобы
+    выбор конкретного способа был гибким и легко изменяемым.</p>
+    <h3>Пример реализации шаблона "Стратегия" в PHP</h3>
+    <p>Предположим, у нас есть задача сортировки массива, и мы хотим использовать разные алгоритмы сортировки в
+        зависимости от ситуации.</p>
+    <ol start="1">
+        <li><p><strong>Создаем интерфейс стратегии:</strong></p></li>
+    </ol>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">interface</span> <span class="token class-name-definition class-name">SortStrategy</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sort</span><span class="token punctuation">(</span><span
+                    class="token keyword type-hint">array</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">array</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <ol start="2">
+        <li><p><strong>Реализуем конкретные стратегии:</strong></p></li>
+    </ol>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">BubbleSortStrategy</span> <span
+                class="token keyword">implements</span> <span class="token class-name">SortStrategy</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sort</span><span class="token punctuation">(</span><span
+                    class="token keyword type-hint">array</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">array</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Реализация пузырьковой сортировки</span>
+        <span class="token variable">$n</span> <span class="token operator">=</span> <span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$dataset</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token variable">$i</span> <span class="token operator">=</span> <span
+                    class="token number">0</span><span class="token punctuation">;</span> <span class="token variable">$i</span> <span
+                    class="token operator">&lt;</span> <span class="token variable">$n</span> <span
+                    class="token operator">-</span> <span class="token number">1</span><span
+                    class="token punctuation">;</span> <span class="token variable">$i</span><span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">$j</span> <span
+                    class="token operator">=</span> <span class="token number">0</span><span
+                    class="token punctuation">;</span> <span class="token variable">$j</span> <span
+                    class="token operator">&lt;</span> <span class="token variable">$n</span> <span
+                    class="token operator">-</span> <span class="token variable">$i</span> <span class="token operator">-</span> <span
+                    class="token number">1</span><span class="token punctuation">;</span> <span class="token variable">$j</span><span
+                    class="token operator">++</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token variable">$dataset</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span><span class="token punctuation">]</span> <span
+                    class="token operator">&gt;</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">[</span><span class="token variable">$j</span> <span
+                    class="token operator">+</span> <span class="token number">1</span><span
+                    class="token punctuation">]</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+                    <span class="token variable">$temp</span> <span class="token operator">=</span> <span
+                    class="token variable">$dataset</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+                    <span class="token variable">$dataset</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">[</span><span class="token variable">$j</span> <span
+                    class="token operator">+</span> <span class="token number">1</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token variable">$dataset</span><span class="token punctuation">[</span><span
+                    class="token variable">$j</span> <span class="token operator">+</span> <span
+                    class="token number">1</span><span class="token punctuation">]</span> <span
+                    class="token operator">=</span> <span class="token variable">$temp</span><span
+                    class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span
+                    class="token class-name-definition class-name">QuickSortStrategy</span> <span class="token keyword">implements</span> <span
+                    class="token class-name">SortStrategy</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sort</span><span class="token punctuation">(</span><span
+                    class="token keyword type-hint">array</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">array</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Реализация быстрой сортировки</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+                    class="token function">count</span><span class="token punctuation">(</span><span
+                    class="token variable">$dataset</span><span class="token punctuation">)</span> <span
+                    class="token operator">&lt;=</span> <span class="token number">1</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$pivot</span> <span class="token operator">=</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">[</span><span class="token number">0</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token variable">$left</span> <span class="token operator">=</span> <span class="token variable">$right</span> <span
+                    class="token operator">=</span> <span class="token punctuation">[</span><span
+                    class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span
+                    class="token variable">$i</span> <span class="token operator">=</span> <span
+                    class="token number">1</span><span class="token punctuation">;</span> <span class="token variable">$i</span> <span
+                    class="token operator">&lt;</span> <span class="token function">count</span><span
+                    class="token punctuation">(</span><span class="token variable">$dataset</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span> <span
+                    class="token variable">$i</span><span class="token operator">++</span><span
+                    class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$dataset</span><span
+                    class="token punctuation">[</span><span class="token variable">$i</span><span
+                    class="token punctuation">]</span> <span class="token operator">&lt;</span> <span
+                    class="token variable">$pivot</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+                <span class="token variable">$left</span><span class="token punctuation">[</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token variable">$dataset</span><span class="token punctuation">[</span><span
+                    class="token variable">$i</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span
+                    class="token punctuation">{</span>
+                <span class="token variable">$right</span><span class="token punctuation">[</span><span
+                    class="token punctuation">]</span> <span class="token operator">=</span> <span
+                    class="token variable">$dataset</span><span class="token punctuation">[</span><span
+                    class="token variable">$i</span><span class="token punctuation">]</span><span
+                    class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token function">array_merge</span><span
+                    class="token punctuation">(</span><span class="token variable">$this</span><span
+                    class="token operator">-&gt;</span><span class="token function">sort</span><span
+                    class="token punctuation">(</span><span class="token variable">$left</span><span
+                    class="token punctuation">)</span><span class="token punctuation">,</span> <span
+                    class="token punctuation">[</span><span class="token variable">$pivot</span><span
+                    class="token punctuation">]</span><span class="token punctuation">,</span> <span
+                    class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token function">sort</span><span class="token punctuation">(</span><span
+                    class="token variable">$right</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <ol start="3">
+        <li><p><strong>Создаем контекст, который будет использовать стратегию:</strong></p></li>
+    </ol>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token keyword">class</span> <span class="token class-name-definition class-name">Sorter</span> <span
+                class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$strategy</span><span
+                    class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">__construct</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">SortStrategy</span> <span
+                    class="token variable">$strategy</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">strategy</span> <span
+                    class="token operator">=</span> <span class="token variable">$strategy</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">setStrategy</span><span
+                    class="token punctuation">(</span><span
+                    class="token class-name type-declaration">SortStrategy</span> <span
+                    class="token variable">$strategy</span><span class="token punctuation">)</span> <span
+                    class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-&gt;</span><span class="token property">strategy</span> <span
+                    class="token operator">=</span> <span class="token variable">$strategy</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span
+                    class="token function-definition function">sort</span><span class="token punctuation">(</span><span
+                    class="token keyword type-hint">array</span> <span class="token variable">$dataset</span><span
+                    class="token punctuation">)</span><span class="token punctuation">:</span> <span
+                    class="token keyword return-type">array</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-&gt;</span><span
+                    class="token property">strategy</span><span class="token operator">-&gt;</span><span
+                    class="token function">sort</span><span class="token punctuation">(</span><span
+                    class="token variable">$dataset</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></pre>
+    </div>
+    <ol start="4">
+        <li><p><strong>Используем стратегию в клиентском коде:</strong></p></li>
+    </ol>
+    <div class="md-code-block">
+        <div class="md-code-block-banner-wrap">
+            <div class="md-code-block-banner">
+                <div class="md-code-block-infostring">php</div>
+                <div class="md-code-block-action">
+                    <div class="ds-markdown-code-copy-button">Copy</div>
+                </div>
+            </div>
+        </div>
+        <pre><span class="token variable">$dataset</span> <span class="token operator">=</span> <span
+                class="token punctuation">[</span><span class="token number">3</span><span
+                class="token punctuation">,</span> <span class="token number">1</span><span
+                class="token punctuation">,</span> <span class="token number">4</span><span
+                class="token punctuation">,</span> <span class="token number">1</span><span
+                class="token punctuation">,</span> <span class="token number">5</span><span
+                class="token punctuation">,</span> <span class="token number">9</span><span
+                class="token punctuation">,</span> <span class="token number">2</span><span
+                class="token punctuation">,</span> <span class="token number">6</span><span
+                class="token punctuation">,</span> <span class="token number">5</span><span
+                class="token punctuation">,</span> <span class="token number">3</span><span
+                class="token punctuation">,</span> <span class="token number">5</span><span
+                class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token variable">$sorter</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span
+                    class="token class-name">Sorter</span><span class="token punctuation">(</span><span
+                    class="token keyword">new</span> <span class="token class-name">BubbleSortStrategy</span><span
+                    class="token punctuation">(</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"Bubble sort:\n"</span><span
+                    class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span
+                    class="token variable">$sorter</span><span class="token operator">-&gt;</span><span
+                    class="token function">sort</span><span class="token punctuation">(</span><span
+                    class="token variable">$dataset</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$sorter</span><span class="token operator">-&gt;</span><span class="token function">setStrategy</span><span
+                    class="token punctuation">(</span><span class="token keyword">new</span> <span
+                    class="token class-name">QuickSortStrategy</span><span class="token punctuation">(</span><span
+                    class="token punctuation">)</span><span class="token punctuation">)</span><span
+                    class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"Quick sort:\n"</span><span
+                    class="token punctuation">;</span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span
+                    class="token variable">$sorter</span><span class="token operator">-&gt;</span><span
+                    class="token function">sort</span><span class="token punctuation">(</span><span
+                    class="token variable">$dataset</span><span class="token punctuation">)</span><span
+                    class="token punctuation">)</span><span class="token punctuation">;</span></pre>
+    </div>
+    <h3>Преимущества использования шаблона "Стратегия":</h3>
+    <ol start="1">
+        <li><p><strong>Гибкость:</strong> Вы можете легко менять алгоритмы или поведение во время выполнения программы.
+        </p></li>
+        <li><p><strong>Расширяемость:</strong> Новые стратегии можно добавлять без изменения существующего кода.</p>
+        </li>
+        <li><p><strong>Изоляция:</strong> Каждая стратегия изолирована и не зависит от других стратегий.</p></li>
+    </ol>
+    <h3>Когда использовать шаблон "Стратегия"?</h3>
+    <ul>
+        <li><p>Когда у вас есть несколько вариантов выполнения задачи, и вы хотите, чтобы выбор варианта был гибким.</p>
+        </li>
+        <li><p>Когда вам нужно изолировать логику алгоритма от клиентского кода.</p></li>
+        <li><p>Когда у вас есть класс, который имеет несколько поведений, и вы хотите вынести эти поведения в отдельные
+            классы.</p></li>
+    </ul>
+    <p>Этот шаблон помогает сделать код более модульным, удобным для тестирования и поддерживаемым.</p></div>
+</body>
+</html>
